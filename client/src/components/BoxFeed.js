@@ -10,6 +10,7 @@ const BoxFeed = (props) => {
     props.getBoxes();
   }, []);
 
+
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
     const two = new Date(b.createdAt);
@@ -17,9 +18,13 @@ const BoxFeed = (props) => {
     return two - one;
   });
 
+  console.log("sorted", sorted);
+
   const renderFeed = () => {
     if (props.boxes.length > 0) {
       return sorted.map((box) => {
+        const date = new Date(box.createdAt).toString()
+        console.log(typeof(date.toString()), "toString")
         return (
           <>
             <Feed.Event key={box._id} fluid>
@@ -29,6 +34,7 @@ const BoxFeed = (props) => {
               <Feed.Content>
                 <Feed.User>
                   <span style={{ color: "#EEFBFB" }}> @userName </span>
+                  <span>{date}</span>
                 </Feed.User>
                 <Feed.Extra
                   style={{ color: "#fff", overflowWrap: "anywhere" }}

@@ -43,7 +43,9 @@ const LeftMenu = (props) => {
           />
         </Modal.Header>
         <Modal.Content>
-          <PostBoxForm onFormSubmit={onFormSubmit} />
+          <Segment basic padded>
+            <PostBoxForm onFormSubmit={onFormSubmit} />
+          </Segment>
         </Modal.Content>
       </Modal>
     );
@@ -142,7 +144,10 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Menu.Item>
             <Segment basic style={{ right: 20 }}>
-              <Button onClick={onPostClick} style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
+              <Button
+                onClick={onPostClick}
+                style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
+              >
                 P
               </Button>
             </Segment>
@@ -187,7 +192,10 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Menu.Item>
             <Segment basic style={{ right: 22 }}>
-              <Button onClick={onPostClick} style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
+              <Button
+                onClick={onPostClick}
+                style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
+              >
                 P
               </Button>
             </Segment>
