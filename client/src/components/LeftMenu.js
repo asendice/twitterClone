@@ -12,6 +12,7 @@ import {
   Divider,
   Grid,
 } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
 import PostBoxForm from "./PostBoxForm";
 import { postBoxes } from "../actions";
 import { connect } from "react-redux";
@@ -35,16 +36,20 @@ const LeftMenu = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
       >
-        <Modal.Header>
+        <Modal.Content style={{ background: "#12232e" }}>
           <Icon
             onClick={() => setOpen(false)}
             style={{ cursor: "pointer" }}
             name="x"
           />
-        </Modal.Header>
-        <Modal.Content>
-          <Segment basic padded>
+          <Segment
+            textAlign="center"
+            very
+            padded
+            style={{ minWidth: 420, background: "#12232e" }}
+          >
             <PostBoxForm onFormSubmit={onFormSubmit} />
+            <Divider hidden />
           </Segment>
         </Modal.Content>
       </Modal>
@@ -58,18 +63,7 @@ const LeftMenu = (props) => {
   return (
     <Sticky context={props.contextRef} offset={66}>
       <Grid className="computer only">
-        <Menu
-          vertical
-          borderless
-          style={{
-            boxShadow: "none",
-            border: "none",
-            background: "#203647",
-            marginLeft: 50,
-            marginTop: 60,
-            width: "20rem",
-          }}
-        >
+        <Menu className="left-menu media-left-menu" vertical borderless>
           <Header as="h1" style={{ color: "#fff" }}>
             <Image circular src={scary} />
             @userName
@@ -77,22 +71,37 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Divider hidden />
           <Menu.Item>
-            <Header as="h2" style={{ color: "#fff" }}>
-              <Icon name="home" />
-              Home
-            </Header>
+            <NavLink
+              to="/"
+              activeStyle={{
+                fontWeight: "bold",
+                color: "red",
+              }}
+            >
+              <Header as="h2" style={{ color: "#fff" }}>
+                <Icon name="home" />
+                Home
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header as="h2" style={{ color: "#fff" }}>
-              <Icon name="bell" />
-              Notifications
-            </Header>
+            <NavLink activeClassName="is-active" to="/notifications" activeStyle={{
+                fontWeight: "bold",
+                color: "red",
+              }}>
+              <Header as="h2" style={{ color: "#fff" }}>
+                <Icon name="bell" />
+                Notifications
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header as="h2" style={{ color: "#fff" }}>
-              <Icon name="user" />
-              Profile
-            </Header>
+            <NavLink activeClassName="is-active" to="/profile">
+              <Header as="h2" style={{ color: "#fff" }}>
+                <Icon name="user" />
+                Profile
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
@@ -127,19 +136,25 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="home" />
-            </Header>
+            <NavLink to="/">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="home" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="bell" />
-            </Header>
+            <NavLink to="/notifications">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="bell" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="user" />
-            </Header>
+            <NavLink to="/profile">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="user" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
@@ -175,19 +190,25 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="home" />
-            </Header>
+            <NavLink to="/">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="home" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="bell" />
-            </Header>
+            <NavLink to="/notifications">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="bell" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
-              <Icon size="big" name="user" />
-            </Header>
+            <NavLink to="/profile">
+              <Header style={{ color: "#fff" }}>
+                <Icon size="big" name="user" />
+              </Header>
+            </NavLink>
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>

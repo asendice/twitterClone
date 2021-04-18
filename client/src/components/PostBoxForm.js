@@ -10,7 +10,7 @@ const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
         {...input}
         row={3}
         placeholder={`What's happening San Diego? `}
-        style={{ maxHeight: 150, minHeight: 150, resize: "none" }}
+        style={{ maxHeight: 150, minHeight: 150, resize: "none", background: "#12232e", color: "#fff" }}
       />
       {touched &&
         ((error && <span>{error}</span>) ||
