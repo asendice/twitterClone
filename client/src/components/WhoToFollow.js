@@ -2,7 +2,6 @@ import React from "react";
 import scary from "../images/scary.jpeg";
 import {
   Segment,
-  Sticky,
   Table,
   Image,
   Header,
@@ -12,9 +11,8 @@ import {
 
 const WhoToFollow = (props) => {
   return (
-    <Sticky context={props.contextRef} offset={66}>
       <Segment
-        className="wtf-card media-wtf-card"
+        className="wtf-card media-right-card"
       >
         <Header as="h2" style={{ color: "#fff" }}>
           Who To Follow
@@ -55,7 +53,6 @@ const WhoToFollow = (props) => {
           </Table.Row>
         </Table>
       </Segment>
-    </Sticky>
   );
 };
 

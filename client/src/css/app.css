@@ -1,19 +1,21 @@
-.left-menu {
-  background-color: #12232e !important;
+.wtf-card {
+  top: 350px !important;
+  left: 50px !important;
+  min-width: 100px !important;
+  max-width: 400px !important;
+  background: #12232e !important;
 }
 
-.wtf-card {
+.search-clone-card {
   top: 50px !important;
   left: 50px !important;
   min-width: 100px !important;
   max-width: 400px !important;
   background: #12232e !important;
-  border: none;
-  box-shadow: none;
 }
 
 @media screen and (max-width: 1500px) {
-  .media-wtf-card {
+  .media-right-card {
     max-width: 350px !important;
     left: 0 !important;
     overflow-wrap: break-word;
@@ -21,7 +23,22 @@
 }
 
 @media screen and (max-width: 1200px) {
-  .media-wtf-card {
-    display: none  !important;
+  .media-right-card {
+    display: none !important;
+  }
+}
+
+.left-menu {
+  box-shadow: none !important;
+  border: none !important;
+  background: #203647 !important;
+  margin-left: 130px !important;
+  margin-top: 60px !important;
+  width: 20rem !important;
+}
+
+@media screen and (max-width: 1250px) {
+  .media-left-menu {
+    margin-left: 50px !important;
   }
 }
