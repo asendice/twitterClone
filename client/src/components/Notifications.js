@@ -1,10 +1,18 @@
 import React from "react";
-
+import { Segment, Header } from "semantic-ui-react";
 
 const Notifications = () => {
   return (
     <>
-      <div>Notifications file</div>
+      <Segment
+        textAlign="center"
+        padded
+        style={{ minWidth: 420, minHeight: 250, background: "#12232e" }}
+      >
+        <Header as="h3" style={{ color: "#fff" }}>
+          Notifications currently unavailable.
+        </Header>
+      </Segment>
     </>
   );
 };

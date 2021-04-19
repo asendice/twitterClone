@@ -7,18 +7,18 @@ import {
   Header,
   Divider,
   Button,
+  TabPane,
 } from "semantic-ui-react";
 
 const WhoToFollow = (props) => {
   return (
-      <Segment
-        className="wtf-card media-right-card"
-      >
-        <Header as="h2" style={{ color: "#fff" }}>
-          Who To Follow
-        </Header>
-        <Divider />
-        <Table basic="very">
+    <Segment className="wtf-card media-right-card">
+      <Header as="h2" style={{ color: "#fff" }}>
+        Who To Follow
+      </Header>
+      <Divider />
+      <Table basic="very">
+        <Table.Body>
           <Table.Row>
             <Table.Cell>
               <Image size="tiny" circular src={scary} />
@@ -51,8 +51,9 @@ const WhoToFollow = (props) => {
               </Button>
             </Table.Cell>
           </Table.Row>
-        </Table>
-      </Segment>
+        </Table.Body>
+      </Table>
+    </Segment>
   );
 };
 

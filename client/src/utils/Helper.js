@@ -7,7 +7,7 @@ const rounder = (num) => {
 };
 
 // converts a number from miliseconds to seconds, minutes, hours, days by 
-// returning a string rounded up to the nearst single digit excluding decimals and corresponding letter
+// returning a templated string, with a number rounded up to the nearst digit excluding decimals and the corresponding letter
 const convertMili = (num) => {
   switch (num > 0) {
     case num >= 1000 && num < 60000:

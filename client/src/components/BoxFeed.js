@@ -23,11 +23,8 @@ const BoxFeed = (props) => {
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
     const two = new Date(b.createdAt);
-
     return two - one;
   });
-
-  console.log("sorted", sorted);
 
   const renderFeed = () => {
     if (props.boxes.length > 0) {
