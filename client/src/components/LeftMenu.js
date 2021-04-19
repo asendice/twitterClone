@@ -39,12 +39,11 @@ const LeftMenu = (props) => {
         <Modal.Content style={{ background: "#12232e" }}>
           <Icon
             onClick={() => setOpen(false)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", color: "#fff" }}
             name="x"
           />
           <Segment
             textAlign="center"
-            very
             padded
             style={{ minWidth: 420, background: "#12232e" }}
           >

@@ -1,12 +1,14 @@
 import React from "react";
+import ProfileBox from "./ProfileBox";
+import BoxFeed from "./BoxFeed"
 
-
-const Notifications = () => {
+const Profile = () => {
   return (
     <>
-      <div>Profile</div>
+      <ProfileBox />
+      <BoxFeed />
     </>
   );
 };
 
-export default Notifications;
+export default Profile;
