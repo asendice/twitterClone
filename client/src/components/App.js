@@ -10,15 +10,15 @@ import { Grid, Divider } from "semantic-ui-react";
 
 const App = () => {
   const contextRef = createRef();
-  const searchRef = createRef();
 
   return (
     <div
-      ref={contextRef}
-      style={{ backgroundColor: "#203647", minHeight: "100vh" }}
+    ref={contextRef}
+      style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
     >
+      
       <BrowserRouter>
-        <Title contextRef={contextRef} />
+        <Title contextRef={contextRef}  />
         <Divider hidden />
         <Grid columns={3}>
           <Grid.Row>

@@ -32,13 +32,15 @@ const BoxFeed = (props) => {
         const postDate = new Date(box.createdAt);
         const date = new Date();
         const ago = date - postDate;
+        const numOfLikes = box.likes.length;
+        const numOfComments= box.comments.length
         return (
           <>
             <Card
               key={box._id}
               fluid
               style={{
-                background: "#12232e",
+                background: "#203647",
                 border: "none",
                 boxShadow: "none",
               }}
@@ -68,18 +70,22 @@ const BoxFeed = (props) => {
               <Grid>
                 <Grid.Row columns={2} textAlign="center">
                   <Grid.Column>
+                    
                     <Icon
                       size="large"
                       style={{ color: "#4DA8DA" }}
-                      name="heart"
+                      name="heart outline"
                     />
+                    <span style={{color: "#4DA8DA" , marginLeft: "10px"}}>{numOfLikes === 0 ? " " : numOfLikes}</span>
                   </Grid.Column>
                   <Grid.Column>
+                    
                     <Icon
                       size="large"
                       style={{ color: "#4DA8DA" }}
-                      name="comment"
+                      name="comment outline"
                     />
+                    <span style={{color: "#4DA8DA" , marginLeft: "10px"}}>{numOfComments === 0 ? " " : numOfComments}</span>
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
@@ -94,7 +100,7 @@ const BoxFeed = (props) => {
   };
 
   return (
-    <Segment style={{ backgroundColor: "#12232E", padding: 10, minWidth: 420 }}>
+    <Segment style={{ backgroundColor: "#203647", padding: 10, minWidth: 420 }}>
       {renderFeed()}
     </Segment>
   );

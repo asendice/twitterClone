@@ -10,13 +10,15 @@ const PostBox = (props) => {
     const box = {
       userId: "1",
       content: values.boxText,
+      likes: [],
+      comments: [],
     };
     props.postBoxes(box);
     console.log("submitted box", box);
   };
 
   return (
-    <Segment textAlign="center"  padded style={{minWidth: 420, minHeight: 250, background: "#12232e"}}>
+    <Segment textAlign="center" basic  padded style={{minWidth: 420, minHeight: 250, background: "#203647"}}>
       <PostBoxForm onFormSubmit={onFormSubmit} />
       <Divider hidden />
     </Segment>

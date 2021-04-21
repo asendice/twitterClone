@@ -7,7 +7,7 @@ const Notifications = () => {
       <Segment
         textAlign="center"
         padded
-        style={{ minWidth: 420, minHeight: 250, background: "#12232e" }}
+        style={{ minWidth: 420, minHeight: 250, background: "#203647" }}
       >
         <Header as="h3" style={{ color: "#fff" }}>
           Notifications currently unavailable.
