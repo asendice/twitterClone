@@ -16,7 +16,7 @@ const SearchClone = (props) => {
     <Segment className="search-clone-card media-right-card">
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />
-        <input style={{ backgroundColor: "#12232e", color: "#fff" }} />
+        <input style={{ backgroundColor: "#203647", color: "#fff" }} />
       </Input>
       <Table basic="very">
         <Table.Body>

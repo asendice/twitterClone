@@ -11,6 +11,12 @@ const boxesSchema = new Schema(
       type: String,
       required: true,
     },
+    likes: {
+      type: Array,
+    },
+    comments: {
+      type: Array,
+    },
   },
   {
     timestamps: true,

@@ -3,7 +3,7 @@
   left: 50px !important;
   min-width: 100px !important;
   max-width: 400px !important;
-  background: #12232e !important;
+  background: #203647 !important;
 }
 
 .search-clone-card {
@@ -11,7 +11,7 @@
   left: 50px !important;
   min-width: 100px !important;
   max-width: 400px !important;
-  background: #12232e !important;
+  background: #203647 !important;
 }
 
 @media screen and (max-width: 1500px) {
@@ -31,14 +31,48 @@
 .left-menu {
   box-shadow: none !important;
   border: none !important;
-  background: #203647 !important;
+  background: #12232e !important;
   margin-left: 130px !important;
   margin-top: 60px !important;
   width: 20rem !important;
+}
+
+.menu-icon {
+  color: #fff;
+}
+
+.menu-item {
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1.28571429em !important;
+  font-size: 2rem !important;
+  text-transform: none;
+}
+
+.menu-item:hover {
+  color: #4da8da !important ;
+}
+
+.menu-item-active {
+  color: #4da8da !important ;
 }
 
 @media screen and (max-width: 1250px) {
   .media-left-menu {
     margin-left: 50px !important;
   }
+}
+
+.follow-btn {
+  cursor: pointer !important;
+  color: #fff !important;
+  background-color: #203647 !important;
+  border: solid #fff 1px !important;
+  overflow: hidden !important;
+}
+
+.follow-btn:hover {
+  background-color: #4DA8DA !important;
+  border: solid #203647 1px !important;
+  overflow: hidden !important;
 }

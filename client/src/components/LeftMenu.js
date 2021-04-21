@@ -31,21 +31,24 @@ const LeftMenu = (props) => {
   const renderModal = () => {
     return (
       <Modal
+        centered={false}
         size="small"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
       >
-        <Modal.Content style={{ background: "#12232e" }}>
+        <Modal.Content style={{ background: "#203647" }}>
           <Icon
             onClick={() => setOpen(false)}
-            style={{ cursor: "pointer", color: "#fff" }}
+            style={{ cursor: "pointer", color: "#4DA8DA" }}
             name="x"
+            size="large"
           />
           <Segment
+            basic
             textAlign="center"
             padded
-            style={{ minWidth: 420, background: "#12232e" }}
+            style={{ minWidth: 420, background: "#203647" }}
           >
             <PostBoxForm onFormSubmit={onFormSubmit} />
             <Divider hidden />
@@ -62,44 +65,44 @@ const LeftMenu = (props) => {
   return (
     <Sticky context={props.contextRef} offset={66}>
       <Grid className="computer only">
-        <Menu className="left-menu media-left-menu" vertical borderless>
-          <Header as="h1" style={{ color: "#fff" }}>
-            <Image circular src={scary} />
-            @userName
-          </Header>
+        <Menu style={{cursor: "pointer"}} className="left-menu media-left-menu" vertical borderless>
+          <NavLink to="/profile">
+            <Header as="h1" style={{ color: "#fff" }}>
+              <Image circular src={scary} />
+              @userName
+            </Header>
+          </NavLink>
           <Divider hidden />
           <Divider hidden />
           <Menu.Item>
             <NavLink
+              exact
+              className="menu-item"
               to="/"
-              activeStyle={{
-                fontWeight: "bold",
-                color: "red",
-              }}
+              activeClassName="menu-item-active"
             >
-              <Header as="h2" style={{ color: "#fff" }}>
-                <Icon name="home" />
-                Home
-              </Header>
+              <Icon name="home" />
+              Home
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink activeClassName="is-active" to="/notifications" activeStyle={{
-                fontWeight: "bold",
-                color: "red",
-              }}>
-              <Header as="h2" style={{ color: "#fff" }}>
-                <Icon name="bell" />
-                Notifications
-              </Header>
+            <NavLink
+              className="menu-item"
+              to="/notifications"
+              activeClassName="menu-item-active"
+            >
+              <Icon name="bell" />
+              Notifications
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink activeClassName="is-active" to="/profile">
-              <Header as="h2" style={{ color: "#fff" }}>
-                <Icon name="user" />
-                Profile
-              </Header>
+            <NavLink
+              className="menu-item"
+              activeClassName="menu-item-active"
+              to="/profile"
+            >
+              <Icon name="user" />
+              Profile
             </NavLink>
           </Menu.Item>
           <Divider hidden />
@@ -124,35 +127,43 @@ const LeftMenu = (props) => {
           style={{
             boxShadow: "none",
             border: "none",
-            background: "#203647",
+            background: "#12232e",
             maxWidth: "10px",
+            cursor: "pointer"
           }}
         >
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
+            <NavLink className="menu-icon" to="/profile">
               <Icon size="big" name="at" />
-            </Header>
+            </NavLink>
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <NavLink to="/">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="home" />
-              </Header>
+            <NavLink
+              exact
+              to="/"
+              className="menu-icon"
+              activeClassName="menu-item-active"
+            >
+              <Icon size="big" name="home" />
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink to="/notifications">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="bell" />
-              </Header>
+            <NavLink
+              className="menu-icon"
+              activeClassName="menu-item-active"
+              to="/notifications"
+            >
+              <Icon size="big" name="bell" />
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink to="/profile">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="user" />
-              </Header>
+            <NavLink
+              className="menu-icon"
+              activeClassName="menu-item-active"
+              to="/profile"
+            >
+              <Icon size="big" name="user" />
             </NavLink>
           </Menu.Item>
           <Divider hidden />
@@ -178,35 +189,43 @@ const LeftMenu = (props) => {
           style={{
             boxShadow: "none",
             border: "none",
-            background: "#203647",
+            background: "#12232e",
             maxWidth: "10px",
+            cursor: "pointer"
           }}
         >
           <Menu.Item>
-            <Header style={{ color: "#fff" }}>
+            <NavLink className="menu-icon" to="/profile">
               <Icon size="big" name="at" />
-            </Header>
+            </NavLink>
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <NavLink to="/">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="home" />
-              </Header>
+            <NavLink
+              exact
+              className="menu-icon"
+              activeClassName="menu-item-active"
+              to="/"
+            >
+              <Icon size="big" name="home" />
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink to="/notifications">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="bell" />
-              </Header>
+            <NavLink
+              className="menu-icon"
+              activeClassName="menu-item-active"
+              to="/notifications"
+            >
+              <Icon size="big" name="bell" />
             </NavLink>
           </Menu.Item>
           <Menu.Item>
-            <NavLink to="/profile">
-              <Header style={{ color: "#fff" }}>
-                <Icon size="big" name="user" />
-              </Header>
+            <NavLink
+              className="menu-icon"
+              activeClassName="menu-item-active"
+              to="/profile"
+            >
+              <Icon size="big" name="user" />
             </NavLink>
           </Menu.Item>
           <Divider hidden />
