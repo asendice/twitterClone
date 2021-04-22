@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import scary from "../images/scary.jpeg";
+import mage from "../images/mage.png";
 import {
   Menu,
   Image,
@@ -63,12 +63,12 @@ const LeftMenu = (props) => {
   };
 
   return (
-    <Sticky context={props.contextRef} offset={66}>
+    <Sticky context={props.contextRef} offset={100}>
       <Grid className="computer only">
         <Menu style={{cursor: "pointer"}} className="left-menu media-left-menu" vertical borderless>
           <NavLink to="/profile">
             <Header as="h1" style={{ color: "#fff" }}>
-              <Image circular src={scary} />
+              <Image circular src={mage} />
               @userName
             </Header>
           </NavLink>
@@ -78,7 +78,7 @@ const LeftMenu = (props) => {
             <NavLink
               exact
               className="menu-item"
-              to="/"
+              to="/home"
               activeClassName="menu-item-active"
             >
               <Icon name="home" />
@@ -141,7 +141,7 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               exact
-              to="/"
+              to="/home"
               className="menu-icon"
               activeClassName="menu-item-active"
             >
@@ -205,7 +205,7 @@ const LeftMenu = (props) => {
               exact
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/"
+              to="/home"
             >
               <Icon size="big" name="home" />
             </NavLink>
