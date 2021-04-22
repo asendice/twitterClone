@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import scary from "../images/scary.jpeg";
+import mage from "../images/mage.png";
 import SettingsForm from "./SettingsForm";
 import {
   Segment,
@@ -8,7 +8,6 @@ import {
   Header,
   Button,
   Icon,
-  Divider,
   Modal,
 } from "semantic-ui-react";
 
@@ -40,19 +39,20 @@ const ProfileBox = () => {
 
   return (
     <Segment
+      as="div"
       textAlign="center"
       padded
       style={{
         minWidth: 420,
         minHeight: 250,
-        background: "#203647",
         cursor: "pointer",
+        backgroundColor: "#203647"
       }}
     >
       <Grid>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <Image circular size="small" src={scary} />
+            <Image circular size="small" src={mage} />
             <Header as="h1" style={{ color: "#fff" }}>
               @userName
             </Header>

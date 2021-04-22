@@ -72,7 +72,11 @@
 }
 
 .follow-btn:hover {
-  background-color: #4DA8DA !important;
+  background-color: #4da8da !important;
   border: solid #203647 1px !important;
   overflow: hidden !important;
+}
+
+.portfolio-box {
+  background-image: url("../images/tm.jpeg") !important;
 }

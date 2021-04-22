@@ -118,6 +118,7 @@ let SettingsForm = (props) => {
       >
         Save
       </Button>
+      <Divider />
       <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
         <Label style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
           {" "}
@@ -130,7 +131,7 @@ let SettingsForm = (props) => {
           accept=".png, .jpeg, .jpg"
           component={renderImageInput}
         />
-        <Divider />
+        <Divider hidden />
 
         <Label style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
           {" "}
@@ -143,7 +144,7 @@ let SettingsForm = (props) => {
           accept=".png, .jpeg, .jpg"
           component={renderImageInput}
         />
-        <Divider />
+        <Divider hidden/>
         <Divider hidden />
         <Field name="bio" component={renderTextArea} label="update your bio" />
       </Form>
