@@ -8,7 +8,7 @@ const App = () => {
     <>
       <BrowserRouter>
         <Route exact path="/" component={Landing}/>
-        <Route path="/home" component={Main}/>
+        <Route path="/main" component={Main}/>
       </BrowserRouter>
     </>
   )

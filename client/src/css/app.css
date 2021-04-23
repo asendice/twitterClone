@@ -80,3 +80,29 @@
 .portfolio-box {
   background-image: url("../images/tm.jpeg") !important;
 }
+
+.box-feed-item {
+  background: #203647 !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  min-width: 420px !important;
+}
+
+.box-feed-item:hover {
+  border: 1px solid #4da8da !important;
+}
+
+.box-icon-heart {
+  transition: color 0.5s ease;
+  color: grey !important;
+}
+.box-icon-heart:hover {
+  color: red !important;
+}
+.box-icon-comment {
+  transition: color 0.5s ease;
+  color: grey !important;
+}
+.box-icon-comment:hover {
+  color: green !important;
+}

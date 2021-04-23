@@ -1,6 +1,6 @@
 import React, { createRef } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-import Landing from "./Landing";
+import BoxComment from "./BoxComment";
 import Home from "./Home";
 import Notifications from "./Notifications";
 import Profile from "./Profile";
@@ -17,7 +17,7 @@ const Main = () => {
       ref={contextRef}
       style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
     >
-      <BrowserRouter>
+
         <Title contextRef={contextRef} />
         <Divider hidden />
         <Grid columns={3}>
@@ -26,16 +26,17 @@ const Main = () => {
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
             <Grid.Column computer={6} tablet={11} mobile={14}>
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/notifications" component={Notifications} />
-              <Route exact path="/profile" component={Profile} />
+              <Route  path="/main/home" component={Home} />
+              <Route  path="/main/notifications" component={Notifications} />
+              <Route  path="/main/profile" component={Profile} />
+              <Route  path="/main/comment" component={BoxComment} />
             </Grid.Column>
             <Grid.Column computer={5} tablet={1}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </BrowserRouter>
+
     </div>
   );
 };

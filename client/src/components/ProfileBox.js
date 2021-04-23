@@ -21,16 +21,15 @@ const ProfileBox = () => {
   const renderModal = () => {
     return (
       <Modal
-      
         centered={false}
         size="small"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
       >
-        <Modal.Content style={{backgroundColor: "#203647"}}>
-          <Segment basic >
-            <SettingsForm onFormSubmit={onFormSubmit} setOpen={setOpen}/>
+        <Modal.Content style={{ backgroundColor: "#203647" }}>
+          <Segment basic>
+            <SettingsForm onFormSubmit={onFormSubmit} setOpen={setOpen} />
           </Segment>
         </Modal.Content>
       </Modal>
@@ -46,7 +45,7 @@ const ProfileBox = () => {
         minWidth: 420,
         minHeight: 250,
         cursor: "pointer",
-        backgroundColor: "#203647"
+        backgroundColor: "#203647",
       }}
     >
       <Grid>
@@ -58,13 +57,9 @@ const ProfileBox = () => {
             </Header>
           </Grid.Column>
           <Grid.Column>
-            <Button
-              style={{ marginTop: 175, marginLeft: 35 }}
-              className="follow-btn"
-            >
+            <Button style={{ marginLeft: 35 }} className="follow-btn">
               Follow
             </Button>
-
             <span style={{ float: "right" }}>
               <Icon
                 onClick={() => setOpen(true)}
@@ -73,6 +68,7 @@ const ProfileBox = () => {
                 style={{ color: "#4DA8DA" }}
               />
             </span>
+            <Segment basic style={{marginTop: 150, color: "#fff"}}>"bio goes here"</Segment>
           </Grid.Column>
         </Grid.Row>
         <Grid.Row columns={2}>

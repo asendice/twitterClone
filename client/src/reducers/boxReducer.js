@@ -4,7 +4,6 @@ const boxReducer = (state = { boxes: [] }, action) => {
       return { ...state, boxes: action.payload };
     case "ADD_BOX":
       return { ...state, boxes: state.boxes.concat(action.payload) };
-
     default:
       return state;
   }

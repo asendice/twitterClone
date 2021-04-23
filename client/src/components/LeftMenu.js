@@ -66,7 +66,7 @@ const LeftMenu = (props) => {
     <Sticky context={props.contextRef} offset={100}>
       <Grid className="computer only">
         <Menu style={{cursor: "pointer"}} className="left-menu media-left-menu" vertical borderless>
-          <NavLink to="/profile">
+          <NavLink to="/main/profile">
             <Header as="h1" style={{ color: "#fff" }}>
               <Image circular src={mage} />
               @userName
@@ -78,7 +78,7 @@ const LeftMenu = (props) => {
             <NavLink
               exact
               className="menu-item"
-              to="/home"
+              to="/main/home"
               activeClassName="menu-item-active"
             >
               <Icon name="home" />
@@ -88,7 +88,7 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               className="menu-item"
-              to="/notifications"
+              to="/main/notifications"
               activeClassName="menu-item-active"
             >
               <Icon name="bell" />
@@ -99,7 +99,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-item"
               activeClassName="menu-item-active"
-              to="/profile"
+              to="/main/profile"
             >
               <Icon name="user" />
               Profile
@@ -133,7 +133,7 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to="/profile">
+            <NavLink className="menu-icon" to="/main/profile">
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -141,7 +141,7 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               exact
-              to="/home"
+              to="/main/home"
               className="menu-icon"
               activeClassName="menu-item-active"
             >
@@ -152,7 +152,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/notifications"
+              to="/main/notifications"
             >
               <Icon size="big" name="bell" />
             </NavLink>
@@ -161,7 +161,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/profile"
+              to="/main/profile"
             >
               <Icon size="big" name="user" />
             </NavLink>
@@ -195,7 +195,7 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to="/profile">
+            <NavLink className="menu-icon" to="/main/profile">
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -205,7 +205,7 @@ const LeftMenu = (props) => {
               exact
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/home"
+              to="/main/home"
             >
               <Icon size="big" name="home" />
             </NavLink>
@@ -214,7 +214,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/notifications"
+              to="/main/notifications"
             >
               <Icon size="big" name="bell" />
             </NavLink>
@@ -223,7 +223,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/profile"
+              to="/main/profile"
             >
               <Icon size="big" name="user" />
             </NavLink>
