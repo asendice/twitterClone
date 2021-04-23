@@ -1,5 +1,6 @@
 const Boxes = require("../models/Boxes");
 const User = require("../models/User");
+const Comment = require("../models/Comment");
 require("dotenv").config();
 
 exports.register = (req, res, next) => {
@@ -158,4 +159,43 @@ exports.getBoxes = (req, res) => {
       });
     }
   });
+};
+
+exports.getComments = (req, res) => {
+  const { boxId } = req.query;
+  Comment.find({ boxId: boxId }).then((comments) => {
+    if (!comments) {
+      return res.status(404).json({
+        errors: [{ comments: `None` }],
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        message: comments,
+      });
+    }
+  });
+};
+
+exports.postComment = (req, res) => {
+  console.log(req.body, 'req.body');
+  const { userId, content, boxId } = req.body;
+  const comment = new Comment({
+    userId: userId,
+    boxId: boxId,
+    content: content,
+  });
+  comment
+    .save()
+    .then((response) => {
+      res.status(200).json({
+        success: true,
+        result: response,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errors: [{ error: err }],
+      });
+    });
 };
