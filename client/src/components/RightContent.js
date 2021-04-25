@@ -10,6 +10,7 @@ const RightContent = (props) => {
       <Sticky context={props.contextRef} offset={100}>
         <SearchClone />
         <WhoToFollow />
+        {""}
       </Sticky>
     </>
 

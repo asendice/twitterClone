@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Form, TextArea, Button } from "semantic-ui-react";
-import { Field, reduxForm, formValueSelector, reset } from "redux-form";
+import {
+  Field,
+  reduxForm,
+  formValueSelector,
+  reset,
+  formValues,
+} from "redux-form";
 
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
   return (
@@ -14,6 +20,7 @@ const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
           maxHeight: 150,
           minHeight: 150,
           resize: "none",
+          fontSize: "20px",
           background: "#203647",
           color: "#fff",
           border: "none",
@@ -33,7 +40,7 @@ const required = (num) => {
 
 const maxLength = (value) =>
   value && value.length > 240 ? (
-    <span>240 is max character limit... is that enough?</span>
+    <span style={{color: "red"}}></span>
   ) : undefined;
 
 const afterSubmit = (result, dispatch) => {
@@ -41,14 +48,25 @@ const afterSubmit = (result, dispatch) => {
 };
 
 let PostBoxForm = (props) => {
+  const [char, setChar] = useState(0);
   return (
     <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
       <Field
+        onChange={(e) => setChar(e.target.value.length)}
         type="text"
         name="boxText"
         component={renderTextArea}
         validate={[maxLength, required]}
       />
+      <span
+        style={{
+          color: char > 240 ? "red" : "grey",
+          float: "left",
+          marginTop: "10px",
+        }}
+      >
+        {char} / 240
+      </span>
       <Button
         type="submit"
         disabled={!props.valid}

@@ -15,6 +15,7 @@ const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
         row={3}
         placeholder={`Comment `}
         style={{
+          fontSize: "20px",
           maxHeight: 150,
           minHeight: 150,
           resize: "none",
@@ -54,7 +55,7 @@ let Comment = (props) => {
         <Divider hidden />
         <Divider />
         <Button type="submit" fluid style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
-          Comment
+          Post Comment
         </Button>
       </Form>
     </div>
