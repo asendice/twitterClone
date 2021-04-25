@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import BoxComment from "./BoxComment";
 import Home from "./Home";
 import Notifications from "./Notifications";
@@ -25,13 +25,13 @@ const Main = () => {
             <Grid.Column computer={5} tablet={2} mobile={2}>
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
-            <Grid.Column computer={6} tablet={11} mobile={14}>
+            <Grid.Column computer={6} tablet={11} mobile={13}>
               <Route  path="/main/home" component={Home} />
               <Route  path="/main/notifications" component={Notifications} />
               <Route  path="/main/profile" component={Profile} />
               <Route  path="/main/comment" component={BoxComment} />
             </Grid.Column>
-            <Grid.Column computer={5} tablet={1}>
+            <Grid.Column computer={5} tablet={1} mobile={1}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>

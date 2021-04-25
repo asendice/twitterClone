@@ -71,6 +71,7 @@ const BoxFeed = (props) => {
         const numOfComments = box.comments.length;
         return (
           <Segment
+            basic
             onClick={() => setSelectedBox(box)}
             fluid
             className="box-feed-item"
@@ -121,7 +122,7 @@ const BoxFeed = (props) => {
                       className="box-icon-heart"
                       name="heart outline"
                     />
-                    <span style={{ color: "#4DA8DA", marginLeft: "10px" }}>
+                    <span style={{ color: "grey", marginLeft: "5px" }}>
                       {numOfLikes === 0 ? " " : numOfLikes}
                     </span>
                   </Grid.Column>
@@ -133,7 +134,7 @@ const BoxFeed = (props) => {
                       name="comment outline"
                     />
 
-                    <span style={{ color: "#4DA8DA", marginLeft: "10px" }}>
+                    <span style={{ color: "grey", marginLeft: "5px" }}>
                       {numOfComments === 0 ? " " : numOfComments}
                     </span>
                   </Grid.Column>

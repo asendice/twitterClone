@@ -18,7 +18,7 @@ const PostBox = (props) => {
   };
 
   return (
-    <Segment textAlign="center" basic  padded style={{minWidth: 420, minHeight: 250, background: "#203647"}}>
+    <Segment textAlign="center" basic  padded style={{minWidth: 420, minHeight: 200, background: "#203647"}}>
       <PostBoxForm onFormSubmit={onFormSubmit} />
       <Divider hidden />
     </Segment>
