@@ -14,7 +14,6 @@ const PostBox = (props) => {
       comments: [],
     };
     props.postBoxes(box);
-    console.log("submitted box", box);
   };
 
   return (

@@ -109,13 +109,33 @@ export const postComment = (comment) => {
   };
 };
 
+export const putComment = (comment) => {
+  const json = JSON.stringify(comment);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/comments/${comment.boxId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      });
+  };
+};
+
 export const getComments = (boxId) => {
   return async (dispatch) => {
     await backendApi
-      .get("/comments", {
-        params: {
-          boxId: boxId,
-        },
+      .get(`/comments/${boxId}`, {
         headers: {
           "Content-Type": "application/json",
         },

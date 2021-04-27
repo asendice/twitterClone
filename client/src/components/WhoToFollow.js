@@ -7,7 +7,6 @@ import {
   Header,
   Divider,
   Button,
-  TabPane,
 } from "semantic-ui-react";
 
 const WhoToFollow = (props) => {

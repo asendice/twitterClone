@@ -11,32 +11,31 @@ import { Grid, Divider } from "semantic-ui-react";
 
 const Main = () => {
   const contextRef = createRef();
+ 
 
   return (
     <div
       ref={contextRef}
       style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
     >
-
-        <Title contextRef={contextRef} />
-        <Divider hidden />
+      <Title contextRef={contextRef} />
+        <Divider hidden/>
         <Grid columns={3}>
           <Grid.Row>
             <Grid.Column computer={5} tablet={2} mobile={2}>
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
             <Grid.Column computer={6} tablet={11} mobile={13}>
-              <Route  path="/main/home" component={Home} />
-              <Route  path="/main/notifications" component={Notifications} />
-              <Route  path="/main/profile" component={Profile} />
-              <Route  path="/main/comment" component={BoxComment} />
+              <Route path="/main/home" component={Home} />
+              <Route path="/main/notifications" component={Notifications} />
+              <Route path="/main/profile" component={Profile} />
+              <Route path="/main/comment" component={BoxComment} />
             </Grid.Column>
             <Grid.Column computer={5} tablet={1} mobile={1}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>
         </Grid>
-
     </div>
   );
 };
