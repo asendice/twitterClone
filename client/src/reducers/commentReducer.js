@@ -1,7 +1,6 @@
 const commentReducer = (state = { comments: [] }, action) => {
   switch (action.type) {
     case "ADD_COMMENTS":
-      console.log(action.payload, "action.payload");
       const sortCommentsList = action.payload.sort((a, b) => {
         return a - b;
       });

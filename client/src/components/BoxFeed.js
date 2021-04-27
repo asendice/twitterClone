@@ -12,7 +12,8 @@ import {
 } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import { Link } from "react-router-dom";
-import { getBoxes, selectBox, postComment } from "../actions";
+import { getBoxes, selectBox, postComment, putComment } from "../actions";
+import uuid from "react-uuid";
 import { connect } from "react-redux";
 import { convertMili } from "../utils/Helper";
 
@@ -21,7 +22,7 @@ const BoxFeed = (props) => {
   console.log(props.selectedBox, "props.selectedBox");
   useEffect(() => {
     props.getBoxes();
-  }, []);
+  }, [open]);
 
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
@@ -30,19 +31,20 @@ const BoxFeed = (props) => {
   });
 
   const setSelectedBox = (box) => {
-    console.log("box from set", box);
     props.selectBox(box);
   };
 
   const onFormSubmit = (values) => {
-    console.log(values);
     const comment = {
+      id: uuid(),
       content: values.content,
       userId: 1,
       boxId: props.selectedBox._id,
     };
     props.postComment(comment);
+    props.putComment(comment);
     setOpen(false);
+    props.getBoxes();
   };
 
   const renderModal = () => {
@@ -76,7 +78,7 @@ const BoxFeed = (props) => {
             fluid
             className="box-feed-item"
           >
-            <Link to="/main/comment">
+            <Link to={`/main/comment/${box._id}`}>
               <Card
                 key={box._id}
                 fluid
@@ -134,7 +136,7 @@ const BoxFeed = (props) => {
                       name="comment outline"
                     />
 
-                    <span style={{ color: "grey", marginLeft: "5px" }}>
+                    <span style={{ color: "#4DA8DA", marginLeft: "5px" }}>
                       {numOfComments === 0 ? " " : numOfComments}
                     </span>
                   </Grid.Column>
@@ -145,7 +147,14 @@ const BoxFeed = (props) => {
         );
       });
     } else {
-      return null;
+      return (
+        <Segment
+            basic
+            fluid
+            className="box-feed-item"
+          > Loading </Segment>
+      
+      );
     }
   };
 
@@ -161,6 +170,7 @@ const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
     selectedBox: state.selectedBox,
+    comments: state.comment.comments,
   };
 };
 
@@ -168,6 +178,7 @@ const mapDispatchToProps = {
   getBoxes: () => getBoxes(),
   selectBox: (box) => selectBox(box),
   postComment: (comment) => postComment(comment),
+  putComment: (comment) => putComment(comment),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxFeed);

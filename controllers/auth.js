@@ -162,7 +162,7 @@ exports.getBoxes = (req, res) => {
 };
 
 exports.getComments = (req, res) => {
-  const { boxId } = req.query;
+  const { boxId } = req.params;
   Comment.find({ boxId: boxId }).then((comments) => {
     if (!comments) {
       return res.status(404).json({
@@ -178,9 +178,9 @@ exports.getComments = (req, res) => {
 };
 
 exports.postComment = (req, res) => {
-  console.log(req.body, 'req.body');
-  const { userId, content, boxId } = req.body;
+  const { userId, content, boxId, id } = req.body;
   const comment = new Comment({
+    id: id,
     userId: userId,
     boxId: boxId,
     content: content,
@@ -198,4 +198,26 @@ exports.postComment = (req, res) => {
         errors: [{ error: err }],
       });
     });
+};
+
+exports.putComment = (req, res) => {
+  console.log(req.body, "req.body")
+  const { boxId, id } = req.body;
+  Boxes.findById(boxId, (err, box) => {
+    console.log(id, "commentId")
+    box.comments.push(id)
+    box
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
 };

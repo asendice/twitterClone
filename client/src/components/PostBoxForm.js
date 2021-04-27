@@ -60,7 +60,7 @@ let PostBoxForm = (props) => {
       />
       <span
         style={{
-          color: char > 240 ? "red" : "grey",
+          color: char > 240 ? "red" : char > 0 ? "#fff" : "grey",
           float: "left",
           marginTop: "10px",
         }}

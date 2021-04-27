@@ -84,7 +84,6 @@
 .box-feed-item {
   background: #203647 !important;
   box-shadow: none !important;
-  cursor: pointer !important;
   min-width: 420px !important;
   border: 1px solid #203647 !important;
 }
@@ -106,4 +105,17 @@
 }
 .box-icon-comment:hover {
   color: green !important;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+body::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 20px;
+  height: 30px;
+}
+
+body::-webkit-scrollbar-track {
+  display: none;
 }

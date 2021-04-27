@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import scary from "../images/scary.jpeg";
 import { convertMili } from "../utils/Helper";
 import { connect } from "react-redux";
+import uuid from "react-uuid";
 import CommentForm from "./CommentForm";
-import { postComment, getComments } from "../actions";
+import { postComment, getComments, putComment } from "../actions";
 import {
   Segment,
   Modal,
@@ -18,15 +19,16 @@ import {
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
 
+  console.log(window.location.href)
+
   useEffect(() => {
     props.getComments(props.selectedBox._id);
   }, []);
 
-  const postDate = new Date(props.selectedBox.createdAt);
-  const date = new Date();
-  const ago = date - postDate;
-  const numOfLikes = props.selectedBox.likes.length;
-  const numOfComments = props.selectedBox.comments.length;
+  const numOfLikes =
+    props.selectedBox ? props.selectedBox.likes.length : 0;
+  const numOfComments =
+    props.comments ? props.comments.length : null;
 
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
@@ -78,17 +80,29 @@ const BoxComment = (props) => {
           </Segment>
         );
       });
+    } else {
+      return (
+        <Segment basic fluid className="box-feed-item">
+          Loading
+        </Segment>
+      );
     }
   };
 
   const onFormSubmit = (values) => {
     console.log(values);
     const comment = {
+      id: uuid(),
       content: values.content,
       userId: 1,
       boxId: props.selectedBox._id,
     };
+    const putComment = {
+      id: uuid(),
+      boxId: props.selectedBox._id,
+    };
     props.postComment(comment);
+    props.putComment(putComment);
     setOpen(false);
   };
 
@@ -113,7 +127,7 @@ const BoxComment = (props) => {
       <Segment
         basic
         padded
-        style={{ minWidth: 420, minHeight: 250, background: "#203647" }}
+        style={{ minWidth: 420, minHeight: 50, background: "#203647" }}
       >
         <Card
           key={props.selectedBox._id}
@@ -134,9 +148,12 @@ const BoxComment = (props) => {
               }}
             >
               {" - "}
-              {convertMili(ago)}
+              <span style={{ color: "grey" }}>
+                {Date(props.selectedBox.createdAt)}
+              </span>
             </span>
           </Header>
+
           <Feed.Content>
             <span
               style={{
@@ -171,7 +188,7 @@ const BoxComment = (props) => {
                   name="comment outline"
                 />
 
-                <span style={{ color: "#4DA8DA", marginLeft: "10px" }}>
+                <span style={{ color: "#4DA8DA", marginLeft: "5px" }}>
                   {numOfComments === 0 ? " " : numOfComments}
                 </span>
               </Grid.Column>
@@ -195,6 +212,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   postComment: (comment) => postComment(comment),
   getComments: (id) => getComments(id),
+  putComment: (comment) => putComment(comment),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxComment);
