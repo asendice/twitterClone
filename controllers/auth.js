@@ -1,6 +1,11 @@
 const Boxes = require("../models/Boxes");
 const User = require("../models/User");
 const Comment = require("../models/Comment");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+require("dotenv").config();
+const { createJWT } = require("../utils/auth.js");
+const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 require("dotenv").config();
 
 exports.register = (req, res, next) => {
@@ -40,7 +45,6 @@ exports.register = (req, res, next) => {
           name: name,
           email: email,
           password: password,
-          skill: skill,
         });
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(password, salt, function (err, hash) {
@@ -125,7 +129,6 @@ exports.login = (req, res) => {
 };
 
 exports.postBoxes = (req, res) => {
-  console.log(req.body);
   const { userId, content } = req.body;
   const boxes = new Boxes({
     userId: userId,
@@ -201,10 +204,8 @@ exports.postComment = (req, res) => {
 };
 
 exports.putComment = (req, res) => {
-  console.log(req.body, "req.body")
   const { boxId, id } = req.body;
   Boxes.findById(boxId, (err, box) => {
-    console.log(id, "commentId")
     box.comments.push(id)
     box
       .save()
@@ -221,3 +222,66 @@ exports.putComment = (req, res) => {
       });
   });
 };
+exports.addLikeBox = (req, res) => {
+  const { boxId, userId } = req.body;
+  Boxes.findById(boxId, (err, box) => {
+    box.likes.push(userId)
+    box
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+exports.addLikeUser = (req, res) => {
+  const { boxId, userId } = req.body;
+  Users.find({id_: userId}, (err, user) => {
+    user.liked.push(boxId)
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+
+exports.getUser = (req,res) => {
+  User.find().then((user) => {
+    if(!user) {
+      return res.status(404).json({
+        errors: [{ user: "Zero users found"}],
+      });
+    }else {
+      const users = user.map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatarPic,
+          background: user.backgroundPic
+        }
+      })
+      return res.status(200).json({
+        success: true,
+        message: users
+      })
+    }
+  })
+}
+
+

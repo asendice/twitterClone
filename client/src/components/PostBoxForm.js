@@ -5,8 +5,6 @@ import {
   Field,
   reduxForm,
   formValueSelector,
-  reset,
-  formValues,
 } from "redux-form";
 
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
@@ -32,9 +30,9 @@ const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
     </div>
   );
 };
-const required = (num) => {
-  if (!num || num === "") {
-    return <span></span>;
+const required = (value) => {
+  if (!value || value === "" || value.length <= 0) {
+    return <span> </span>;
   }
 };
 
@@ -43,9 +41,9 @@ const maxLength = (value) =>
     <span style={{color: "red"}}></span>
   ) : undefined;
 
-const afterSubmit = (result, dispatch) => {
-  dispatch(reset("PostBoxForm"));
-};
+// const afterSubmit = (result, dispatch) => {
+//   dispatch(reset("PostBoxForm"));
+// };
 
 let PostBoxForm = (props) => {
   const [char, setChar] = useState(0);
@@ -69,7 +67,7 @@ let PostBoxForm = (props) => {
       </span>
       <Button
         type="submit"
-        disabled={!props.valid}
+        disabled={char === 0 || char > 240}
         style={{
           float: "right",
           marginTop: "5px",
@@ -85,7 +83,7 @@ let PostBoxForm = (props) => {
 
 PostBoxForm = reduxForm({
   form: "box",
-  onSubmitSuccess: () => afterSubmit,
+  // onSubmitSuccess: () => afterSubmit,
 })(PostBoxForm);
 
 const selector = formValueSelector("box");

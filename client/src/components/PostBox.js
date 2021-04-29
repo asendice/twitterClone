@@ -8,7 +8,7 @@ const PostBox = (props) => {
 
   const onFormSubmit = (values) => {
     const box = {
-      userId: "1",
+      userId: props.userId,
       content: values.boxText,
       likes: [],
       comments: [],
@@ -26,6 +26,7 @@ const PostBox = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
+    userId: state.userInfo.user.data.message._id
   };
 };
 

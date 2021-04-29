@@ -1,12 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Form,
-  Header,
-  Button,
-  Divider,
-  Segment,
-} from "semantic-ui-react";
+import { Form, Header, Button, Divider, Segment } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 const required = (x) => {
   if (!x || x === "") {
@@ -56,7 +50,6 @@ const renderInput = ({
   return (
     <div>
       <input
-        fluid
         {...input}
         placeholder={label}
         type={type}
@@ -82,13 +75,19 @@ let Login = (props) => {
         Log in to twitterClone
       </Header>
       <Divider hidden />
-      <Form>
+      <Form onSubmit={props.handleSubmit(props.onLogIn)}>
         <Field
           name="name"
           component={renderInput}
           type="text"
           label="username"
-          validate={[required, alphaNumeric, length, nameMaxLength, userNameVal]}
+          validate={[
+            required,
+            alphaNumeric,
+            length,
+            nameMaxLength,
+            userNameVal,
+          ]}
         />
         <Divider hidden />
         <Field
@@ -96,15 +95,22 @@ let Login = (props) => {
           component={renderInput}
           type="password"
           label="password"
-          validate={[required, alphaNumeric, length, passMaxLength, userNameVal]}
+          validate={[required, length, passMaxLength, userNameVal]}
         />
         <Divider />
-        <Button type="submit" fluid style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
+        <Button
+          onClick={() =>
+            setTimeout(() => {
+              props.setLoginResult(true);
+            }, 1500)
+          }
+          type="submit"
+          fluid
+          style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
+        >
           Login
         </Button>
-        <Segment basic textAlign="center">
-          <a href="/register" style={{color: "#4DA8DA"}}>Need An Account? | Register to twitterClone!</a>
-        </Segment>
+        
       </Form>
     </div>
   );

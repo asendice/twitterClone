@@ -10,8 +10,9 @@ import {
   Icon,
   Modal,
 } from "semantic-ui-react";
+import { connect } from "react-redux";
 
-const ProfileBox = () => {
+const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
 
   const onFormSubmit = () => {
@@ -53,7 +54,7 @@ const ProfileBox = () => {
           <Grid.Column>
             <Image circular size="small" src={mage} />
             <Header as="h1" style={{ color: "#fff" }}>
-              @userName
+              {props.userInfo.name}
             </Header>
           </Grid.Column>
           <Grid.Column>
@@ -85,4 +86,12 @@ const ProfileBox = () => {
   );
 };
 
-export default ProfileBox;
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo.user.data.message,
+    loggedIn: state.userInfo.loggedIn,
+  };
+};
+
+
+export default connect(mapStateToProps, null)(ProfileBox);

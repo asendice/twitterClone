@@ -1,11 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {
-  Form,
-  Button,
-  Divider,
-  TextArea,
-} from "semantic-ui-react";
+import { Form, Button, Divider, TextArea, Segment } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
   return (
@@ -13,7 +8,7 @@ const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
       <TextArea
         {...input}
         row={3}
-        placeholder={`Comment `}
+        placeholder={`Enter your reply `}
         style={{
           fontSize: "20px",
           maxHeight: 150,
@@ -43,7 +38,7 @@ const maxLength = (value) =>
 
 let Comment = (props) => {
   return (
-    <div style={{ backgroundColor: "#203647" }}>
+    <div style={{ backgroundColor: "#203647", minHeight: 220 }}>
       <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
         <Field
           name="content"
@@ -53,10 +48,18 @@ let Comment = (props) => {
           validate={[required, maxLength]}
         />
         <Divider hidden />
-        <Divider />
-        <Button type="submit" fluid style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
-          Post Comment
-        </Button>
+        <span style={{float: "right"}}>
+          <Button
+            type="submit"
+            style={{
+              backgroundColor: "#4DA8DA",
+              color: "#fff",
+              
+            }}
+          >
+            Reply
+          </Button>
+        </span>
       </Form>
     </div>
   );
