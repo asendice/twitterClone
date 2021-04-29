@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from "react";
-import scary from "../images/scary.jpeg";
-import {
-  Feed,
-  Modal,
-  Image,
-  Icon,
-  Grid,
-  Segment,
-  Header,
-  Card,
-} from "semantic-ui-react";
+import Box from "./Box";
+import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
-import { Link } from "react-router-dom";
-import { getBoxes, selectBox, postComment, putComment } from "../actions";
+import {
+  getBoxes,
+  selectBox,
+  postComment,
+  putComment,
+  getUsers,
+} from "../actions";
 import uuid from "react-uuid";
 import { connect } from "react-redux";
-import { convertMili } from "../utils/Helper";
 
 const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
-  console.log(props.selectedBox, "props.selectedBox");
   useEffect(() => {
     props.getBoxes();
-  }, [open]);
+    props.getUsers();
+  }, []);
 
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
@@ -38,13 +33,15 @@ const BoxFeed = (props) => {
     const comment = {
       id: uuid(),
       content: values.content,
-      userId: 1,
+      userId: props.userInfo.data.message._id,
       boxId: props.selectedBox._id,
     };
     props.postComment(comment);
     props.putComment(comment);
     setOpen(false);
-    props.getBoxes();
+    setTimeout(() => {
+      props.getBoxes();
+    }, 500);
   };
 
   const renderModal = () => {
@@ -57,6 +54,26 @@ const BoxFeed = (props) => {
         open={open}
       >
         <Modal.Content style={{ backgroundColor: "#203647" }}>
+          <Icon
+            onClick={() => setOpen(false)}
+            style={{ cursor: "pointer", color: "#4DA8DA" }}
+            name="x"
+            size="large"
+          />
+          <Divider />
+          <Box
+            id={props.selectedBox.id}
+            userName="@userName"
+            userId={props.selectedBox.userId}
+            content={props.selectedBox.content}
+            time={props.selectedBox.createdAt}
+            ago={props.selectedBox.createdAt}
+            display="none"
+          />
+          <Divider />
+          <span
+            style={{ marginLeft: "20px", color: "#4da8da" }}
+          >{`Replying to ${props.selectedBox.userId}`}</span>
           <CommentForm onFormSubmit={onFormSubmit} />
         </Modal.Content>
       </Modal>
@@ -73,87 +90,31 @@ const BoxFeed = (props) => {
         const numOfComments = box.comments.length;
         return (
           <Segment
+            key={box._id}
             basic
             onClick={() => setSelectedBox(box)}
-            fluid
             className="box-feed-item"
           >
-            <Link to={`/main/comment/${box._id}`}>
-              <Card
-                key={box._id}
-                fluid
-                style={{
-                  background: "#203647",
-                  boxShadow: "none",
-                }}
-              >
-                <Header as="h3">
-                  <Image circular src={scary} />
-                  <span style={{ color: "#EEFBFB" }}> @userName </span>
-                  <span
-                    style={{
-                      color: "grey",
-                      fontSize: "15px",
-                      fontWeight: "normal",
-                    }}
-                  >
-                    {" - "}
-                    {convertMili(ago)}
-                  </span>
-                </Header>
-                <Feed.Content>
-                  <span
-                    style={{
-                      color: "#fff",
-                      overflowWrap: "anywhere",
-                      fontSize: "20px",
-                    }}
-                    text
-                  >
-                    {box.content}
-                  </span>
-                </Feed.Content>
-              </Card>
-            </Link>
-            <Feed.Meta>
-              <Grid>
-                <Grid.Row columns={2} textAlign="center">
-                  <Grid.Column>
-                    <Icon
-                      size="large"
-                      className="box-icon-heart"
-                      name="heart outline"
-                    />
-                    <span style={{ color: "grey", marginLeft: "5px" }}>
-                      {numOfLikes === 0 ? " " : numOfLikes}
-                    </span>
-                  </Grid.Column>
-                  <Grid.Column>
-                    <Icon
-                      onClick={() => setOpen(true)}
-                      size="large"
-                      className="box-icon-comment"
-                      name="comment outline"
-                    />
-
-                    <span style={{ color: "#4DA8DA", marginLeft: "5px" }}>
-                      {numOfComments === 0 ? " " : numOfComments}
-                    </span>
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid>
-            </Feed.Meta>
+            <Box
+              id={box._id}
+              userId={box.userId}
+              link={box._id}
+              userName="@userName"
+              content={box.content}
+              ago={ago}
+              numOfLikes={numOfLikes}
+              numOfComments={numOfComments}
+              setOpen={setOpen}
+            />
           </Segment>
         );
       });
     } else {
       return (
-        <Segment
-            basic
-            fluid
-            className="box-feed-item"
-          > Loading </Segment>
-      
+        <Segment basic className="box-feed-item">
+          {" "}
+          Loading{" "}
+        </Segment>
       );
     }
   };
@@ -171,6 +132,8 @@ const mapStateToProps = (state) => {
     boxes: state.box.boxes,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
+    userInfo: state.userInfo.user,
+    loggedIn: state.userInfo.loggedIn,
   };
 };
 
@@ -179,6 +142,7 @@ const mapDispatchToProps = {
   selectBox: (box) => selectBox(box),
   postComment: (comment) => postComment(comment),
   putComment: (comment) => putComment(comment),
+  getUsers: () => getUsers(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxFeed);

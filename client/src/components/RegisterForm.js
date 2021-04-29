@@ -81,7 +81,7 @@ let Register = (props) => {
         Register to twitterClone
       </Header>
       <Divider hidden />
-      <Form>
+      <Form onSubmit={props.handleSubmit(props.onRegister)}>
         <Field
           name="name"
           component={renderInput}
@@ -111,7 +111,6 @@ let Register = (props) => {
           label="password"
           validate={[
             required,
-            alphaNumeric,
             length,
             passMaxLength,
             userNameVal,
@@ -133,11 +132,7 @@ let Register = (props) => {
         >
           Register
         </Button>
-        <Segment basic textAlign="center">
-          <a href="/register" style={{ color: "#4DA8DA" }}>
-            Already Have An Account? | Login to twitterClone!
-          </a>
-        </Segment>
+        
       </Form>
     </div>
   );

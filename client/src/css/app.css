@@ -82,6 +82,7 @@
 }
 
 .box-feed-item {
+  cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
   min-width: 420px !important;
@@ -92,19 +93,29 @@
   border: 1px solid #4da8da !important;
 }
 
-.box-icon-heart {
+.box-btn-heart {
+  cursor: pointer;
+  background-color: #203647 !important;
+  border: none !important;
+  box-shadow: none;
   transition: color 0.5s ease;
   color: grey !important;
 }
-.box-icon-heart:hover {
+.box-btn-heart:hover {
   color: red !important;
 }
-.box-icon-comment {
+
+.box-btn-comment {
+  cursor: pointer;
+  border: none !important;
+  box-shadow: none;
   transition: color 0.5s ease;
-  color: grey !important;
+  color: grey;
+  background-color: #203647 !important;
 }
-.box-icon-comment:hover {
-  color: green !important;
+
+.box-btn-comment:hover {
+  color: #4da8da !important;
 }
 
 body::-webkit-scrollbar {

@@ -40,7 +40,6 @@ export const getBoxes = () => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "getboxes");
           return response;
         } else {
           const error = new Error(
@@ -56,7 +55,6 @@ export const getBoxes = () => {
 
 export const postBoxes = (box) => {
   const json = JSON.stringify(box);
-  console.log("json", json);
   return (dispatch) => {
     backendApi
       .post("/boxes", json, {
@@ -142,7 +140,6 @@ export const getComments = (boxId) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "getComments");
           return response;
         } else {
           const error = new Error(
@@ -169,3 +166,120 @@ export const addComments = (comments) => {
     payload: comments,
   };
 };
+
+
+export const register = (formValues) => {
+  const json = JSON.stringify({
+    email: formValues.email,
+    name: formValues.name,
+    password: formValues.password,
+    password_confirmation: formValues.confirmPassword,
+  });
+  console.log(json)
+  return (dispatch) => {
+    backendApi
+      .post("/register", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          console.log(error, "error");
+          error.response = JSON.stringify(response);
+        }
+      })
+      .then((response) => dispatch(registered(response)))
+      .catch((error) => {
+        dispatch(registered(error.response));
+      });
+  };
+};
+
+export const registered = (res) => {
+  return {
+    type: "REG_RESPONSE",
+    payload: res,
+  };
+};
+
+export const login = (formValues) => {
+  const json = JSON.stringify({
+    name: formValues.name,
+    password: formValues.password,
+  });
+  return (dispatch) => {
+    backendApi
+      .post("/login", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          localStorage.setItem("user", JSON.stringify(response));
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          console.log(error, "error");
+          error.response = JSON.stringify(response);
+        }
+      })
+      .then((response) => dispatch(loggedin(response)))
+      .catch((error) => {
+        dispatch(loggedin(error.response));
+      });
+  };
+};
+
+export const loggedin = (res) => {
+  return {
+    type: "LOG_RESPONSE",
+    payload: res,
+  };
+};
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("user");
+
+  dispatch({
+    type: "LOGOUT",
+  });
+};
+
+export const getUsers = () => {
+  return async (dispatch) => {
+    await backendApi
+      .get(`/users`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((users) => dispatch(addUsers(users.data.message)));
+  };
+};
+
+export const addUsers = (users) => {
+  return {
+    type: "ADD_USERS",
+    payload: users,
+  };
+}

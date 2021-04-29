@@ -15,6 +15,7 @@ import {
 import { NavLink } from "react-router-dom";
 import PostBoxForm from "./PostBoxForm";
 import { postBoxes } from "../actions";
+import { logout } from "../actions";
 import { connect } from "react-redux";
 
 const LeftMenu = (props) => {
@@ -65,11 +66,16 @@ const LeftMenu = (props) => {
   return (
     <Sticky context={props.contextRef} offset={100}>
       <Grid className="computer only">
-        <Menu style={{cursor: "pointer"}} className="left-menu media-left-menu" vertical borderless>
+        <Menu
+          style={{ cursor: "pointer" }}
+          className="left-menu media-left-menu"
+          vertical
+          borderless
+        >
           <NavLink to="/main/profile">
             <Header as="h1" style={{ color: "#fff" }}>
               <Image circular src={mage} />
-              @userName
+              {props.userInfo.name}
             </Header>
           </NavLink>
           <Divider hidden />
@@ -116,6 +122,17 @@ const LeftMenu = (props) => {
               </Header>
             </Button>
           </Menu.Item>
+          <Divider hidden />
+          <Menu.Item>
+            <Button
+              onClick={() => props.logout()}
+              style={{ backgroundColor: "grey" }}
+            >
+              <Header as="h2" style={{ color: "#fff" }}>
+                Logout
+              </Header>
+            </Button>
+          </Menu.Item>
         </Menu>
       </Grid>
 
@@ -129,7 +146,7 @@ const LeftMenu = (props) => {
             border: "none",
             background: "#12232e",
             maxWidth: "10px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <Menu.Item>
@@ -191,7 +208,7 @@ const LeftMenu = (props) => {
             border: "none",
             background: "#12232e",
             maxWidth: "10px",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           <Menu.Item>
@@ -249,11 +266,14 @@ const LeftMenu = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
+    userInfo: state.userInfo.user.data.message,
+    loggedIn: state.userInfo.loggedIn,
   };
 };
 
 const mapDispatchToProps = {
   postBoxes: (box) => postBoxes(box),
+  logout: () => logout(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

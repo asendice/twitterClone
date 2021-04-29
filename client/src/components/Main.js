@@ -1,5 +1,5 @@
 import React, { createRef } from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import BoxComment from "./BoxComment";
 import Home from "./Home";
 import Notifications from "./Notifications";
@@ -8,18 +8,19 @@ import Title from "./Title";
 import LeftMenu from "./LeftMenu";
 import RightContent from "./RightContent";
 import { Grid, Divider } from "semantic-ui-react";
+import { connect } from "react-redux";
 
-const Main = () => {
+const Main = (props) => {
   const contextRef = createRef();
- 
 
-  return (
-    <div
-      ref={contextRef}
-      style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
-    >
-      <Title contextRef={contextRef} />
-        <Divider hidden/>
+  if (props.loggedIn) {
+    return (
+      <div
+        ref={contextRef}
+        style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
+      >
+        <Title contextRef={contextRef} />
+        <Divider hidden />
         <Grid columns={3}>
           <Grid.Row>
             <Grid.Column computer={5} tablet={2} mobile={2}>
@@ -36,8 +37,18 @@ const Main = () => {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-    </div>
-  );
+      </div>
+    );
+  } else {
+    return <Redirect to="/" />;
+  }
 };
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo.user,
+    loggedIn: state.userInfo.loggedIn,
+  };
+};
+
+export default connect(mapStateToProps, null)(Main);
