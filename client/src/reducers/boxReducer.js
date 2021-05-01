@@ -4,6 +4,13 @@ const boxReducer = (state = { boxes: [] }, action) => {
       return { ...state, boxes: action.payload };
     case "ADD_BOX":
       return { ...state, boxes: state.boxes.concat(action.payload) };
+    case "UPDATE_BOX":
+      const newList = state.boxes.map(
+        (box) =>
+          [action.payload.data.result].find((item) => item._id === box._id) ||
+          box
+      );
+      return { ...state, boxes: newList };
     default:
       return state;
   }
