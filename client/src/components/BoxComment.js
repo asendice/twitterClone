@@ -9,7 +9,6 @@ import { Segment, Modal, Divider, Icon } from "semantic-ui-react";
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
 
-
   useEffect(() => {
     props.getComments(props.selectedBox._id);
     props.getUsers();
@@ -38,6 +37,7 @@ const BoxComment = (props) => {
               ago={commentAgo}
               setOpen={setOpen}
               display="none"
+              currentUserId={props.userInfo._id}
             />
           </Segment>
         );
@@ -67,6 +67,7 @@ const BoxComment = (props) => {
     setOpen(false);
   };
 
+
   const renderModal = () => {
     return (
       <Modal
@@ -85,12 +86,14 @@ const BoxComment = (props) => {
           />
           <Divider />
           <Box
+            likes={props.selectedBox.likes}
             id={props.selectedBox.id}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
             time={props.selectedBox.createdAt}
             ago={props.selectedBox.createdAt}
             display="none"
+            currentUserId={props.userInfo._id}
           />
           <Divider />
           <span
@@ -110,7 +113,8 @@ const BoxComment = (props) => {
         style={{ minWidth: 420, minHeight: 50, background: "#203647" }}
       >
         <Box
-          id={props.selectedBox.id}
+          likes={props.selectedBox.likes}
+          id={props.selectedBox._id}
           userId={props.selectedBox.userId}
           content={props.selectedBox.content}
           time={props.selectedBox.createdAt}
@@ -118,6 +122,7 @@ const BoxComment = (props) => {
           numOfLikes={numOfLikes}
           numOfComments={numOfComments}
           setOpen={setOpen}
+          currentUserId={props.userInfo._id}
         />
       </Segment>
       {renderCommentFeed()}
@@ -130,7 +135,7 @@ const mapStateToProps = (state) => {
   return {
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
-    userInfo: state.userInfo.user.data.message,
+    userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
   };
 };

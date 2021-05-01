@@ -112,7 +112,7 @@ exports.login = (req, res) => {
                   return res.status(200).json({
                     success: true,
                     token: access_token,
-                    message: user,
+                    result: user,
                   });
                 }
               }
@@ -158,7 +158,7 @@ exports.getBoxes = (req, res) => {
     } else {
       return res.status(200).json({
         success: true,
-        message: posts,
+        result: posts,
       });
     }
   });
@@ -174,7 +174,7 @@ exports.getComments = (req, res) => {
     } else {
       return res.status(200).json({
         success: true,
-        message: comments,
+        result: comments,
       });
     }
   });
@@ -205,8 +205,9 @@ exports.postComment = (req, res) => {
 
 exports.putComment = (req, res) => {
   const { boxId, id } = req.body;
-  Boxes.findById(boxId, (err, box) => {
-    box.comments.push(id)
+  console.log('PUT COMMENT BOX ID ', boxId)
+  Boxes.findById( boxId, (err, box) => {
+    box.comments.push(id);
     box
       .save()
       .then((response) => {
@@ -225,7 +226,7 @@ exports.putComment = (req, res) => {
 exports.addLikeBox = (req, res) => {
   const { boxId, userId } = req.body;
   Boxes.findById(boxId, (err, box) => {
-    box.likes.push(userId)
+    box.likes.push(userId);
     box
       .save()
       .then((response) => {
@@ -243,8 +244,8 @@ exports.addLikeBox = (req, res) => {
 };
 exports.addLikeUser = (req, res) => {
   const { boxId, userId } = req.body;
-  Users.find({id_: userId}, (err, user) => {
-    user.liked.push(boxId)
+  User.findById(userId, (err, user) => {
+    user.liked.push(boxId);
     user
       .save()
       .then((response) => {
@@ -261,27 +262,25 @@ exports.addLikeUser = (req, res) => {
   });
 };
 
-exports.getUser = (req,res) => {
+exports.getUser = (req, res) => {
   User.find().then((user) => {
-    if(!user) {
+    if (!user) {
       return res.status(404).json({
-        errors: [{ user: "Zero users found"}],
+        errors: [{ user: "Zero users found" }],
       });
-    }else {
+    } else {
       const users = user.map((user) => {
         return {
           id: user.id,
           name: user.name,
           avatar: user.avatarPic,
-          background: user.backgroundPic
-        }
-      })
+          background: user.backgroundPic,
+        };
+      });
       return res.status(200).json({
         success: true,
-        message: users
-      })
+        result: users,
+      });
     }
-  })
-}
-
-
+  });
+};

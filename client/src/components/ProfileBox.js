@@ -88,7 +88,7 @@ const ProfileBox = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userInfo: state.userInfo.user.data.message,
+    userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
   };
 };

@@ -266,7 +266,7 @@ const LeftMenu = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
-    userInfo: state.userInfo.user.data.message,
+    userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
   };
 };

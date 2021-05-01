@@ -3,24 +3,37 @@ import { Feed, Image, Icon, Grid, Header, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import scary from "../images/scary.jpeg";
 import { convertMili } from "../utils/Helper";
-import { getUsers } from "../actions";
+import { getUsers, addLikeUser, addLikeBox } from "../actions";
 import { connect } from "react-redux";
 
 const Box = (props) => {
+
+
   const onHeartClick = () => {
-    props.addLikeUser();
-    props.addLikeBox();
+    const ids = {
+      userId: props.currentUserId,
+      boxId: props.id,
+    };
+
+    console.log(ids, "ids");
+
+    if (props.likes.includes(props.userInfo.data.result._id)) {
+      return null;
+    } else {
+      props.addLikeUser(ids);
+      props.addLikeBox(ids);
+    }
   };
 
   const userName = props.otherUsers.filter((user) => {
-    if (user.id == props.userId) {
+    if (user.id === props.userId) {
       return user;
     }
   });
-  
-  const name = userName.map((name)=> {
+
+  const name = userName.map((name) => {
     return name.name;
-  })
+  });
 
   return (
     <>
@@ -34,8 +47,7 @@ const Box = (props) => {
           }}
         >
           <Header as="h3">
-            <Image circular src={scary} />
-            {" "}
+            <Image circular src={scary} />{" "}
             <span style={{ color: "#EEFBFB" }}>{name}</span>
             <span
               style={{
@@ -50,8 +62,7 @@ const Box = (props) => {
           </Header>
           {props.reply ? (
             <span style={{ marginLeft: "20px", color: "grey" }}>
-              Replying to{" "}
-              <span style={{ color: "#4da8da" }}>{}</span>
+              Replying to <span style={{ color: "#4da8da" }}>{}</span>
             </span>
           ) : (
             ""
@@ -74,7 +85,11 @@ const Box = (props) => {
           <Grid.Row columns={2} textAlign="center">
             <Grid.Column>
               <button className="box-btn-heart">
-                <Icon size="large" name="heart outline" />
+                <Icon
+                  onClick={() => onHeartClick()}
+                  size="large"
+                  name="heart outline"
+                />
                 <span style={{ marginLeft: "5px" }}>
                   {props.numOfLikes === 0 ? " " : props.numOfLikes}
                 </span>
@@ -101,6 +116,7 @@ const Box = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    boxes: state.box.boxes,
     userInfo: state.userInfo.user,
     otherUsers: state.otherUsers.users,
   };
@@ -108,6 +124,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getUsers: () => getUsers(),
+  addLikeUser: (ids) => addLikeUser(ids),
+  addLikeBox: (ids) => addLikeBox(ids),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Box);

@@ -49,7 +49,7 @@ export const getBoxes = () => {
           throw error;
         }
       })
-      .then((boxes) => dispatch(addBoxes(boxes.data.message)));
+      .then((boxes) => dispatch(addBoxes(boxes.data.result)));
   };
 };
 
@@ -75,7 +75,7 @@ export const postBoxes = (box) => {
       })
       .then((boxes) => dispatch(addBox(boxes.data.result)))
       .catch((error) => {
-        console.log("postBoxes", error.message);
+        console.log("postBoxes", error.result);
       });
   };
 };
@@ -102,7 +102,7 @@ export const postComment = (comment) => {
       })
       .then((comments) => dispatch(addComment(comments.data.result)))
       .catch((error) => {
-        console.log("postComments", error.message);
+        console.log("postComments", error.result);
       });
   };
 };
@@ -126,7 +126,8 @@ export const putComment = (comment) => {
           error.response = response;
           throw error;
         }
-      });
+      })
+      .then((response) => dispatch(updateBox(response)));
   };
 };
 
@@ -140,6 +141,7 @@ export const getComments = (boxId) => {
       })
       .then((response) => {
         if (response) {
+          console.log(response, "from getComments");
           return response;
         } else {
           const error = new Error(
@@ -149,7 +151,7 @@ export const getComments = (boxId) => {
           throw error;
         }
       })
-      .then((comments) => dispatch(addComments(comments.data.message)));
+      .then((comments) => dispatch(addComments(comments.data.result)));
   };
 };
 
@@ -167,7 +169,6 @@ export const addComments = (comments) => {
   };
 };
 
-
 export const register = (formValues) => {
   const json = JSON.stringify({
     email: formValues.email,
@@ -175,7 +176,7 @@ export const register = (formValues) => {
     password: formValues.password,
     password_confirmation: formValues.confirmPassword,
   });
-  console.log(json)
+  console.log(json);
   return (dispatch) => {
     backendApi
       .post("/register", json, {
@@ -222,6 +223,7 @@ export const login = (formValues) => {
       })
       .then((response) => {
         if (response) {
+          console.log(response, "from log in ");
           localStorage.setItem("user", JSON.stringify(response));
           return response;
         } else {
@@ -273,7 +275,7 @@ export const getUsers = () => {
           throw error;
         }
       })
-      .then((users) => dispatch(addUsers(users.data.message)));
+      .then((users) => dispatch(addUsers(users.data.result)));
   };
 };
 
@@ -282,4 +284,62 @@ export const addUsers = (users) => {
     type: "ADD_USERS",
     payload: users,
   };
-}
+};
+
+export const addLikeUser = (ids) => {
+  const json = JSON.stringify(ids);
+  console.log(ids.userId, "json.userId");
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/${ids.userId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          console.log(response, "from addLikeUser");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(loggedin(response)));
+  };
+};
+
+export const addLikeBox = (ids) => {
+  const json = JSON.stringify(ids);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/boxes/${ids.boxId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          console.log(response, "from addLikeUser");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(updateBox(response)));
+  };
+};
+
+export const updateBox = (box) => {
+  return {
+    type: "UPDATE_BOX",
+    payload: box,
+  };
+};

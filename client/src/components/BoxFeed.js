@@ -33,7 +33,7 @@ const BoxFeed = (props) => {
     const comment = {
       id: uuid(),
       content: values.content,
-      userId: props.userInfo.data.message._id,
+      userId: props.userInfo.data.result._id,
       boxId: props.selectedBox._id,
     };
     props.postComment(comment);
@@ -63,12 +63,14 @@ const BoxFeed = (props) => {
           <Divider />
           <Box
             id={props.selectedBox.id}
+            likes={props.selectedBox.likes}
             userName="@userName"
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
             time={props.selectedBox.createdAt}
             ago={props.selectedBox.createdAt}
             display="none"
+            currentUserId={props.userInfo.data.result._id}
           />
           <Divider />
           <span
@@ -99,12 +101,14 @@ const BoxFeed = (props) => {
               id={box._id}
               userId={box.userId}
               link={box._id}
+              likes={box.likes}
               userName="@userName"
               content={box.content}
               ago={ago}
               numOfLikes={numOfLikes}
               numOfComments={numOfComments}
               setOpen={setOpen}
+              currentUserId={props.userInfo.data.result._id}
             />
           </Segment>
         );
