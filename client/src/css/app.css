@@ -89,6 +89,13 @@
   border: 1px solid #203647 !important;
 }
 
+.search-input {
+  background-color: #203647 !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .box-feed-item:hover {
   border: 1px solid #4da8da !important;
 }

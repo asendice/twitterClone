@@ -126,8 +126,7 @@ export const putComment = (comment) => {
           error.response = response;
           throw error;
         }
-      })
-      .then((response) => dispatch(updateBox(response)));
+      }).then((response) => dispatch(updateBox(response)));
   };
 };
 
@@ -323,7 +322,57 @@ export const addLikeBox = (ids) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from addLikeUser");
+          console.log(response, "from addLikeBox");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(updateBox(response)));
+  };
+};
+export const delLikeUser = (ids) => {
+  const json = JSON.stringify(ids);
+  console.log(ids.userId, "json.userId");
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/del/${ids.userId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          console.log(response, "from delLikeUser");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(loggedin(response)));
+  };
+};
+
+export const delLikeBox = (ids) => {
+  const json = JSON.stringify(ids);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/boxes/del/${ids.boxId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          console.log(response, "from delLikeBox");
           return response;
         } else {
           const error = new Error(
