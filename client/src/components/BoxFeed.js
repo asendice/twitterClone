@@ -29,6 +29,13 @@ const BoxFeed = (props) => {
     props.selectBox(box);
   };
 
+  const replyName = props.otherUsers.filter((item) => {
+    const name = item.id === props.selectedBox.userId ? item.name : null;
+    return name;
+  });
+  const mappedName = replyName.map((item) => {
+    return item.name;
+  });
   const onFormSubmit = (values) => {
     const comment = {
       id: uuid(),
@@ -65,6 +72,7 @@ const BoxFeed = (props) => {
             id={props.selectedBox.id}
             likes={props.selectedBox.likes}
             userName="@userName"
+            comments={props.selectedBox.comments}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
             time={props.selectedBox.createdAt}
@@ -75,7 +83,7 @@ const BoxFeed = (props) => {
           <Divider />
           <span
             style={{ marginLeft: "20px", color: "#4da8da" }}
-          >{`Replying to ${props.selectedBox.userId}`}</span>
+          >{`Replying to ${mappedName}`}</span>
           <CommentForm onFormSubmit={onFormSubmit} />
         </Modal.Content>
       </Modal>
@@ -104,6 +112,7 @@ const BoxFeed = (props) => {
               likes={box.likes}
               userName="@userName"
               content={box.content}
+              comments={box.comments}
               ago={ago}
               numOfLikes={numOfLikes}
               numOfComments={numOfComments}
@@ -138,6 +147,7 @@ const mapStateToProps = (state) => {
     comments: state.comment.comments,
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
+    otherUsers: state.otherUsers.users,
   };
 };
 

@@ -17,6 +17,16 @@ const BoxComment = (props) => {
   const numOfLikes = props.selectedBox ? props.selectedBox.likes.length : 0;
   const numOfComments = props.comments ? props.comments.length : null;
 
+  const replyName = props.otherUsers.filter((item) => {
+    const name = item.id === props.selectedBox.userId ? item.name : null;
+    return name;
+  });
+  const mappedName = replyName.map((item) => {
+    return item.name;
+  });
+
+  
+
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
       return props.comments.map((comment) => {
@@ -30,7 +40,9 @@ const BoxComment = (props) => {
           >
             <Box
               id={comment.id}
-              reply={"yes"}
+              comments={comment.content}
+              likes={comment.likes}
+              reply={mappedName}
               userId={comment.userId}
               content={comment.content}
               time={comment.createdAt}
@@ -67,7 +79,6 @@ const BoxComment = (props) => {
     setOpen(false);
   };
 
-
   const renderModal = () => {
     return (
       <Modal
@@ -90,6 +101,7 @@ const BoxComment = (props) => {
             id={props.selectedBox.id}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
+            comments={props.selectedBox.comments}
             time={props.selectedBox.createdAt}
             ago={props.selectedBox.createdAt}
             display="none"
@@ -98,7 +110,7 @@ const BoxComment = (props) => {
           <Divider />
           <span
             style={{ marginLeft: "20px", color: "#4da8da" }}
-          >{`Replying to ${props.selectedBox.userId}`}</span>
+          >{`Replying to ${mappedName}`}</span>
           <CommentForm onFormSubmit={onFormSubmit} />
         </Modal.Content>
       </Modal>
@@ -118,6 +130,7 @@ const BoxComment = (props) => {
           userId={props.selectedBox.userId}
           content={props.selectedBox.content}
           time={props.selectedBox.createdAt}
+          comments={props.selectedBox.comments}
           ago={props.selectedBox.createdAt}
           numOfLikes={numOfLikes}
           numOfComments={numOfComments}
@@ -137,6 +150,7 @@ const mapStateToProps = (state) => {
     comments: state.comment.comments,
     userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
+    otherUsers: state.otherUsers.users,
   };
 };
 

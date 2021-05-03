@@ -205,8 +205,7 @@ exports.postComment = (req, res) => {
 
 exports.putComment = (req, res) => {
   const { boxId, id } = req.body;
-  console.log('PUT COMMENT BOX ID ', boxId)
-  Boxes.findById( boxId, (err, box) => {
+  Boxes.findById(boxId, (err, box) => {
     box.comments.push(id);
     box
       .save()
@@ -246,6 +245,50 @@ exports.addLikeUser = (req, res) => {
   const { boxId, userId } = req.body;
   User.findById(userId, (err, user) => {
     user.liked.push(boxId);
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+exports.delLikeBox = (req, res) => {
+  const { boxId, userId } = req.body;
+  Boxes.findById(boxId, (err, box) => {
+    const index = box.likes.indexOf(userId);
+    if (index > -1) {
+      box.likes.splice(index, 1);
+    }
+    box
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+exports.delLikeUser = (req, res) => {
+  const { boxId, userId } = req.body;
+  User.findById(userId, (err, user) => {
+    const index = user.liked.indexOf(boxId);
+    if (index > -1) {
+      user.liked.splice(index, 1);
+    }
     user
       .save()
       .then((response) => {

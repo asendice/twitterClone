@@ -3,22 +3,29 @@ import { Feed, Image, Icon, Grid, Header, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import scary from "../images/scary.jpeg";
 import { convertMili } from "../utils/Helper";
-import { getUsers, addLikeUser, addLikeBox } from "../actions";
+import {
+  getUsers,
+  addLikeUser,
+  addLikeBox,
+  delLikeUser,
+  delLikeBox,
+} from "../actions";
 import { connect } from "react-redux";
 
 const Box = (props) => {
 
-
+  // creates ids object that contains user Id and the box or "post" id. 
+  // checks to see if the logged in user is in the box's "likes" array
+  // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
   const onHeartClick = () => {
     const ids = {
       userId: props.currentUserId,
       boxId: props.id,
     };
 
-    console.log(ids, "ids");
-
     if (props.likes.includes(props.userInfo.data.result._id)) {
-      return null;
+      props.delLikeUser(ids);
+      props.delLikeBox(ids);
     } else {
       props.addLikeUser(ids);
       props.addLikeBox(ids);
@@ -62,7 +69,8 @@ const Box = (props) => {
           </Header>
           {props.reply ? (
             <span style={{ marginLeft: "20px", color: "grey" }}>
-              Replying to <span style={{ color: "#4da8da" }}>{}</span>
+              Replying to{" "}
+              <span style={{ color: "#4da8da" }}>{props.reply}</span>
             </span>
           ) : (
             ""
@@ -88,10 +96,17 @@ const Box = (props) => {
                 <Icon
                   onClick={() => onHeartClick()}
                   size="large"
-                  name="heart outline"
+                  color={props.likes.includes(props.userInfo.data.result._id) ? "red" : ""}
+                  name={props.likes.includes(props.userInfo.data.result._id) ? "heart" : "heart outline"}
                 />
-                <span style={{ marginLeft: "5px" }}>
-                  {props.numOfLikes === 0 ? " " : props.numOfLikes}
+                <span
+                  style={{
+                    marginLeft: "5px",
+                    visibility: props.numOfLikes === 0 ? "hidden" : " ",
+                    color: "grey"
+                  }}
+                >
+                  {props.numOfLikes}
                 </span>
               </button>
             </Grid.Column>
@@ -100,10 +115,16 @@ const Box = (props) => {
                 onClick={() => props.setOpen(true)}
                 className="box-btn-comment"
               >
-                <Icon size="large" name="comment outline" />
+                <Icon size="large" name="comment outline"/>
 
-                <span style={{ marginLeft: "5px" }}>
-                  {props.numOfComments === 0 ? " " : props.numOfComments}
+                <span
+                  style={{
+                    marginLeft: "5px",
+                    visibility: props.numOfComments === 0 ? "hidden" : "",
+                    color: "grey"
+                  }}
+                >
+                  {props.numOfComments}
                 </span>
               </button>
             </Grid.Column>
@@ -126,6 +147,8 @@ const mapDispatchToProps = {
   getUsers: () => getUsers(),
   addLikeUser: (ids) => addLikeUser(ids),
   addLikeBox: (ids) => addLikeBox(ids),
+  delLikeUser: (ids) => delLikeUser(ids),
+  delLikeBox: (ids) => delLikeBox(ids),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Box);
