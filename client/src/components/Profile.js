@@ -1,12 +1,12 @@
 import React from "react";
 import ProfileBox from "./ProfileBox";
-import BoxFeed from "./BoxFeed"
+import ProfileFeed from "./ProfileFeed";
 
 const Profile = () => {
   return (
     <>
       <ProfileBox />
-      <BoxFeed />
+      <ProfileFeed />
     </>
   );
 };

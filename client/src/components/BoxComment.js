@@ -14,18 +14,22 @@ const BoxComment = (props) => {
     props.getUsers();
   }, []);
 
-  const numOfLikes = props.selectedBox ? props.selectedBox.likes.length : 0;
-  const numOfComments = props.comments ? props.comments.length : null;
-
-  const replyName = props.otherUsers.filter((item) => {
-    const name = item.id === props.selectedBox.userId ? item.name : null;
+  const user = props.allUsers.filter((item) => {
+    const name = item.id === props.selectedBox.userId ? item : null;
     return name;
   });
-  const mappedName = replyName.map((item) => {
-    return item.name;
+
+  const box = props.boxes.filter((box) => {
+    const item = box._id === props.selectedBox._id ? box : null;
+    return item;
   });
 
-  
+  console.log("box", box[0]);
+  const mappedName = user.map((item) => {
+    return item.name;
+  });
+  const numOfLikes = box ? box[0].likes.length : 0;
+  const numOfComments = props.comments ? props.comments.length : null;
 
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
@@ -40,7 +44,7 @@ const BoxComment = (props) => {
           >
             <Box
               id={comment.id}
-              comments={comment.content}
+              comments="none"
               likes={comment.likes}
               reply={mappedName}
               userId={comment.userId}
@@ -57,7 +61,7 @@ const BoxComment = (props) => {
     } else {
       return (
         <Segment basic className="box-feed-item">
-          Loading
+          <a onClick={() => setOpen(true)}>Add a comment? </a>
         </Segment>
       );
     }
@@ -97,13 +101,13 @@ const BoxComment = (props) => {
           />
           <Divider />
           <Box
-            likes={props.selectedBox.likes}
-            id={props.selectedBox.id}
-            userId={props.selectedBox.userId}
-            content={props.selectedBox.content}
-            comments={props.selectedBox.comments}
-            time={props.selectedBox.createdAt}
-            ago={props.selectedBox.createdAt}
+            likes={box[0].likes}
+            id={box[0].id}
+            userId={box[0].userId}
+            content={box[0].content}
+            comments={box[0].comments}
+            time={box[0].createdAt}
+            ago={box[0].createdAt}
             display="none"
             currentUserId={props.userInfo._id}
           />
@@ -125,13 +129,13 @@ const BoxComment = (props) => {
         style={{ minWidth: 420, minHeight: 50, background: "#203647" }}
       >
         <Box
-          likes={props.selectedBox.likes}
-          id={props.selectedBox._id}
-          userId={props.selectedBox.userId}
-          content={props.selectedBox.content}
-          time={props.selectedBox.createdAt}
-          comments={props.selectedBox.comments}
-          ago={props.selectedBox.createdAt}
+          likes={box[0].likes}
+          id={box[0]._id}
+          userId={box[0].userId}
+          content={box[0].content}
+          comments={box[0].comments}
+          time={box[0].createdAt}
+          ago={box[0].createdAt}
           numOfLikes={numOfLikes}
           numOfComments={numOfComments}
           setOpen={setOpen}
@@ -146,11 +150,13 @@ const BoxComment = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    boxes: state.box.boxes,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
     userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
-    otherUsers: state.otherUsers.users,
+    allUsers: state.allUsers.users,
+    selectedUser: state.selectedUser,
   };
 };
 

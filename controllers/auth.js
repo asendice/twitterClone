@@ -3,10 +3,12 @@ const User = require("../models/User");
 const Comment = require("../models/Comment");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
+const path = require("path");
+const multer = require("multer");
 require("dotenv").config();
 const { createJWT } = require("../utils/auth.js");
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-require("dotenv").config();
 
 exports.register = (req, res, next) => {
   const { name, email, password, password_confirmation } = req.body;
@@ -305,25 +307,75 @@ exports.delLikeUser = (req, res) => {
   });
 };
 
+exports.getUsers = (req, res) => {
+  User.find().then((users) => {
+    if (!users) {
+      return res.status(404).json({
+        errors: [{ users: "Zero users found" }],
+      });
+    } else {
+      const allUsers = users.map((user) => {
+        return {
+          id: user.id,
+          name: user.name,
+          profilePic: user.profilePic,
+          followers: user.followers,
+          following: user.following,
+          liked: user.liked,
+        };
+      });
+      return res.status(200).json({
+        success: true,
+        result: allUsers,
+      });
+    }
+  });
+};
 exports.getUser = (req, res) => {
-  User.find().then((user) => {
+  const { userId } = req.body;
+  User.findById(userId).then((user) => {
+    console.log(user);
     if (!user) {
       return res.status(404).json({
         errors: [{ user: "Zero users found" }],
       });
     } else {
-      const users = user.map((user) => {
-        return {
-          id: user.id,
-          name: user.name,
-          avatar: user.avatarPic,
-          background: user.backgroundPic,
-        };
-      });
+      const theUser = {
+        id: user.id,
+        name: user.name,
+        avatar: user.avatarPic,
+        background: user.backgroundPic,
+        followers: user.followers,
+        following: user.following,
+        liked: user.liked,
+      };
       return res.status(200).json({
         success: true,
-        result: users,
+        result: theUser,
       });
     }
+  });
+};
+
+exports.uploadProfilePic = (req, res) => {
+  let image = req.file.path;
+  const { userId } = req.body;
+  console.log(req.body);
+  User.findById(userId).then((user) => {
+    console.log(user, "user");
+    user.profilePic = image;
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: user,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
   });
 };

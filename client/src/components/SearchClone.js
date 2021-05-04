@@ -17,7 +17,7 @@ const SearchClone = (props) => {
   const [term, setTerm] = useState("");
 
   const renderRow = () => {
-    const filteredUsers = props.otherUsers.filter((user) => {
+    const filteredUsers = props.allUsers.filter((user) => {
       if (user.name.toLowerCase().includes(term.toLowerCase())) {
         return user;
       } else {
@@ -86,7 +86,7 @@ const SearchClone = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    otherUsers: state.otherUsers.users,
+    allUsers: state.allUsers.users,
   };
 };
 

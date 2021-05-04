@@ -13,8 +13,7 @@ import {
 import { connect } from "react-redux";
 
 const Box = (props) => {
-
-  // creates ids object that contains user Id and the box or "post" id. 
+  // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
   const onHeartClick = () => {
@@ -23,7 +22,7 @@ const Box = (props) => {
       boxId: props.id,
     };
 
-    if (props.likes.includes(props.userInfo.data.result._id)) {
+    if (props.likes.includes(props.userInfo._id)) {
       props.delLikeUser(ids);
       props.delLikeBox(ids);
     } else {
@@ -32,19 +31,37 @@ const Box = (props) => {
     }
   };
 
-  const userName = props.otherUsers.filter((user) => {
+  const userName = props.allUsers.filter((user) => {
     if (user.id === props.userId) {
       return user;
     }
   });
 
+  console.log('userName', userName)
+
   const name = userName.map((name) => {
     return name.name;
   });
 
+  const profilePic = userName.map((name) => {
+    return name.profilePic;
+  });
+
+  console.log(profilePic);
+
+  // this is going to need to swith the selected user or however we solved that problem when click on other users profiles
+  const renderLikeMsg = () => {
+    return props.likes.includes(props.userInfo._id) && props.profile ? (
+      <span>{props.userInfo.name} liked this post: </span>
+    ) : (
+      ""
+    );
+  };
+
   return (
     <>
       <Link to={`/main/comment/${props.link}`}>
+        {renderLikeMsg()}
         <Card
           key={props.id}
           fluid
@@ -54,7 +71,7 @@ const Box = (props) => {
           }}
         >
           <Header as="h3">
-            <Image circular src={scary} />{" "}
+            <Image circular src={`http://localhost:8000/${profilePic}`} />{" "}
             <span style={{ color: "#EEFBFB" }}>{name}</span>
             <span
               style={{
@@ -96,14 +113,18 @@ const Box = (props) => {
                 <Icon
                   onClick={() => onHeartClick()}
                   size="large"
-                  color={props.likes.includes(props.userInfo.data.result._id) ? "red" : ""}
-                  name={props.likes.includes(props.userInfo.data.result._id) ? "heart" : "heart outline"}
+                  color={props.likes.includes(props.userInfo._id) ? "red" : ""}
+                  name={
+                    props.likes.includes(props.userInfo._id)
+                      ? "heart"
+                      : "heart outline"
+                  }
                 />
                 <span
                   style={{
                     marginLeft: "5px",
                     visibility: props.numOfLikes === 0 ? "hidden" : " ",
-                    color: "grey"
+                    color: "grey",
                   }}
                 >
                   {props.numOfLikes}
@@ -115,13 +136,13 @@ const Box = (props) => {
                 onClick={() => props.setOpen(true)}
                 className="box-btn-comment"
               >
-                <Icon size="large" name="comment outline"/>
+                <Icon size="large" name="comment outline" />
 
                 <span
                   style={{
                     marginLeft: "5px",
                     visibility: props.numOfComments === 0 ? "hidden" : "",
-                    color: "grey"
+                    color: "grey",
                   }}
                 >
                   {props.numOfComments}
@@ -138,8 +159,8 @@ const Box = (props) => {
 const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
-    userInfo: state.userInfo.user,
-    otherUsers: state.otherUsers.users,
+    userInfo: state.userInfo.user.data.result,
+    allUsers: state.allUsers.users,
   };
 };
 

@@ -126,7 +126,8 @@ export const putComment = (comment) => {
           error.response = response;
           throw error;
         }
-      }).then((response) => dispatch(updateBox(response)));
+      })
+      .then((response) => dispatch(updateBox(response)));
   };
 };
 
@@ -277,11 +278,40 @@ export const getUsers = () => {
       .then((users) => dispatch(addUsers(users.data.result)));
   };
 };
+export const getUser = (userId) => {
+  const json = JSON.stringify(userId);
+  return async (dispatch) => {
+    await backendApi
+      .get(`/users/${userId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((users) => dispatch(selectUser(users.data.result)));
+  };
+};
 
 export const addUsers = (users) => {
   return {
     type: "ADD_USERS",
     payload: users,
+  };
+};
+export const selectUser = (user) => {
+  return {
+    type: "USER_SELECT",
+    payload: user,
   };
 };
 
@@ -290,7 +320,7 @@ export const addLikeUser = (ids) => {
   console.log(ids.userId, "json.userId");
   return async (dispatch) => {
     await backendApi
-      .put(`/users/${ids.userId}`, json, {
+      .put(`/users/add/${ids.userId}`, json, {
         headers: {
           "Content-Type": "application/json",
         },
