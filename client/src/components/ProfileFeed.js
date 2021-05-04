@@ -12,16 +12,27 @@ import {
 import uuid from "react-uuid";
 import { connect } from "react-redux";
 
-const BoxFeed = (props) => {
+const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     props.getBoxes();
     props.getUsers();
   }, []);
 
-  const sorted = props.boxes.sort((a, b) => {
-    const one = new Date(a.createdAt);
-    const two = new Date(b.createdAt);
+  const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
+    if (
+      props.userInfo.liked.includes(box._id) ||
+      box.userId === props.userInfo._id
+    ) {
+      return box;
+    }
+  });
+  console.log("props.boxes", props.boxes);
+  console.log("filterBoxesByUserAndUserLikes", filterBoxesByUserAndUserLikes);
+
+  const sorted = filterBoxesByUserAndUserLikes.sort((a, b) => {
+    const one = new Date(a.updatedAt);
+    const two = new Date(b.updatedAt);
     return two - one;
   });
 
@@ -78,7 +89,7 @@ const BoxFeed = (props) => {
             time={props.selectedBox.createdAt}
             ago={props.selectedBox.createdAt}
             display="none"
-            currentUserId={props.userInfo.data.result._id}
+            currentUserId={props.userInfo._id}
           />
           <Divider />
           <span
@@ -107,6 +118,7 @@ const BoxFeed = (props) => {
           >
             <Box
               id={box._id}
+              profile={true}
               userId={box.userId}
               link={box._id}
               likes={box.likes}
@@ -117,7 +129,7 @@ const BoxFeed = (props) => {
               numOfLikes={numOfLikes}
               numOfComments={numOfComments}
               setOpen={setOpen}
-              currentUserId={props.userInfo.data.result._id}
+              currentUserId={props.userInfo._id}
             />
           </Segment>
         );
@@ -126,7 +138,7 @@ const BoxFeed = (props) => {
       return (
         <Segment basic className="box-feed-item">
           {" "}
-          Loading{" "}
+          Nothing to display{" "}
         </Segment>
       );
     }
@@ -145,7 +157,7 @@ const mapStateToProps = (state) => {
     boxes: state.box.boxes,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
-    userInfo: state.userInfo.user,
+    userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
   };
@@ -159,4 +171,4 @@ const mapDispatchToProps = {
   getUsers: () => getUsers(),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoxFeed);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileFeed);

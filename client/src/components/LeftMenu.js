@@ -74,7 +74,10 @@ const LeftMenu = (props) => {
         >
           <NavLink to="/main/profile">
             <Header as="h1" style={{ color: "#fff" }}>
-              <Image circular src={mage} />
+              <Image
+                circular
+                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+              />
               {props.userInfo.name}
             </Header>
           </NavLink>

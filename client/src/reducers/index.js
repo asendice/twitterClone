@@ -6,6 +6,7 @@ import commentReducer from "./commentReducer";
 import registerReducer from "./registerReducer";
 import loginReducer from "./loginReducer";
 import usersReducer from "./usersReducer";
+import selectUserReducer from "./selectUserReducer";
 
 export default combineReducers({
   box: boxReducer,
@@ -13,6 +14,7 @@ export default combineReducers({
   selectedBox: selectBoxReducer,
   registerInfo: registerReducer,
   userInfo: loginReducer,
-  otherUsers: usersReducer,
+  allUsers: usersReducer,
+  selectedUser: selectUserReducer,
   form: formReducer,
 });
