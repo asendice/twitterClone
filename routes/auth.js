@@ -3,6 +3,7 @@ const router = express.Router();
 
 //middleware Multer
 const uploadMulter = require("../middleware/uploadMulter");
+const validation = require("../middleware/validation");
 
 const {
   postBoxes,
@@ -22,12 +23,13 @@ const {
   getProfilePic,
   getBackgroundPic,
   uploadBackgroundPic,
+  editBio,
 } = require("../controllers/auth");
 
 router.post("/login", login);
 router.post("/register", register);
 router.get("/users", getUsers);
-router.get("/users/:userId", getUser);
+router.get("/main/profile/:name", getUser);
 router.post("/boxes", postBoxes);
 router.get("/boxes", getBoxes);
 router.post("/comments", postComment);
@@ -37,9 +39,7 @@ router.put("/users/add/:userId", addLikeUser);
 router.put("/users/del/:userId", delLikeUser);
 router.put("/boxes/:boxId", addLikeBox);
 router.put("/boxes/del/:boxId", delLikeBox);
-router.put("/users/:userId", uploadMulter, uploadProfilePic);
-// router.get("/users/avatar/:userId", getProfilePic);
-// router.put("/users/bkg/:userId", uploadBackgroundPic);
-// router.get("/users/bkg/:userId", getBackgroundPic);
-
+router.put("/users/pic/:userId", uploadMulter, uploadProfilePic);
+router.put("/users/bkg/:userId", uploadMulter, uploadBackgroundPic);
+router.put("/users/bio/:userId", editBio);
 module.exports = router;

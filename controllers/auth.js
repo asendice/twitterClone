@@ -331,24 +331,27 @@ exports.getUsers = (req, res) => {
     }
   });
 };
+
 exports.getUser = (req, res) => {
-  const { userId } = req.body;
-  User.findById(userId).then((user) => {
-    console.log(user);
+  const { name } = req.params;
+  User.find({ name: name }).then((user) => {
     if (!user) {
       return res.status(404).json({
         errors: [{ user: "Zero users found" }],
       });
     } else {
+      console.log(user)
       const theUser = {
-        id: user.id,
-        name: user.name,
-        avatar: user.avatarPic,
-        background: user.backgroundPic,
-        followers: user.followers,
-        following: user.following,
-        liked: user.liked,
+        id: user[0]._id,
+        name: user[0].name,
+        profilePic: user[0].profilePic,
+        bio: user[0].bio,
+        background: user[0].backgroundPic,
+        followers: user[0].followers,
+        following: user[0].following,
+        liked: user[0].liked,
       };
+      console.log(theUser)
       return res.status(200).json({
         success: true,
         result: theUser,
@@ -360,10 +363,52 @@ exports.getUser = (req, res) => {
 exports.uploadProfilePic = (req, res) => {
   let image = req.file.path;
   const { userId } = req.body;
-  console.log(req.body);
+  console.log(req);
   User.findById(userId).then((user) => {
     console.log(user, "user");
     user.profilePic = image;
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: user,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+exports.uploadBackgroundPic = (req, res) => {
+  let image = req.file.path;
+  const { userId } = req.body;
+  console.log(req);
+  User.findById(userId).then((user) => {
+    console.log(user, "user");
+    user.backgroundPic = image;
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: user,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+
+exports.editBio = (req, res) => {
+  const { userId, bio } = req.body;
+  User.findById(userId).then((user) => {
+    user.bio = bio;
     user
       .save()
       .then((response) => {
