@@ -278,11 +278,10 @@ export const getUsers = () => {
       .then((users) => dispatch(addUsers(users.data.result)));
   };
 };
-export const getUser = (userId) => {
-  const json = JSON.stringify(userId);
+export const getUser = (name) => {
   return async (dispatch) => {
     await backendApi
-      .get(`/users/${userId}`, json, {
+      .get(`/main/profile/${name}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -422,3 +421,16 @@ export const updateBox = (box) => {
     payload: box,
   };
 };
+
+
+export const editProfilePic = () => {
+
+}
+
+export const editBackgroundPic = () => {
+
+}
+
+export const editBio = () => {
+
+}

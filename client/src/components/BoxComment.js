@@ -24,7 +24,6 @@ const BoxComment = (props) => {
     return item;
   });
 
-  console.log("box", box[0]);
   const mappedName = user.map((item) => {
     return item.name;
   });

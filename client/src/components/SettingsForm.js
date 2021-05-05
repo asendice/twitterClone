@@ -8,37 +8,9 @@ import {
   TextArea,
   Divider,
   Label,
-  Input,
+  Segment,
 } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
-
-const renderInput = ({
-  input,
-  label,
-  value,
-  type,
-  meta: { touched, error, warning },
-}) => {
-  return (
-    <div>
-      <Input
-        {...input}
-        placeholder={label}
-        type={type}
-        value={value}
-        autoComplete="off"
-        style={{
-          backgroundColor: "#4DA8DA",
-          color: "#fff",
-          border: "solid 1px",
-        }}
-      />
-      {touched &&
-        ((error && <span>{error}</span>) ||
-          (warning && <span>{warning}</span>))}
-    </div>
-  );
-};
 
 const renderImageInput = ({
   input,
@@ -97,7 +69,7 @@ const renderTextArea = ({
 
 let SettingsForm = (props) => {
   return (
-    <div style={{ backgroundColor: "#203647" }}>
+    <div style={{ backgroundColor: "#203647", height: "100%" }}>
       <Header as="h2" style={{ color: "#fff" }}>
         <Icon
           onClick={() => props.setOpen(false)}
@@ -106,26 +78,15 @@ let SettingsForm = (props) => {
         />
         Edit Profile
       </Header>
-      <Button
-        type="submit"
-        disable={!props.valid}
-        style={{
-          backgroundColor: "#4DA8DA",
-          color: "#fff",
-          float: "right",
-          marginTop: -50,
-        }}
-      >
-        Save
-      </Button>
+
       <Divider />
       <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
         <Label style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
           {" "}
-          Change your Avatar Image
+          Change your Profile Image
         </Label>
         <Field
-          name="avatarPic"
+          name="profilePic"
           value=""
           type="file"
           accept=".png, .jpeg, .jpg"
@@ -144,9 +105,22 @@ let SettingsForm = (props) => {
           accept=".png, .jpeg, .jpg"
           component={renderImageInput}
         />
-        <Divider hidden/>
+        <Divider hidden />
         <Divider hidden />
         <Field name="bio" component={renderTextArea} label="update your bio" />
+        <Segment basic>
+          <Button
+            type="submit"
+            disable={!props.valid}
+            style={{
+              backgroundColor: "#4DA8DA",
+              color: "#fff",
+              float: "right",
+            }}
+          >
+            Save
+          </Button>
+        </Segment>
       </Form>
     </div>
   );
@@ -158,7 +132,7 @@ SettingsForm = reduxForm({
 
 const selector = formValueSelector("settings");
 SettingsForm = connect((state) => {
-  const values = selector(state, "avatarPic", "bio", "backgroundPic");
+  const values = selector(state, "profilePic", "bio", "backgroundPic");
   return {
     values,
   };

@@ -77,15 +77,12 @@
   overflow: hidden !important;
 }
 
-.portfolio-box {
-  background-image: url("../images/tm.jpeg") !important;
-}
-
 .box-feed-item {
   cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
   min-width: 420px !important;
+  max-width: 650px !important;
   border: 1px solid #203647 !important;
 }
 

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import mage from "../images/mage.png";
 import {
   Menu,
   Image,
@@ -14,12 +13,16 @@ import {
 } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import PostBoxForm from "./PostBoxForm";
-import { postBoxes } from "../actions";
+import { postBoxes, getUser } from "../actions";
 import { logout } from "../actions";
 import { connect } from "react-redux";
 
 const LeftMenu = (props) => {
   const [open, setOpen] = useState(false);
+
+  const onProfileClick = () => {
+    props.getUser(props.userInfo.name);
+  };
 
   const onFormSubmit = (values) => {
     const box = {
@@ -72,9 +75,10 @@ const LeftMenu = (props) => {
           vertical
           borderless
         >
-          <NavLink to="/main/profile">
+          <NavLink to={`/main/${props.selectedUser.name}`}>
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
+                style={{ maxWidth: 70, maxHeight: 70 }}
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
@@ -104,13 +108,14 @@ const LeftMenu = (props) => {
               Notifications
             </NavLink>
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item >
             <NavLink
+              onClick={() => onProfileClick()} 
               className="menu-item"
               activeClassName="menu-item-active"
-              to="/main/profile"
+              to={`/main/profile/${props.selectedUser.name}`}
             >
-              <Icon name="user" />
+              <Icon name="user"/>
               Profile
             </NavLink>
           </Menu.Item>
@@ -153,7 +158,7 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to="/main/profile">
+            <NavLink className="menu-icon" to={`/main/profile${props.selectedUser.name}`}>
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -181,7 +186,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/main/profile"
+              to={`/main/profile${props.selectedUser.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
@@ -215,7 +220,7 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to="/main/profile">
+            <NavLink className="menu-icon" to={`/main/profile${props.selectedUser.name}`}>
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -243,7 +248,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/main/profile"
+              to={`/main/profile/${props.selectedUser.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
@@ -271,12 +276,14 @@ const mapStateToProps = (state) => {
     box: state.box,
     userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
+    selectedUser: state.selectedUser
   };
 };
 
 const mapDispatchToProps = {
   postBoxes: (box) => postBoxes(box),
   logout: () => logout(),
+  getUser: (userId) => getUser(userId),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

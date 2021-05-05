@@ -37,8 +37,6 @@ const Box = (props) => {
     }
   });
 
-  console.log('userName', userName)
-
   const name = userName.map((name) => {
     return name.name;
   });
@@ -47,7 +45,6 @@ const Box = (props) => {
     return name.profilePic;
   });
 
-  console.log(profilePic);
 
   // this is going to need to swith the selected user or however we solved that problem when click on other users profiles
   const renderLikeMsg = () => {
@@ -71,7 +68,7 @@ const Box = (props) => {
           }}
         >
           <Header as="h3">
-            <Image circular src={`http://localhost:8000/${profilePic}`} />{" "}
+            <Image circular src={`http://localhost:8000/${profilePic}`} style={{maxHeight: 45, maxWidth: 45}} />{" "}
             <span style={{ color: "#EEFBFB" }}>{name}</span>
             <span
               style={{
