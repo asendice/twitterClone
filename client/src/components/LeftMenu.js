@@ -113,7 +113,7 @@ const LeftMenu = (props) => {
               onClick={() => onProfileClick()} 
               className="menu-item"
               activeClassName="menu-item-active"
-              to={`/main/profile/${props.selectedUser.name}`}
+              to={`/main/profile/${props.userInfo.name}`}
             >
               <Icon name="user"/>
               Profile
@@ -186,7 +186,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to={`/main/profile${props.selectedUser.name}`}
+              to={`/main/profile/${props.userInfo.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
@@ -220,7 +220,7 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to={`/main/profile${props.selectedUser.name}`}>
+            <NavLink className="menu-icon" to={`/main/profile/${props.userInfo.name}`}>
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -248,7 +248,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to={`/main/profile/${props.selectedUser.name}`}
+              to={`/main/profile/${props.userInfo.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
