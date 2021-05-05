@@ -45,11 +45,10 @@ const Box = (props) => {
     return name.profilePic;
   });
 
-
   // this is going to need to swith the selected user or however we solved that problem when click on other users profiles
   const renderLikeMsg = () => {
-    return props.likes.includes(props.userInfo._id) && props.profile ? (
-      <span>{props.userInfo.name} liked this post: </span>
+    return props.likes.includes(props.selectedUser.id) && props.profile ? (
+      <span>{props.selectedUser.name} liked this post: </span>
     ) : (
       ""
     );
@@ -68,7 +67,11 @@ const Box = (props) => {
           }}
         >
           <Header as="h3">
-            <Image circular src={`http://localhost:8000/${profilePic}`} style={{maxHeight: 45, maxWidth: 45}} />{" "}
+            <Image
+              circular
+              src={`http://localhost:8000/${profilePic}`}
+              style={{ maxHeight: 45, maxWidth: 45 }}
+            />{" "}
             <span style={{ color: "#EEFBFB" }}>{name}</span>
             <span
               style={{
@@ -158,6 +161,7 @@ const mapStateToProps = (state) => {
     boxes: state.box.boxes,
     userInfo: state.userInfo.user.data.result,
     allUsers: state.allUsers.users,
+    selectedUser: state.selectedUser,
   };
 };
 

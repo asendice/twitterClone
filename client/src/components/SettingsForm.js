@@ -99,7 +99,7 @@ let SettingsForm = (props) => {
           Change your Background Image
         </Label>
         <Field
-          name="backgroundPic"
+          name="background"
           value=""
           type="file"
           accept=".png, .jpeg, .jpg"
@@ -132,7 +132,7 @@ SettingsForm = reduxForm({
 
 const selector = formValueSelector("settings");
 SettingsForm = connect((state) => {
-  const values = selector(state, "profilePic", "bio", "backgroundPic");
+  const values = selector(state, "profilePic", "bio", "background");
   return {
     values,
   };

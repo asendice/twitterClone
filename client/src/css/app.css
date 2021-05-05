@@ -57,9 +57,9 @@
   color: #4da8da !important ;
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1300px) {
   .media-left-menu {
-    margin-left: 50px !important;
+    margin-left: 55px !important;
   }
 }
 

@@ -423,11 +423,36 @@ export const updateBox = (box) => {
 };
 
 
-export const editProfilePic = () => {
+export const editProfilePic = (item) => {
+  console.log(item, "item");
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/pic/${item.id}`, {
+        profilePic: {
+          
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          console.log(response, "from delLikeUser");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(loggedin(response)));
+  };
 
 }
 
-export const editBackgroundPic = () => {
+export const editBackground = () => {
 
 }
 

@@ -14,18 +14,24 @@ import { connect } from "react-redux";
 
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
-  console.log(props.selectedUser)
+  console.log(props.selectedUser);
   useEffect(() => {
     props.getBoxes();
     props.getUsers();
   }, []);
 
+  // console.log(props.selectedUser., "selectedUser ");
+
   const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
-    if (
-      props.userInfo.liked.includes(box._id) ||
-      box.userId === props.userInfo.id
-    ) {
-      return box;
+    if (props.selectedUser.name) {
+      if (
+        props.selectedUser.liked.includes(box._id) ||
+        box.userId === props.selectedUser.id
+      ) {
+        return box;
+      }
+    } else {
+      return null;
     }
   });
 
@@ -159,7 +165,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
-    selectedUser: state.selectedUser ? state.selectedUser : "sdfs"
+    selectedUser: state.selectedUser ? state.selectedUser : "sdfs",
   };
 };
 

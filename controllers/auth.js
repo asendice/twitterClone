@@ -361,9 +361,9 @@ exports.getUser = (req, res) => {
 };
 
 exports.uploadProfilePic = (req, res) => {
+  console.log(req.file, "req.file")
   let image = req.file.path;
   const { userId } = req.body;
-  console.log(req);
   User.findById(userId).then((user) => {
     console.log(user, "user");
     user.profilePic = image;
@@ -385,7 +385,7 @@ exports.uploadProfilePic = (req, res) => {
 exports.uploadBackgroundPic = (req, res) => {
   let image = req.file.path;
   const { userId } = req.body;
-  console.log(req);
+  console.log(req, "THIS IS THE REQUEST ");
   User.findById(userId).then((user) => {
     console.log(user, "user");
     user.backgroundPic = image;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import tm from "../images/tm.jpeg";
 import SettingsForm from "./SettingsForm";
 import {
   Segment,
@@ -11,28 +10,39 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { getUser } from "../actions";
+import { getUser, editProfilePic, editBackground, editBio } from "../actions";
 
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-
-  console.log(window.location.pathname.slice(14));
 
   useEffect(() => {
-    if (props.selectedUser.name === window.location.pathname.slice(14)) {
-      console.log("SHOULD BE PROFILE ");
-    } else {
-      console.log("SENT MOTHER FUCKER ")
-      setName(window.location.pathname.slice(14));
-      props.getUser(name);
+    props.getUser(window.location.pathname.slice(14));
+  }, [window.location]);
+
+  const onFormSubmit = (values) => {
+    console.log(values, "values");
+    if (values.profilePic) {
+      const items = {
+        id: props.userInfo._id,
+        profilePic: values.profilePic,
+      };
+      props.editProfilePic(items);
     }
-  });
+    if (values.background) {
+      const items = {
+        id: props.userInfo._id,
+        background: values.background,
+      };
+      props.editBackground(items);
+    }
 
-  console.log(name)
-
-  const onFormSubmit = () => {
-    return;
+    if (values.bio) {
+      const items = {
+        id: props.userInfo._id,
+        bio: values.bio,
+      };
+      props.editBio(items);
+    }
   };
 
   const renderModal = () => {
@@ -63,7 +73,7 @@ const ProfileBox = (props) => {
         minHeight: 330,
         maxWidth: 650,
         cursor: "pointer",
-        backgroundImage: `url('${tm}')`,
+        backgroundImage: `url('${`http://localhost:8000/${props.selectedUser.background}`}')`,
         backgroundSize: "655px 350px, cover",
       }}
     >
@@ -125,6 +135,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getUser: (name) => getUser(name),
+  editProfilePic: (item) => editProfilePic(item),
+  editBackground: (item) => editBackground(item),
+  editBio: (item) => editBio(item),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileBox);
