@@ -165,6 +165,21 @@ exports.getBoxes = (req, res) => {
     }
   });
 };
+exports.getBox = (req, res) => {
+  const { boxId } = req.params;
+  Boxes.findById(boxId).then((box) => {
+    if (!box) {
+      return res.status(404).json({
+        errors: [{ user: `does not have posts` }],
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        result: box,
+      });
+    }
+  });
+};
 
 exports.getComments = (req, res) => {
   const { boxId } = req.params;
@@ -340,18 +355,18 @@ exports.getUser = (req, res) => {
         errors: [{ user: "Zero users found" }],
       });
     } else {
-      console.log(user)
+      console.log(user);
       const theUser = {
         id: user[0]._id,
         name: user[0].name,
         profilePic: user[0].profilePic,
         bio: user[0].bio,
-        background: user[0].backgroundPic,
+        background: user[0].background,
         followers: user[0].followers,
         following: user[0].following,
         liked: user[0].liked,
       };
-      console.log(theUser)
+      console.log(theUser);
       return res.status(200).json({
         success: true,
         result: theUser,
@@ -361,9 +376,9 @@ exports.getUser = (req, res) => {
 };
 
 exports.uploadProfilePic = (req, res) => {
-  console.log(req.file, "req.file")
+  console.log(req.file, "req.file");
   let image = req.file.path;
-  const { userId } = req.body;
+  const { userId } = req.params;
   User.findById(userId).then((user) => {
     console.log(user, "user");
     user.profilePic = image;
@@ -384,11 +399,12 @@ exports.uploadProfilePic = (req, res) => {
 };
 exports.uploadBackgroundPic = (req, res) => {
   let image = req.file.path;
-  const { userId } = req.body;
+  console.log(image, "IMAGE")
+  const { userId } = req.params;
   console.log(req, "THIS IS THE REQUEST ");
   User.findById(userId).then((user) => {
     console.log(user, "user");
-    user.backgroundPic = image;
+    user.background = image;
     user
       .save()
       .then((response) => {
@@ -406,8 +422,9 @@ exports.uploadBackgroundPic = (req, res) => {
 };
 
 exports.editBio = (req, res) => {
-  const { userId, bio } = req.body;
-  User.findById(userId).then((user) => {
+  const { id, bio } = req.body;
+  console.log(id, bio)
+  User.findById(id).then((user) => {
     user.bio = bio;
     user
       .save()

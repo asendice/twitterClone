@@ -3,13 +3,21 @@ import Box from "./Box";
 import { connect } from "react-redux";
 import uuid from "react-uuid";
 import CommentForm from "./CommentForm";
-import { postComment, getComments, putComment, getUsers } from "../actions";
+import {
+  postComment,
+  getComments,
+  putComment,
+  getUsers,
+  selectBox,
+  getBox,
+} from "../actions";
 import { Segment, Modal, Divider, Icon } from "semantic-ui-react";
 
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    props.getBox(window.location.pathname.slice(14));
     props.getComments(props.selectedBox._id);
     props.getUsers();
   }, []);
@@ -19,15 +27,11 @@ const BoxComment = (props) => {
     return name;
   });
 
-  const box = props.boxes.filter((box) => {
-    const item = box._id === props.selectedBox._id ? box : null;
-    return item;
-  });
-
   const mappedName = user.map((item) => {
     return item.name;
   });
-  const numOfLikes = box ? box[0].likes.length : 0;
+  const numOfLikes =
+    props.selectedBox ? props.selectedBox.likes.length : 0;
   const numOfComments = props.comments ? props.comments.length : null;
 
   const renderCommentFeed = () => {
@@ -100,13 +104,13 @@ const BoxComment = (props) => {
           />
           <Divider />
           <Box
-            likes={box[0].likes}
-            id={box[0].id}
-            userId={box[0].userId}
-            content={box[0].content}
-            comments={box[0].comments}
-            time={box[0].createdAt}
-            ago={box[0].createdAt}
+            likes={props.selectedBox.likes}
+            id={props.selectedBox.id}
+            userId={props.selectedBox.userId}
+            content={props.selectedBox.content}
+            comments={props.selectedBox.comments}
+            time={props.selectedBox.createdAt}
+            ago={props.selectedBox.createdAt}
             display="none"
             currentUserId={props.userInfo._id}
           />
@@ -128,13 +132,14 @@ const BoxComment = (props) => {
         style={{ minWidth: 420, minHeight: 50, background: "#203647" }}
       >
         <Box
-          likes={box[0].likes}
-          id={box[0]._id}
-          userId={box[0].userId}
-          content={box[0].content}
-          comments={box[0].comments}
-          time={box[0].createdAt}
-          ago={box[0].createdAt}
+          link={props.selectedBox._id}
+          likes={props.selectedBox.likes}
+          id={props.selectedBox._id}
+          userId={props.selectedBox.userId}
+          content={props.selectedBox.content}
+          comments={props.selectedBox.comments}
+          time={props.selectedBox.createdAt}
+          ago={props.selectedBox.createdAt}
           numOfLikes={numOfLikes}
           numOfComments={numOfComments}
           setOpen={setOpen}
@@ -160,10 +165,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
+  getBox: (id) => getBox(id),
   postComment: (comment) => postComment(comment),
   getComments: (id) => getComments(id),
   putComment: (comment) => putComment(comment),
   getUsers: () => getUsers(),
+  selectBox: (box) => selectBox(box),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BoxComment);

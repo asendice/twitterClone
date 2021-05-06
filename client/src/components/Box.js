@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Feed, Image, Icon, Grid, Header, Card } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import scary from "../images/scary.jpeg";
+import { Link, Redirect } from "react-router-dom";
 import { convertMili } from "../utils/Helper";
 import {
   getUsers,
@@ -48,10 +47,17 @@ const Box = (props) => {
   // this is going to need to swith the selected user or however we solved that problem when click on other users profiles
   const renderLikeMsg = () => {
     return props.likes.includes(props.selectedUser.id) && props.profile ? (
-      <span>{props.selectedUser.name} liked this post: </span>
+      <span className="reply-text">
+        {props.selectedUser.name} liked this post:{" "}
+      </span>
     ) : (
       ""
     );
+  };
+
+  const onCardClick = () => {
+    console.log("does this work?");
+    return <Redirect to={`/main/comment/${props.link}`} />;
   };
 
   return (
@@ -66,24 +72,27 @@ const Box = (props) => {
             boxShadow: "none",
           }}
         >
-          <Header as="h3">
-            <Image
-              circular
-              src={`http://localhost:8000/${profilePic}`}
-              style={{ maxHeight: 45, maxWidth: 45 }}
-            />{" "}
-            <span style={{ color: "#EEFBFB" }}>{name}</span>
-            <span
-              style={{
-                color: "grey",
-                fontSize: "15px",
-                fontWeight: "normal",
-              }}
-            >
-              {" - "}
-              {props.ago > 0 ? convertMili(props.ago) : Date(props.time)}
-            </span>
-          </Header>
+          {/* */}
+          <a href={`http://localhost:3000/main/profile/${name}`}>
+            <Header as="h3">
+              <Image
+                circular
+                src={`http://localhost:8000/${profilePic}`}
+                style={{ maxHeight: 45, maxWidth: 45 }}
+              />{" "}
+              <span style={{ color: "#EEFBFB" }}>{name}</span>
+              <span
+                style={{
+                  color: "grey",
+                  fontSize: "15px",
+                  fontWeight: "normal",
+                }}
+              >
+                {" - "}
+                {props.ago > 0 ? convertMili(props.ago) : Date(props.time)}
+              </span>
+            </Header>
+          </a>
           {props.reply ? (
             <span style={{ marginLeft: "20px", color: "grey" }}>
               Replying to{" "}

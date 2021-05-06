@@ -17,7 +17,7 @@ const ProfileBox = (props) => {
 
   useEffect(() => {
     props.getUser(window.location.pathname.slice(14));
-  }, [window.location]);
+  }, [open]);
 
   const onFormSubmit = (values) => {
     console.log(values, "values");
@@ -43,6 +43,7 @@ const ProfileBox = (props) => {
       };
       props.editBio(items);
     }
+    setOpen(false);
   };
 
   const renderModal = () => {

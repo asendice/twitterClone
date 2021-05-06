@@ -41,7 +41,7 @@ const LeftMenu = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
       >
-        <Modal.Content style={{ background: "#203647" }}>
+        <Modal.Content style={{ background: "#203647"}}>
           <Icon
             onClick={() => setOpen(false)}
             style={{ cursor: "pointer", color: "#4DA8DA" }}
@@ -75,7 +75,7 @@ const LeftMenu = (props) => {
           vertical
           borderless
         >
-          <NavLink to={`/main/${props.selectedUser.name}`}>
+          <NavLink to={`/main/profile/${props.selectedUser.name}`}>
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
                 style={{ maxWidth: 70, maxHeight: 70 }}

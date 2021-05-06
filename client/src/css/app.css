@@ -14,6 +14,10 @@
   background: #203647 !important;
 }
 
+.reply-text {
+  color: #4da8da !important;
+}
+
 @media screen and (max-width: 1500px) {
   .media-right-card {
     max-width: 350px !important;

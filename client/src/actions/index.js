@@ -300,6 +300,28 @@ export const getUser = (name) => {
       .then((users) => dispatch(selectUser(users.data.result)));
   };
 };
+export const getBox = (id) => {
+  return async (dispatch) => {
+    await backendApi
+      .get(`/main/boxes/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((box) => dispatch(selectBox(box.data.result)));
+  };
+};
 
 export const addUsers = (users) => {
   return {
@@ -422,22 +444,45 @@ export const updateBox = (box) => {
   };
 };
 
-
 export const editProfilePic = (item) => {
   console.log(item, "item");
+  let formData = new FormData();
+  formData.append("image", item.profilePic[0]);
   return async (dispatch) => {
     await backendApi
-      .put(`/users/pic/${item.id}`, {
-        profilePic: {
-          
-        },
+      .put(`/users/pic/${item.id}`, formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from delLikeUser");
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(loggedin(response)))
+      .then((response) => dispatch(selectUser(response.data.result)));
+  };
+};
+
+export const editBackground = (item) => {
+  let formData = new FormData();
+  formData.append("image", item.background[0]);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/bkg/${item.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        if (response) {
           return response;
         } else {
           const error = new Error(
@@ -449,13 +494,29 @@ export const editProfilePic = (item) => {
       })
       .then((response) => dispatch(loggedin(response)));
   };
+};
 
-}
-
-export const editBackground = () => {
-
-}
-
-export const editBio = () => {
-
-}
+export const editBio = (items) => {
+  const json = JSON.stringify(items);
+  console.log("items", items);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/bio/${items.id}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(loggedin(response)));
+  };
+};
