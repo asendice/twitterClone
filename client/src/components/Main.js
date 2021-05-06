@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 const Main = (props) => {
   const contextRef = createRef();
   const name = window.location.pathname.slice(14);
-  console.log(name)
+
   if (props.loggedIn) {
     return (
       <div
@@ -30,11 +30,8 @@ const Main = (props) => {
             <Grid.Column computer={6} tablet={11} mobile={13}>
               <Route path="/main/home" component={Home} />
               <Route path="/main/notifications" component={Notifications} />
-              <Route
-                path={`/main/profile/${name}`}
-                component={Profile}
-              />
-              <Route path="/main/comment" component={BoxComment} />
+              <Route path={`/main/profile/${name}`} component={Profile} />
+              <Route path={`/main/comment/${name}`} component={BoxComment} />
             </Grid.Column>
             <Grid.Column computer={5} tablet={1} mobile={1}>
               <RightContent contextRef={contextRef} />
@@ -53,6 +50,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
+    selectedBox: state.selectedBox,
   };
 };
 

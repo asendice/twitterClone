@@ -18,7 +18,7 @@ const userSchema = new Schema(
     profilePic: {
       type: String,
     },
-    backgroundPic: {
+    background: {
       type: String,
     },
     bio: {

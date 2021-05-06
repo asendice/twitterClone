@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import scary from "../images/scary.jpeg";
+import { Link } from "react-router-dom";
 import {
   Segment,
   Input,
@@ -16,59 +16,102 @@ import { connect } from "react-redux";
 const SearchClone = (props) => {
   const [term, setTerm] = useState("");
 
-  const renderRow = () => {
-    const filteredUsers = props.allUsers.filter((user) => {
-      if (user.name.toLowerCase().includes(term.toLowerCase())) {
-        return user;
-      } else {
-        return null;
-      }
-    });
+  const arr = ["batman", "capndreadful", "DylanTravis"];
+  const preSelectedUsers = props.allUsers.filter((user) => {
+    if (arr.includes(user.name)) {
+      return user;
+    }
+  });
 
-    if (term.length > 0) {
-      return filteredUsers.map((user) => {
-        return (
-          <Table.Row key={user.id}>
-            <Table.Cell>
-              <Image size="tiny" circular src={scary} />
-            </Table.Cell>
-            <Table.Cell>
-              <Header as="h3" style={{ color: "#fff" }}>
-                {" "}
-                {user.name}
-              </Header>
-            </Table.Cell>
-            <Table.Cell>
-            <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-              Follow
-            </Button>
-          </Table.Cell>
-          </Table.Row>
-        );
-      });
+  const filteredUsers = props.allUsers.filter((user) => {
+    if (user.name.toLowerCase().includes(term.toLowerCase())) {
+      return user;
     } else {
+      return null;
+    }
+  });
+
+  const renderSearchNf = () => {
+    if (filteredUsers.length === 0) {
       return (
         <Table.Row>
           <Table.Cell>
-            <Image size="tiny" circular src={scary} />
-          </Table.Cell>
-          <Table.Cell>
-            <Header as="h3" style={{ color: "#fff" }}>
-              DylanTravis
-            </Header>
-          </Table.Cell>
-          <Table.Cell>
-            <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-              Follow
-            </Button>
+            <Segment basic textAlign="center">
+              <Header as="h3" style={{ color: "#fff" }}>
+                Zero twitterClone users found for: "{term}"
+              </Header>
+            </Segment>
           </Table.Cell>
         </Table.Row>
       );
     }
   };
 
+  const renderRow = () => {
+    if (term.length > 0) {
+      return filteredUsers.map((user) => {
+        return (
+          <Table.Row key={user.id}>
+            <Table.Cell>
+              <a href={`/main/profile/${user.name}`}>
+                <Image
+                  size="tiny"
+                  circular
+                  src={`http://localhost:8000/${user.profilePic}`}
+                />
+              </a>
+            </Table.Cell>
+            <Table.Cell>
+              <a href={`/main/profile/${user.name}`}>
+                <Header as="h3" style={{ color: "#fff" }}>
+                  {user.name}
+                </Header>
+              </a>
+            </Table.Cell>
+            <Table.Cell>
+              <Button style={{ background: "#4DA8DA", color: "#fff" }}>
+                Follow
+              </Button>
+            </Table.Cell>
+          </Table.Row>
+        );
+      });
+    } else {
+      return preSelectedUsers.map((user) => {
+        return (
+          <Table.Row>
+            <Table.Cell>
+              <a href={`/main/profile/${user.name}`}>
+                <Image
+                  size="tiny"
+                  circular
+                  src={`http://localhost:8000/${user.profilePic}`}
+                />
+              </a>
+            </Table.Cell>
+            <Table.Cell>
+              <a href={`/main/profile/${user.name}`}>
+                <Header as="h3" style={{ color: "#fff" }}>
+                  {user.name}
+                </Header>
+              </a>
+            </Table.Cell>
+            <Table.Cell>
+              <Button style={{ background: "#4DA8DA", color: "#fff" }}>
+                Follow
+              </Button>
+            </Table.Cell>
+          </Table.Row>
+        );
+      });
+    }
+  };
+
   return (
-    <Segment className="search-clone-card media-right-card">
+    <Segment
+      className="search-clone-card media-right-card"
+      style={{ minHeight: 404 }}
+    >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />
         <input
@@ -78,7 +121,10 @@ const SearchClone = (props) => {
       </Input>
       <Divider />
       <Table basic="very">
-        <Table.Body>{renderRow()}</Table.Body>
+        <Table.Body>
+          {renderRow()}
+          {renderSearchNf()}
+        </Table.Body>
       </Table>
     </Segment>
   );

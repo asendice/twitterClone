@@ -1,4 +1,3 @@
-
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -27,4 +26,4 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-module.exports = upload.single('profilePic')
+module.exports = upload.single("image");

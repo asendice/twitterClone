@@ -20,8 +20,6 @@ const ProfileFeed = (props) => {
     props.getUsers();
   }, []);
 
-  // console.log(props.selectedUser., "selectedUser ");
-
   const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
     if (props.selectedUser.name) {
       if (

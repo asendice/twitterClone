@@ -20,8 +20,7 @@ const {
   delLikeBox,
   delLikeUser,
   uploadProfilePic,
-  getProfilePic,
-  getBackgroundPic,
+  getBox,
   uploadBackgroundPic,
   editBio,
 } = require("../controllers/auth");
@@ -32,9 +31,12 @@ router.get("/users", getUsers);
 router.get("/main/profile/:name", getUser);
 router.post("/boxes", postBoxes);
 router.get("/boxes", getBoxes);
+router.get("/main/boxes/:boxId", getBox);
 router.post("/comments", postComment);
 router.get("/comments/:boxId", getComments);
 router.put("/comments/:boxId", putComment);
+router.put("/users/add/:userId", addLikeUser);
+router.put("/users/del/:userId", delLikeUser);
 router.put("/users/add/:userId", addLikeUser);
 router.put("/users/del/:userId", delLikeUser);
 router.put("/boxes/:boxId", addLikeBox);
