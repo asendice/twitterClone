@@ -54,7 +54,7 @@ const ProfileFeed = (props) => {
     const comment = {
       id: uuid(),
       content: values.content,
-      userId: props.userInfo.data.result._id,
+      userId: props.userInfo._id,
       boxId: props.selectedBox._id,
     };
     props.postComment(comment);
@@ -66,46 +66,48 @@ const ProfileFeed = (props) => {
   };
 
   const renderModal = () => {
-    return (
-      <Modal
-        centered={false}
-        size="tiny"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-      >
-        <Modal.Content style={{ backgroundColor: "#203647" }}>
-          <Icon
-            onClick={() => setOpen(false)}
-            style={{ cursor: "pointer", color: "#4DA8DA" }}
-            name="x"
-            size="large"
-          />
-          <Divider />
-          <Box
-            id={props.selectedBox.id}
-            likes={props.selectedBox.likes}
-            userName="@userName"
-            comments={props.selectedBox.comments}
-            userId={props.selectedBox.userId}
-            content={props.selectedBox.content}
-            time={props.selectedBox.createdAt}
-            ago={props.selectedBox.createdAt}
-            display="none"
-            currentUserId={props.userInfo._id}
-          />
-          <Divider />
-          <span
-            style={{ marginLeft: "20px", color: "#4da8da" }}
-          >{`Replying to ${mappedName}`}</span>
-          <CommentForm onFormSubmit={onFormSubmit} />
-        </Modal.Content>
-      </Modal>
-    );
+    if (props.selectedBox.likes) {
+      return (
+        <Modal
+          centered={false}
+          size="tiny"
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+        >
+          <Modal.Content style={{ backgroundColor: "#203647" }}>
+            <Icon
+              onClick={() => setOpen(false)}
+              style={{ cursor: "pointer", color: "#4DA8DA" }}
+              name="x"
+              size="large"
+            />
+            <Divider />
+            <Box
+              id={props.selectedBox.id}
+              likes={props.selectedBox.likes}
+              userName="@userName"
+              comments={props.selectedBox.comments}
+              userId={props.selectedBox.userId}
+              content={props.selectedBox.content}
+              time={props.selectedBox.createdAt}
+              ago={props.selectedBox.createdAt}
+              display="none"
+              currentUserId={props.userInfo._id}
+            />
+            <Divider />
+            <span
+              style={{ marginLeft: "20px", color: "#4da8da" }}
+            >{`Replying to ${mappedName}`}</span>
+            <CommentForm onFormSubmit={onFormSubmit} />
+          </Modal.Content>
+        </Modal>
+      );
+    }
   };
 
   const renderFeed = () => {
-    if (props.boxes.length > 0) {
+    if (sorted.length > 0) {
       return sorted.map((box) => {
         const postDate = new Date(box.createdAt);
         const date = new Date();
@@ -141,7 +143,7 @@ const ProfileFeed = (props) => {
       return (
         <Segment basic className="box-feed-item">
           {" "}
-          Nothing to display{" "}
+          <span style={{color: "#fff"}}>Nothing to display{" "}</span>
         </Segment>
       );
     }

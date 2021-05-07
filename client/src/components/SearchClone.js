@@ -55,7 +55,7 @@ const SearchClone = (props) => {
             <Table.Cell>
               <a href={`/main/profile/${user.name}`}>
                 <Image
-                  size="tiny"
+                  style={{ maxWidth: 80, minHeight: 80 }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
                 />
@@ -83,7 +83,7 @@ const SearchClone = (props) => {
             <Table.Cell>
               <a href={`/main/profile/${user.name}`}>
                 <Image
-                  size="tiny"
+                  style={{ maxWidth: 80, minHeight: 80 }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
                 />
@@ -110,7 +110,7 @@ const SearchClone = (props) => {
   return (
     <Segment
       className="search-clone-card media-right-card"
-      style={{ minHeight: 404 }}
+      style={{ minHeight: 404}}
     >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />

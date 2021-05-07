@@ -26,6 +26,7 @@ const BoxFeed = (props) => {
   });
 
   const setSelectedBox = (box) => {
+    console.log("I SELECTED A USER ")
     props.selectBox(box);
   };
 
@@ -52,42 +53,43 @@ const BoxFeed = (props) => {
   };
 
   const renderModal = () => {
-    return (
-      <Modal
-        centered={false}
-        size="tiny"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-      >
-        <Modal.Content style={{ backgroundColor: "#203647" }}>
-          <Icon
-            onClick={() => setOpen(false)}
-            style={{ cursor: "pointer", color: "#4DA8DA" }}
-            name="x"
-            size="large"
-          />
-          <Divider />
-          <Box
-            id={props.selectedBox.id}
-            likes={props.selectedBox.likes}
-            userName="@userName"
-            comments={props.selectedBox.comments}
-            userId={props.selectedBox.userId}
-            content={props.selectedBox.content}
-            time={props.selectedBox.createdAt}
-            ago={props.selectedBox.createdAt}
-            display="none"
-            currentUserId={props.userInfo.data.result._id}
-          />
-          <Divider />
-          <span
-            style={{ marginLeft: "20px", color: "#4da8da" }}
-          >{`Replying to ${mappedName}`}</span>
-          <CommentForm onFormSubmit={onFormSubmit} />
-        </Modal.Content>
-      </Modal>
-    );
+    if (props.selectedBox.likes) {
+      return (
+        <Modal
+          centered={false}
+          size="tiny"
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+        >
+          <Modal.Content style={{ backgroundColor: "#203647" }}>
+            <Icon
+              onClick={() => setOpen(false)}
+              style={{ cursor: "pointer", color: "#4DA8DA" }}
+              name="x"
+              size="large"
+            />
+            <Divider />
+            <Box
+              id={props.selectedBox.id}
+              likes={props.selectedBox.likes}
+              comments={props.selectedBox.comments}
+              userId={props.selectedBox.userId}
+              content={props.selectedBox.content}
+              time={props.selectedBox.createdAt}
+              ago={props.selectedBox.createdAt}
+              display="none"
+              currentUserId={props.userInfo.data.result._id}
+            />
+            <Divider />
+            <span
+              style={{ marginLeft: "20px", color: "#4da8da" }}
+            >{`Replying to ${mappedName}`}</span>
+            <CommentForm onFormSubmit={onFormSubmit} />
+          </Modal.Content>
+        </Modal>
+      );
+    }
   };
 
   const renderFeed = () => {
@@ -104,6 +106,7 @@ const BoxFeed = (props) => {
             basic
             onClick={() => setSelectedBox(box)}
             className="box-feed-item"
+            style={{maxWidth: 650,}}
           >
             <Box
               id={box._id}

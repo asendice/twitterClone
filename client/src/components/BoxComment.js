@@ -15,12 +15,13 @@ import { Segment, Modal, Divider, Icon } from "semantic-ui-react";
 
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
+  if (!props.selectedBox.likes) {
     props.getBox(window.location.pathname.slice(14));
+  }
+  useEffect(() => {
     props.getComments(props.selectedBox._id);
     props.getUsers();
-  }, []);
+  }, [props.selectedBox]);
 
   const user = props.allUsers.filter((item) => {
     const name = item.id === props.selectedBox.userId ? item : null;
@@ -30,8 +31,9 @@ const BoxComment = (props) => {
   const mappedName = user.map((item) => {
     return item.name;
   });
-  const numOfLikes =
-    props.selectedBox ? props.selectedBox.likes.length : 0;
+  const numOfLikes = props.selectedBox.likes
+    ? props.selectedBox.likes.length
+    : 0;
   const numOfComments = props.comments ? props.comments.length : null;
 
   const renderCommentFeed = () => {
@@ -40,13 +42,14 @@ const BoxComment = (props) => {
         const date = new Date();
         const postDate = new Date(comment.createdAt);
         const commentAgo = date - postDate;
+        console.log(comment, "COMMENT");
         return (
           <Segment
             key={comment.id}
-            style={{ background: "#203647", minWidth: 420 }}
+            style={{ background: "#203647", minWidth: 420, maxWidth: 650, }}
           >
             <Box
-              id={comment.id}
+              commentId={comment.id}
               comments="none"
               likes={comment.likes}
               reply={mappedName}
@@ -87,69 +90,75 @@ const BoxComment = (props) => {
   };
 
   const renderModal = () => {
+    if (props.selectedBox.likes) {
+      return (
+        <Modal
+          centered={false}
+          size="tiny"
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+        >
+          <Modal.Content style={{ backgroundColor: "#203647" }}>
+            <Icon
+              onClick={() => setOpen(false)}
+              style={{ cursor: "pointer", color: "#4DA8DA" }}
+              name="x"
+              size="large"
+            />
+            <Divider />
+            <Box
+              likes={props.selectedBox.likes}
+              id={props.selectedBox.id}
+              userId={props.selectedBox.userId}
+              content={props.selectedBox.content}
+              comments={props.selectedBox.comments}
+              time={props.selectedBox.createdAt}
+              ago={props.selectedBox.createdAt}
+              display="none"
+              currentUserId={props.userInfo._id}
+            />
+            <Divider />
+            <span
+              style={{ marginLeft: "20px", color: "#4da8da" }}
+            >{`Replying to ${mappedName}`}</span>
+            <CommentForm onFormSubmit={onFormSubmit} />
+          </Modal.Content>
+        </Modal>
+      );
+    }
+  };
+
+  if (props.selectedBox.likes) {
     return (
-      <Modal
-        centered={false}
-        size="tiny"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-      >
-        <Modal.Content style={{ backgroundColor: "#203647" }}>
-          <Icon
-            onClick={() => setOpen(false)}
-            style={{ cursor: "pointer", color: "#4DA8DA" }}
-            name="x"
-            size="large"
-          />
-          <Divider />
+      <>
+        <Segment
+          basic
+          padded
+          style={{ minWidth: 420, maxWidth: 650, minHeight: 50, background: "#203647" }}
+        >
           <Box
+            link={props.selectedBox._id}
             likes={props.selectedBox.likes}
-            id={props.selectedBox.id}
+            id={props.selectedBox._id}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
             comments={props.selectedBox.comments}
             time={props.selectedBox.createdAt}
             ago={props.selectedBox.createdAt}
-            display="none"
+            numOfLikes={numOfLikes}
+            numOfComments={numOfComments}
+            setOpen={setOpen}
             currentUserId={props.userInfo._id}
           />
-          <Divider />
-          <span
-            style={{ marginLeft: "20px", color: "#4da8da" }}
-          >{`Replying to ${mappedName}`}</span>
-          <CommentForm onFormSubmit={onFormSubmit} />
-        </Modal.Content>
-      </Modal>
+        </Segment>
+        {renderCommentFeed()}
+        {renderModal()}
+      </>
     );
-  };
-
-  return (
-    <>
-      <Segment
-        basic
-        padded
-        style={{ minWidth: 420, minHeight: 50, background: "#203647" }}
-      >
-        <Box
-          link={props.selectedBox._id}
-          likes={props.selectedBox.likes}
-          id={props.selectedBox._id}
-          userId={props.selectedBox.userId}
-          content={props.selectedBox.content}
-          comments={props.selectedBox.comments}
-          time={props.selectedBox.createdAt}
-          ago={props.selectedBox.createdAt}
-          numOfLikes={numOfLikes}
-          numOfComments={numOfComments}
-          setOpen={setOpen}
-          currentUserId={props.userInfo._id}
-        />
-      </Segment>
-      {renderCommentFeed()}
-      {renderModal()}
-    </>
-  );
+  } else {
+    return <div>hello</div>;
+  }
 };
 
 const mapStateToProps = (state) => {
