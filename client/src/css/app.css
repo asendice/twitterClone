@@ -1,14 +1,7 @@
-.wtf-card {
-  top: 100px !important;
-  left: 50px !important;
-  min-width: 100px !important;
-  max-width: 400px !important;
-  background: #203647 !important;
-}
 
 .search-clone-card {
-  top: 50px !important;
-  left: 50px !important;
+  /* top: 50px !important;
+  left: 50px !important; */
   min-width: 100px !important;
   max-width: 400px !important;
   background: #203647 !important;
@@ -33,11 +26,15 @@
 }
 
 .left-menu {
+  display: flex !important;
+  justify-content: flex-end !important;
+  float: right !important;
   box-shadow: none !important;
   border: none !important;
   background: #12232e !important;
-  margin-left: 130px !important;
-  margin-top: 60px !important;
+  margin-left: auto !important;
+  /* margin-left: 130px !important;
+  margin-top: 60px !important; */
   width: 20rem !important;
 }
 
@@ -61,11 +58,11 @@
   color: #4da8da !important ;
 }
 
-@media screen and (max-width: 1300px) {
+/* @media screen and (max-width: 1300px) {
   .media-left-menu {
     margin-left: 55px !important;
   }
-}
+} */
 
 .follow-btn {
   cursor: pointer !important;

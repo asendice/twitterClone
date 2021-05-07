@@ -91,9 +91,9 @@ const Box = (props) => {
             {" "}
             <Image
               href={`http://localhost:3000/main/profile/${name}`}
-              circular
+              avatar
               src={`http://localhost:8000/${profilePic}`}
-              style={{ height: 45, width: 45 }}
+              // style={{ height: "45px", width: "45px" }}
             />{" "}
             <a href={`http://localhost:3000/main/profile/${name}`}>
               <span style={{ color: "#EEFBFB" }}>{name}</span>
