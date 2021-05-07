@@ -87,6 +87,8 @@ const LeftMenu = (props) => {
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
+            </Header>
+            <Header as="h1" style={{ color: "#fff" }}>
               {props.userInfo.name}
             </Header>
           </NavLink>
@@ -167,7 +169,11 @@ const LeftMenu = (props) => {
               className="menu-icon"
               to={`/main/profile${props.selectedUser.name}`}
             >
-              <Icon size="big" name="at" />
+              <Image
+                style={{ minWidth: 50, minHeight: 50, right: "6px" }}
+                circular
+                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+              />
             </NavLink>
           </Menu.Item>
           <Divider hidden />
@@ -232,7 +238,11 @@ const LeftMenu = (props) => {
               className="menu-icon"
               to={`/main/profile/${props.userInfo.name}`}
             >
-              <Icon size="big" name="at" />
+               <Image
+                style={{ minWidth: 50, minHeight: 50, right: "6px" }}
+                circular
+                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+              />
             </NavLink>
           </Menu.Item>
           <Divider hidden />
