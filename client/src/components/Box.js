@@ -1,5 +1,13 @@
 import React from "react";
-import { Feed, Image, Icon, Grid, Header, Card } from "semantic-ui-react";
+import {
+  Feed,
+  Image,
+  Icon,
+  Grid,
+  Header,
+  Card,
+  Segment,
+} from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import { convertMili } from "../utils/Helper";
 import {
@@ -12,6 +20,10 @@ import {
 import { connect } from "react-redux";
 
 const Box = (props) => {
+  console.log(props.time, "props.time");
+  console.log(props.ago, "props.time");
+  // console.log(props.likes, "props.likes");
+  // console.log(props.selectedBox.likes, "props.selectedBox.likes");
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
@@ -44,25 +56,26 @@ const Box = (props) => {
     return name.profilePic;
   });
 
-  // this is going to need to swith the selected user or however we solved that problem when click on other users profiles
   const renderLikeMsg = () => {
-    return props.likes.includes(props.selectedUser.id) && props.profile ? (
-      <span className="reply-text">
-        {props.selectedUser.name} liked this post:{" "}
-      </span>
-    ) : (
-      ""
-    );
-  };
-
-  const onCardClick = () => {
-    console.log("does this work?");
-    return <Redirect to={`/main/comment/${props.link}`} />;
+    if (props.likes) {
+      return props.likes.includes(props.selectedUser.id) && props.profile ? (
+        <span className="reply-text">
+          {props.selectedUser.name} liked this post:{" "}
+        </span>
+      ) : (
+        ""
+      );
+    }
   };
 
   return (
     <>
-      <Link to={`/main/comment/${props.link}`}>
+      <Segment
+        style={{ padding: 0 }}
+        basic
+        as="a"
+        href={`http://localhost:3000/main/comment/${props.link}`}
+      >
         {renderLikeMsg()}
         <Card
           key={props.id}
@@ -73,26 +86,29 @@ const Box = (props) => {
           }}
         >
           {/* */}
-          <a href={`http://localhost:3000/main/profile/${name}`}>
-            <Header as="h3">
-              <Image
-                circular
-                src={`http://localhost:8000/${profilePic}`}
-                style={{ maxHeight: 45, maxWidth: 45 }}
-              />{" "}
+
+          <Header as="h3">
+            {" "}
+            <Image
+              href={`http://localhost:3000/main/profile/${name}`}
+              circular
+              src={`http://localhost:8000/${profilePic}`}
+              style={{ height: 45, width: 45 }}
+            />{" "}
+            <a href={`http://localhost:3000/main/profile/${name}`}>
               <span style={{ color: "#EEFBFB" }}>{name}</span>
-              <span
-                style={{
-                  color: "grey",
-                  fontSize: "15px",
-                  fontWeight: "normal",
-                }}
-              >
-                {" - "}
-                {props.ago > 0 ? convertMili(props.ago) : Date(props.time)}
-              </span>
-            </Header>
-          </a>
+            </a>
+            <span
+              style={{
+                color: "grey",
+                fontSize: "15px",
+                fontWeight: "normal",
+              }}
+            >
+              {" - "}
+              {props.ago > 0 ? convertMili(props.ago) : (props.time)}
+            </span>
+          </Header>
           {props.reply ? (
             <span style={{ marginLeft: "20px", color: "grey" }}>
               Replying to{" "}
@@ -113,7 +129,8 @@ const Box = (props) => {
             </span>
           </Feed.Content>
         </Card>
-      </Link>
+      </Segment>
+
       <Feed.Meta style={{ display: `${props.display}` }}>
         <Grid>
           <Grid.Row columns={2} textAlign="center">
@@ -171,6 +188,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user.data.result,
     allUsers: state.allUsers.users,
     selectedUser: state.selectedUser,
+    selectedBox: state.selectedBox,
   };
 };
 

@@ -26,8 +26,10 @@ const LeftMenu = (props) => {
 
   const onFormSubmit = (values) => {
     const box = {
-      userId: "1",
+      userId: props.userInfo._id,
       content: values.boxText,
+      likes: [],
+      comments: [],
     };
     props.postBoxes(box);
     setOpen(false);
@@ -41,7 +43,7 @@ const LeftMenu = (props) => {
         onOpen={() => setOpen(true)}
         open={open}
       >
-        <Modal.Content style={{ background: "#203647"}}>
+        <Modal.Content style={{ background: "#203647" }}>
           <Icon
             onClick={() => setOpen(false)}
             style={{ cursor: "pointer", color: "#4DA8DA" }}
@@ -75,10 +77,13 @@ const LeftMenu = (props) => {
           vertical
           borderless
         >
-          <NavLink to={`/main/profile/${props.selectedUser.name}`}>
+          <NavLink
+            onClick={() => onProfileClick()}
+            to={`/main/profile/${props.userInfo.name}`}
+          >
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
-                style={{ maxWidth: 70, maxHeight: 70 }}
+                style={{ minWidth: 120, minHeight: 120 }}
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
@@ -108,14 +113,14 @@ const LeftMenu = (props) => {
               Notifications
             </NavLink>
           </Menu.Item>
-          <Menu.Item >
+          <Menu.Item>
             <NavLink
-              onClick={() => onProfileClick()} 
+              onClick={() => onProfileClick()}
               className="menu-item"
               activeClassName="menu-item-active"
               to={`/main/profile/${props.userInfo.name}`}
             >
-              <Icon name="user"/>
+              <Icon name="user" />
               Profile
             </NavLink>
           </Menu.Item>
@@ -158,7 +163,10 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to={`/main/profile${props.selectedUser.name}`}>
+            <NavLink
+              className="menu-icon"
+              to={`/main/profile${props.selectedUser.name}`}
+            >
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -220,7 +228,10 @@ const LeftMenu = (props) => {
           }}
         >
           <Menu.Item>
-            <NavLink className="menu-icon" to={`/main/profile/${props.userInfo.name}`}>
+            <NavLink
+              className="menu-icon"
+              to={`/main/profile/${props.userInfo.name}`}
+            >
               <Icon size="big" name="at" />
             </NavLink>
           </Menu.Item>
@@ -276,7 +287,7 @@ const mapStateToProps = (state) => {
     box: state.box,
     userInfo: state.userInfo.user.data.result,
     loggedIn: state.userInfo.loggedIn,
-    selectedUser: state.selectedUser
+    selectedUser: state.selectedUser,
   };
 };
 

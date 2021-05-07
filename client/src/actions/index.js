@@ -372,6 +372,7 @@ export const addLikeBox = (ids) => {
         },
       })
       .then((response) => {
+        console.log(response, "response");
         if (response) {
           console.log(response, "from addLikeBox");
           return response;
@@ -383,7 +384,10 @@ export const addLikeBox = (ids) => {
           throw error;
         }
       })
-      .then((response) => dispatch(updateBox(response)));
+      .then((response) => {
+        dispatch(updateBox(response));
+        dispatch(selectBox(response));
+      });
   };
 };
 export const delLikeUser = (ids) => {
@@ -408,7 +412,10 @@ export const delLikeUser = (ids) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)));
+      .then((response) => {
+        dispatch(updateBox(response));
+        dispatch(selectBox(response));
+      });
   };
 };
 
@@ -457,6 +464,7 @@ export const editProfilePic = (item) => {
       })
       .then((response) => {
         if (response) {
+          console.log(response);
           return response;
         } else {
           const error = new Error(
@@ -466,8 +474,7 @@ export const editProfilePic = (item) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)))
-      .then((response) => dispatch(selectUser(response.data.result)));
+      .then((response) => dispatch(loggedin(response)));
   };
 };
 

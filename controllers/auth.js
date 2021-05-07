@@ -388,6 +388,7 @@ exports.uploadProfilePic = (req, res) => {
         res.status(200).json({
           success: true,
           result: user,
+          response: response,
         });
       })
       .catch((err) => {
