@@ -47,6 +47,8 @@ exports.register = (req, res, next) => {
           name: name,
           email: email,
           password: password,
+          profilePic: "uploads/2021-05-08T02:06:44.991Zbasicuser.png",
+          background: "uploads/2021-05-08T02:09:18.528Zbasicbackground.png",
         });
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(password, salt, function (err, hash) {
@@ -75,6 +77,7 @@ exports.register = (req, res, next) => {
       });
     });
 };
+
 exports.login = (req, res) => {
   const { name, password } = req.body;
   const errors = [];
@@ -165,6 +168,7 @@ exports.getBoxes = (req, res) => {
     }
   });
 };
+
 exports.getBox = (req, res) => {
   const { boxId } = req.params;
   Boxes.findById(boxId).then((box) => {
@@ -239,6 +243,7 @@ exports.putComment = (req, res) => {
       });
   });
 };
+
 exports.addLikeBox = (req, res) => {
   const { boxId, userId } = req.body;
   Boxes.findById(boxId, (err, box) => {
@@ -258,6 +263,7 @@ exports.addLikeBox = (req, res) => {
       });
   });
 };
+
 exports.addLikeUser = (req, res) => {
   const { boxId, userId } = req.body;
   User.findById(userId, (err, user) => {
@@ -277,6 +283,7 @@ exports.addLikeUser = (req, res) => {
       });
   });
 };
+
 exports.delLikeBox = (req, res) => {
   const { boxId, userId } = req.body;
   Boxes.findById(boxId, (err, box) => {
@@ -299,6 +306,7 @@ exports.delLikeBox = (req, res) => {
       });
   });
 };
+
 exports.delLikeUser = (req, res) => {
   const { boxId, userId } = req.body;
   User.findById(userId, (err, user) => {
@@ -375,6 +383,7 @@ exports.getUser = (req, res) => {
   });
 };
 
+// EDIT PROFILE //////////////////////////
 exports.uploadProfilePic = (req, res) => {
   console.log(req.file, "req.file");
   let image = req.file.path;
@@ -398,9 +407,10 @@ exports.uploadProfilePic = (req, res) => {
       });
   });
 };
+
 exports.uploadBackgroundPic = (req, res) => {
   let image = req.file.path;
-  console.log(image, "IMAGE")
+  console.log(image, "IMAGE");
   const { userId } = req.params;
   console.log(req, "THIS IS THE REQUEST ");
   User.findById(userId).then((user) => {
@@ -424,7 +434,7 @@ exports.uploadBackgroundPic = (req, res) => {
 
 exports.editBio = (req, res) => {
   const { id, bio } = req.body;
-  console.log(id, bio)
+  console.log(id, bio);
   User.findById(id).then((user) => {
     user.bio = bio;
     user
@@ -442,3 +452,4 @@ exports.editBio = (req, res) => {
       });
   });
 };
+// END OF EDIT PROFILE ///////////////

@@ -15,13 +15,15 @@ import { Segment, Modal, Divider, Icon } from "semantic-ui-react";
 
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
+  const url = window.location.pathname.slice(9);
+  console.log(!props.selectedBox.likes);
   if (!props.selectedBox.likes) {
-    props.getBox(window.location.pathname.slice(14));
+    props.getBox(url);
   }
   useEffect(() => {
-    props.getComments(props.selectedBox._id);
+    props.getComments(url);
     props.getUsers();
-  }, [props.selectedBox]);
+  }, [url]);
 
   const user = props.allUsers.filter((item) => {
     const name = item.id === props.selectedBox.userId ? item : null;
@@ -36,9 +38,15 @@ const BoxComment = (props) => {
     : 0;
   const numOfComments = props.comments ? props.comments.length : null;
 
+  const sorted = props.comments.sort((a, b) => {
+    const one = new Date(a.createdAt);
+    const two = new Date(b.createdAt);
+    return two - one;
+  });
+
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
-      return props.comments.map((comment) => {
+      return sorted.map((comment) => {
         const date = new Date();
         const postDate = new Date(comment.createdAt);
         const commentAgo = date - postDate;
@@ -46,10 +54,17 @@ const BoxComment = (props) => {
         return (
           <Segment
             key={comment.id}
-            style={{ background: "#203647", minWidth: 420, maxWidth: 650, }}
+            style={{
+              background: "#203647",
+              minWidth: 420,
+              maxWidth: 650,
+              marginLeft: "auto",
+              marginRight: "auto",
+              border: "1px solid black",
+            }}
           >
             <Box
-              commentId={comment.id}
+              id={comment.id}
               comments="none"
               likes={comment.likes}
               reply={mappedName}
@@ -89,6 +104,10 @@ const BoxComment = (props) => {
     setOpen(false);
   };
 
+  const date = new Date();
+  const postDate = new Date(props.selectedBox.createdAt);
+  const postAgo = date - postDate;
+
   const renderModal = () => {
     if (props.selectedBox.likes) {
       return (
@@ -114,7 +133,7 @@ const BoxComment = (props) => {
               content={props.selectedBox.content}
               comments={props.selectedBox.comments}
               time={props.selectedBox.createdAt}
-              ago={props.selectedBox.createdAt}
+              ago={postAgo}
               display="none"
               currentUserId={props.userInfo._id}
             />
@@ -132,24 +151,21 @@ const BoxComment = (props) => {
   if (props.selectedBox.likes) {
     return (
       <>
-        <Segment
-          basic
-          padded
-          style={{ minWidth: 420, maxWidth: 650, minHeight: 50, background: "#203647" }}
-        >
+        <Segment basic padded className="focus-box">
           <Box
-            link={props.selectedBox._id}
+            link={props._id}
             likes={props.selectedBox.likes}
             id={props.selectedBox._id}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}
             comments={props.selectedBox.comments}
             time={props.selectedBox.createdAt}
-            ago={props.selectedBox.createdAt}
+            ago={postAgo}
             numOfLikes={numOfLikes}
             numOfComments={numOfComments}
             setOpen={setOpen}
             currentUserId={props.userInfo._id}
+            info={true}
           />
         </Segment>
         {renderCommentFeed()}
@@ -157,7 +173,7 @@ const BoxComment = (props) => {
       </>
     );
   } else {
-    return <div>hello</div>;
+    return <div></div>;
   }
 };
 

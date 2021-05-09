@@ -281,7 +281,7 @@ export const getUsers = () => {
 export const getUser = (name) => {
   return async (dispatch) => {
     await backendApi
-      .get(`/main/profile/${name}`, {
+      .get(`/profile/${name}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -303,7 +303,7 @@ export const getUser = (name) => {
 export const getBox = (id) => {
   return async (dispatch) => {
     await backendApi
-      .get(`/main/boxes/${id}`, {
+      .get(`/boxes/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -386,7 +386,7 @@ export const addLikeBox = (ids) => {
       })
       .then((response) => {
         dispatch(updateBox(response));
-        dispatch(selectBox(response));
+        dispatch(selectBox(response.data.result));
       });
   };
 };
@@ -414,7 +414,6 @@ export const delLikeUser = (ids) => {
       })
       .then((response) => {
         dispatch(updateBox(response));
-        dispatch(selectBox(response));
       });
   };
 };
@@ -440,7 +439,10 @@ export const delLikeBox = (ids) => {
           throw error;
         }
       })
-      .then((response) => dispatch(updateBox(response)));
+      .then((response) => {
+        dispatch(updateBox(response));
+        dispatch(selectBox(response.data.result));
+      });
   };
 };
 

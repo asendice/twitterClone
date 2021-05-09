@@ -27,9 +27,9 @@ const length = (value) =>
   ) : undefined;
 
 const nameMaxLength = (value) =>
-  value && value.length > 12 ? (
+  value && value.length > 18 ? (
     <span style={{ color: "pink" }}>
-      {`*This field must contain no more than 12 characters.`}
+      {`*This field must contain no more than 18 characters.`}
     </span>
   ) : undefined;
 

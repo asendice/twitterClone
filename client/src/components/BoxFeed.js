@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "./Box";
-import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
+import { Modal, Segment, Divider, Icon, Header } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import {
   getBoxes,
@@ -14,6 +14,8 @@ import { connect } from "react-redux";
 
 const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
+
+  
   useEffect(() => {
     props.getBoxes();
     props.getUsers();
@@ -106,7 +108,6 @@ const BoxFeed = (props) => {
             basic
             onClick={() => setSelectedBox(box)}
             className="box-feed-item"
-            style={{maxWidth: 650,}}
           >
             <Box
               id={box._id}
@@ -127,9 +128,9 @@ const BoxFeed = (props) => {
       });
     } else {
       return (
-        <Segment basic className="box-feed-item">
+        <Segment basic className="box-feed-item" >
           {" "}
-          Loading{" "}
+          Loading
         </Segment>
       );
     }

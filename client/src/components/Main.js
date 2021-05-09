@@ -2,8 +2,10 @@ import React, { createRef } from "react";
 import { Redirect, Route } from "react-router-dom";
 import BoxComment from "./BoxComment";
 import Home from "./Home";
+import Landing from "./Landing";
 import Notifications from "./Notifications";
 import Profile from "./Profile";
+import Follow from "./Follow";
 import Title from "./Title";
 import LeftMenu from "./LeftMenu";
 import RightContent from "./RightContent";
@@ -12,7 +14,11 @@ import { connect } from "react-redux";
 
 const Main = (props) => {
   const contextRef = createRef();
-  const name = window.location.pathname.slice(14);
+  const name = window.location.pathname.slice(9);
+
+  if (window.location.pathname === "/" && props.loggedIn) {
+    return <Redirect to="/home" />;
+  }
 
   if (props.loggedIn) {
     return (
@@ -22,18 +28,19 @@ const Main = (props) => {
       >
         <Title contextRef={contextRef} />
         <Divider hidden />
-        <Grid columns={3}>
+        <Grid columns={3} centered>
           <Grid.Row>
             <Grid.Column computer={5} tablet={2} mobile={2}>
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
-            <Grid.Column computer={6} tablet={11} mobile={13}>
-              <Route path="/main/home" component={Home} />
-              <Route path="/main/notifications" component={Notifications} />
-              <Route path={`/main/profile/${name}`} component={Profile} />
-              <Route path={`/main/comment/${name}`} component={BoxComment} />
+            <Grid.Column computer={6} tablet={11} mobile={12}>
+              <Route exact path="/home" component={Home} />
+              <Route exact path="/notifications" component={Notifications} />
+              <Route exact path={`/profile/${name}`} component={Profile} />
+              <Route exact path={`/follow`} component={Follow} />
+              <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
-            <Grid.Column computer={5} tablet={1} mobile={1}>
+            <Grid.Column computer={5} tablet={1} mobile={2}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>
@@ -41,7 +48,12 @@ const Main = (props) => {
       </div>
     );
   } else {
-    return <Redirect to="/" />;
+    return (
+      <>
+        <Route exact path="/" component={Landing} />
+        <Redirect to="/" />
+      </>
+    );
   }
 };
 

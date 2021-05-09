@@ -11,7 +11,7 @@ import {
   Divider,
   Grid,
 } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import PostBoxForm from "./PostBoxForm";
 import { postBoxes, getUser } from "../actions";
 import { logout } from "../actions";
@@ -32,8 +32,16 @@ const LeftMenu = (props) => {
       comments: [],
     };
     props.postBoxes(box);
+    props.getUser(props.selectedUser.id);
     setOpen(false);
   };
+
+  const logout = () => {
+    props.logout()
+    return <Redirect to="/login"/>
+  }
+
+
   const renderModal = () => {
     return (
       <Modal
@@ -79,11 +87,16 @@ const LeftMenu = (props) => {
         >
           <NavLink
             onClick={() => onProfileClick()}
-            to={`/main/profile/${props.userInfo.name}`}
+            to={`/profile/${props.userInfo.name}`}
           >
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
-                style={{ minWidth: 120, minHeight: 120 }}
+                style={{
+                  minWidth: 120,
+                  minHeight: 120,
+                  maxWidth: 120,
+                  maxHeight: 120,
+                }}
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
@@ -98,7 +111,7 @@ const LeftMenu = (props) => {
             <NavLink
               exact
               className="menu-item"
-              to="/main/home"
+              to="/home"
               activeClassName="menu-item-active"
             >
               <Icon name="home" />
@@ -108,7 +121,7 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               className="menu-item"
-              to="/main/notifications"
+              to="/notifications"
               activeClassName="menu-item-active"
             >
               <Icon name="bell" />
@@ -120,7 +133,7 @@ const LeftMenu = (props) => {
               onClick={() => onProfileClick()}
               className="menu-item"
               activeClassName="menu-item-active"
-              to={`/main/profile/${props.userInfo.name}`}
+              to={`/profile/${props.userInfo.name}`}
             >
               <Icon name="user" />
               Profile
@@ -140,7 +153,7 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Menu.Item>
             <Button
-              onClick={() => props.logout()}
+              onClick={() => logout()}
               style={{ backgroundColor: "grey" }}
             >
               <Header as="h2" style={{ color: "#fff" }}>
@@ -167,10 +180,16 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               className="menu-icon"
-              to={`/main/profile${props.selectedUser.name}`}
+              to={`/profile${props.selectedUser.name}`}
             >
               <Image
-                style={{ minWidth: 50, minHeight: 50, right: "6px" }}
+                style={{
+                  minWidth: 50,
+                  minHeight: 50,
+                  maxHeight: 50,
+                  maxWidth: 50,
+                  right: "6px",
+                }}
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
@@ -180,7 +199,7 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               exact
-              to="/main/home"
+              to="/home"
               className="menu-icon"
               activeClassName="menu-item-active"
             >
@@ -191,7 +210,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/main/notifications"
+              to="/notifications"
             >
               <Icon size="big" name="bell" />
             </NavLink>
@@ -200,7 +219,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to={`/main/profile/${props.userInfo.name}`}
+              to={`/profile/${props.userInfo.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
@@ -236,10 +255,16 @@ const LeftMenu = (props) => {
           <Menu.Item>
             <NavLink
               className="menu-icon"
-              to={`/main/profile/${props.userInfo.name}`}
+              to={`/profile/${props.userInfo.name}`}
             >
-               <Image
-                style={{ minWidth: 50, minHeight: 50, right: "6px" }}
+              <Image
+                style={{
+                  minWidth: 50,
+                  minHeight: 50,
+                  maxHeight: 50,
+                  maxWidth: 50,
+                  right: "6px",
+                }}
                 circular
                 src={`http://localhost:8000/${props.userInfo.profilePic}`}
               />
@@ -251,7 +276,7 @@ const LeftMenu = (props) => {
               exact
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/main/home"
+              to="/home"
             >
               <Icon size="big" name="home" />
             </NavLink>
@@ -260,7 +285,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to="/main/notifications"
+              to="/notifications"
             >
               <Icon size="big" name="bell" />
             </NavLink>
@@ -269,7 +294,7 @@ const LeftMenu = (props) => {
             <NavLink
               className="menu-icon"
               activeClassName="menu-item-active"
-              to={`/main/profile/${props.userInfo.name}`}
+              to={`/profile/${props.userInfo.name}`}
             >
               <Icon size="big" name="user" />
             </NavLink>
