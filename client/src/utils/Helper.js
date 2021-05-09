@@ -1,12 +1,11 @@
-
-// rounds number up to single digit excluding decimals 
+// rounds number up to single digit excluding decimals
 const rounder = (num) => {
   if (num && num.toString().length > 2) {
     return Math.round(num * 1) / 1;
   } else return num;
 };
 
-// converts a number from miliseconds to seconds, minutes, hours, days by 
+// converts a number from miliseconds to seconds, minutes, hours, days by
 // returning a templated string, with a number rounded up to the nearst digit excluding decimals and the corresponding letter
 const convertMili = (num) => {
   switch (num > 0) {
@@ -27,7 +26,20 @@ const convertMili = (num) => {
   }
 };
 
+const readableDate = (str) => {
+  const date = str.slice(3, 15);
+  const timeTwentyFour = str.slice(15, 24);
+  console.log(timeTwentyFour.slice(0, 3), "24 hour time ");
+  const timeTwelve =
+    Number(timeTwentyFour.slice(0, 3)) > 12
+      ? `${timeTwentyFour.slice(0, 3) - 12 + `:` + timeTwentyFour.slice(4)}` +
+        " " +
+        `PM`
+      : `${timeTwentyFour.slice(0, 3) + `:` + timeTwentyFour.slice(4)}` +
+        " " +
+        `AM`;
 
+  return `${timeTwelve}` + " - " + ` ${date}`;
+};
 
-
-export { convertMili, rounder };
+export { convertMili, rounder, readableDate };

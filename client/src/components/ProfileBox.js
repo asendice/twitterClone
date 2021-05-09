@@ -16,7 +16,7 @@ const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    props.getUser(window.location.pathname.slice(14));
+    props.getUser(window.location.pathname.slice(9));
   }, [open]);
 
   const onFormSubmit = (values) => {
@@ -67,13 +67,10 @@ const ProfileBox = (props) => {
   return (
     <Segment
       textAlign="center"
+      className="profile-box"
       padded
       fluid
       style={{
-        minWidth: 420,
-        minHeight: 330,
-        maxWidth: 650,
-        cursor: "pointer",
         backgroundImage: `url('${`http://localhost:8000/${props.selectedUser.background}`}')`,
         backgroundSize: "655px 350px, cover",
       }}
@@ -85,9 +82,11 @@ const ProfileBox = (props) => {
               circular
               size="small"
               style={{
+                maxHeight: 150,
+                maxWidth: 150,
                 minHeight: 150,
                 minWidth: 150,
-                border: "3px #203647 solid",
+                border: "3px black solid",
               }}
               src={`http://localhost:8000/${props.selectedUser.profilePic}`}
             />

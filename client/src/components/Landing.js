@@ -11,7 +11,9 @@ const Landing = (props) => {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [loginResult, setLoginResult] = useState(false);
   const [registerResult, setRegisterResult] = useState(false);
-
+  if (props.loggedIn) {
+    return <Redirect to="/home" />;
+  }
   const logLinkClick = () => {
     setLoginOpen(false);
     setRegisterOpen(true);
@@ -29,9 +31,45 @@ const Landing = (props) => {
     props.register(formValues);
   };
 
-  const renderLoginResultMoldal = () => {
+  // const renderRegisterResultModal = () => {
+  //   if (props.registerInfo.status === 200) {
+  //     setLoginOpen(true);
+  //   } else if (props.registerInfo.status === 200) {
+  //     console.log("this should be working ---", props.registerInfo.status);
+  //     const mapRegInfoError = props.registerInfo.data.errors.map((errors) => {
+  //       return errors.user || errors.password;
+  //     });
+  //     return (
+  //       <Modal
+  //         centered={false}
+  //         size="tiny"
+  //         onClose={() => setRegisterResult(false)}
+  //         onOpen={() => setRegisterResult(true)}
+  //         open={registerResult}
+  //       >
+  //         <Modal.Content style={{ backgroundColor: "#203647" }}>
+  //           <Segment basic style={{ color: "#fff" }}>
+  //             {" "}
+  //             Registration failed: {mapRegInfoError}
+  //             <Icon
+  //               onClick={() => setRegisterResult(false)}
+  //               name="x"
+  //               style={{ cursor: "pointer", color: "#4DA8DA", float: "right" }}
+  //               name="x"
+  //               size="large"
+  //             />
+  //           </Segment>
+  //         </Modal.Content>
+  //       </Modal>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // };
+
+  const renderLoginResultModal = () => {
     if (props.loggedIn) {
-      return <Redirect to="/main/home" />;
+      return <Redirect to="/home" />;
     } else if (!props.loggedIn) {
       const mapUserInfoError = props.userInfo.data.errors.map((errors) => {
         return errors.user || errors.password;
@@ -60,7 +98,7 @@ const Landing = (props) => {
         </Modal>
       );
     } else {
-      return null;
+      return <Redirect to="/home" />;
     }
   };
 
@@ -121,7 +159,7 @@ const Landing = (props) => {
       <Grid columns={3}>
         <Grid.Column mobile={1} tablet={5} computer={6}></Grid.Column>
         <Grid.Column mobile={14} tablet={6} computer={6} style={{ top: 200 }}>
-          <Segment basic>
+          <Segment basic style={{ minWidth: "400px", maxWidth: "400px" }}>
             <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
               It's
             </Header>
@@ -135,7 +173,7 @@ const Landing = (props) => {
               Join twitterClone Today.
             </Header>
           </Segment>
-          <Segment basic style={{ maxWidth: "400px" }}>
+          <Segment basic style={{ minWidth: "400px", maxWidth: "400px" }}>
             <Button
               fluid
               onClick={() => setRegisterOpen(true)}
@@ -161,7 +199,8 @@ const Landing = (props) => {
       </Grid>
       {renderLoginModal()}
       {renderRegisterModal()}
-      {props.userInfo ? renderLoginResultMoldal() : null}
+      {props.userInfo ? renderLoginResultModal() : null}
+      {/* {props.registerInfo ? renderRegisterResultModal() : null} */}
     </Segment>
   );
 };

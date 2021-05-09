@@ -7,9 +7,9 @@ import {
   Header,
   Card,
   Segment,
+  Divider,
 } from "semantic-ui-react";
-import { Link, Redirect } from "react-router-dom";
-import { convertMili } from "../utils/Helper";
+import { convertMili, readableDate } from "../utils/Helper";
 import {
   getUsers,
   addLikeUser,
@@ -20,8 +20,6 @@ import {
 import { connect } from "react-redux";
 
 const Box = (props) => {
-  console.log(props.time, "props.time");
-  console.log(props.ago, "props.time");
   // console.log(props.likes, "props.likes");
   // console.log(props.selectedBox.likes, "props.selectedBox.likes");
   // creates ids object that contains user Id and the box or "post" id.
@@ -32,7 +30,6 @@ const Box = (props) => {
       userId: props.currentUserId,
       boxId: props.id,
     };
-
     if (props.likes.includes(props.userInfo._id)) {
       props.delLikeUser(ids);
       props.delLikeBox(ids);
@@ -55,6 +52,38 @@ const Box = (props) => {
   const profilePic = userName.map((name) => {
     return name.profilePic;
   });
+  const postDate = new Date(props.time).toString();
+  console.log(postDate);
+
+  const renderBoxInfo = () => {
+    if (props.info) {
+      return (
+        <>
+          <span
+            style={{
+              color: "grey",
+              fontSize: "15px",
+              fontWeight: "normal",
+              marginLeft: 12,
+              fontSize: 14,
+            }}
+          >
+            {readableDate(postDate)}
+          </span>
+          <Divider />
+          <span style={{ color: "#fff", marginLeft: 10 }}>
+            {props.numOfLikes}{" "}
+          </span>
+          <span style={{ color: "grey", marginLeft: 3 }}> Likes</span>
+          <span style={{ color: "#fff", marginLeft: 10 }}>
+            {props.numOfComments}{" "}
+          </span>
+          <span style={{ color: "grey", marginLeft: 3 }}> Comments</span>
+          <Divider />
+        </>
+      );
+    }
+  };
 
   const renderLikeMsg = () => {
     if (props.likes) {
@@ -68,15 +97,25 @@ const Box = (props) => {
     }
   };
 
+  const renderReplyMsg = () => {
+    return props.reply ? (
+      <span className="reply-text">
+        Replying to <span>{props.reply}</span>
+      </span>
+    ) : (
+      ""
+    );
+  };
+
   return (
     <>
       <Segment
         style={{ padding: 0 }}
         basic
-        as="a"
-        href={`http://localhost:3000/main/comment/${props.link}`}
+        href={`http://localhost:3000/comment/${props.link}`}
       >
         {renderLikeMsg()}
+        {renderReplyMsg()}
         <Card
           key={props.id}
           fluid
@@ -90,12 +129,17 @@ const Box = (props) => {
           <Header as="h3">
             {" "}
             <Image
-              href={`http://localhost:3000/main/profile/${name}`}
-              avatar
+              circular
+              href={`http://localhost:3000/profile/${name}`}
               src={`http://localhost:8000/${profilePic}`}
-              // style={{ height: "45px", width: "45px" }}
+              style={{
+                minWidth: 60,
+                minHeight: 60,
+                maxHeight: 60,
+                maxWidth: 60,
+              }}
             />{" "}
-            <a href={`http://localhost:3000/main/profile/${name}`}>
+            <a href={`http://localhost:3000/profile/${name}`}>
               <span style={{ color: "#EEFBFB" }}>{name}</span>
             </a>
             <span
@@ -106,17 +150,9 @@ const Box = (props) => {
               }}
             >
               {" - "}
-              {props.ago > 0 ? convertMili(props.ago) : (props.time)}
+              {convertMili(props.ago)}
             </span>
           </Header>
-          {props.reply ? (
-            <span style={{ marginLeft: "20px", color: "grey" }}>
-              Replying to{" "}
-              <span style={{ color: "#4da8da" }}>{props.reply}</span>
-            </span>
-          ) : (
-            ""
-          )}
           <Feed.Content>
             <span
               style={{
@@ -130,7 +166,7 @@ const Box = (props) => {
           </Feed.Content>
         </Card>
       </Segment>
-
+      {renderBoxInfo()}
       <Feed.Meta style={{ display: `${props.display}` }}>
         <Grid>
           <Grid.Row columns={2} textAlign="center">
@@ -149,7 +185,8 @@ const Box = (props) => {
                 <span
                   style={{
                     marginLeft: "5px",
-                    visibility: props.numOfLikes === 0 ? "hidden" : " ",
+                    visibility:
+                      props.numOfLikes === 0 || props.info ? "hidden" : " ",
                     color: "grey",
                   }}
                 >
@@ -167,7 +204,8 @@ const Box = (props) => {
                 <span
                   style={{
                     marginLeft: "5px",
-                    visibility: props.numOfComments === 0 ? "hidden" : "",
+                    visibility:
+                      props.numOfComments === 0 || props.info ? "hidden" : "",
                     color: "grey",
                   }}
                 >

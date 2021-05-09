@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Segment,
   Input,
@@ -53,16 +52,21 @@ const SearchClone = (props) => {
         return (
           <Table.Row key={user.id}>
             <Table.Cell>
-              <a href={`/main/profile/${user.name}`}>
+              <a href={`/profile/${user.name}`}>
                 <Image
-                  style={{ maxWidth: 80, minHeight: 80 }}
+                  style={{
+                    maxWidth: 80,
+                    minHeight: 80,
+                    minWidth: 80,
+                    maxHeight: 80,
+                  }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
                 />
               </a>
             </Table.Cell>
             <Table.Cell>
-              <a href={`/main/profile/${user.name}`}>
+              <a href={`/${user.name}`}>
                 <Header as="h3" style={{ color: "#fff" }}>
                   {user.name}
                 </Header>
@@ -81,16 +85,21 @@ const SearchClone = (props) => {
         return (
           <Table.Row>
             <Table.Cell>
-              <a href={`/main/profile/${user.name}`}>
+              <a href={`/profile/${user.name}`}>
                 <Image
-                  style={{ maxWidth: 80, minHeight: 80 }}
+                  style={{
+                    maxWidth: 80,
+                    minHeight: 80,
+                    minWidth: 80,
+                    maxHeight: 80,
+                  }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
                 />
               </a>
             </Table.Cell>
             <Table.Cell>
-              <a href={`/main/profile/${user.name}`}>
+              <a href={`/profile/${user.name}`}>
                 <Header as="h3" style={{ color: "#fff" }}>
                   {user.name}
                 </Header>
@@ -110,7 +119,7 @@ const SearchClone = (props) => {
   return (
     <Segment
       className="search-clone-card media-right-card"
-      style={{ minHeight: 404}}
+      style={{ minHeight: 404 }}
     >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />
