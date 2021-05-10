@@ -11,7 +11,7 @@ const commentSchema = new Schema(
       type: String,
       required: true,
     },
-    boxId:{
+    boxId: {
       type: String,
       required: true,
     },
@@ -20,6 +20,9 @@ const commentSchema = new Schema(
       required: true,
     },
     likes: {
+      type: Array,
+    },
+    replies: {
       type: Array,
     },
   },

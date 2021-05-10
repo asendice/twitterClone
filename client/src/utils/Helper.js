@@ -29,7 +29,6 @@ const convertMili = (num) => {
 const readableDate = (str) => {
   const date = str.slice(3, 15);
   const timeTwentyFour = str.slice(15, 24);
-  console.log(timeTwentyFour.slice(0, 3), "24 hour time ");
   const timeTwelve =
     Number(timeTwentyFour.slice(0, 3)) > 12
       ? `${timeTwentyFour.slice(0, 3) - 12 + `:` + timeTwentyFour.slice(4)}` +

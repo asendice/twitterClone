@@ -14,7 +14,6 @@ import { connect } from "react-redux";
 
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
-  console.log(props.selectedUser);
   useEffect(() => {
     props.getBoxes();
     props.getUsers();

@@ -20,7 +20,6 @@ const ProfileBox = (props) => {
   }, [open]);
 
   const onFormSubmit = (values) => {
-    console.log(values, "values");
     if (values.profilePic) {
       const items = {
         id: props.userInfo._id,

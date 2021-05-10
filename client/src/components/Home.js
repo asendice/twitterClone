@@ -5,7 +5,7 @@ import { Segment } from "semantic-ui-react";
 
 const Home = () => {
   return (
-    <Segment compact basic style={{ margin: "auto", padding: "0px" }}>
+    <Segment basic style={{ margin: "auto", padding: "0px"  }}>
       <PostBox />
       <BoxFeed />
     </Segment>

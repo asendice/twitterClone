@@ -1,3 +1,7 @@
+const fs = require("fs");
+
+
+
 module.exports = (req, res, next) => {
   if (typeof req.file === "undefined" || typeof req.body === "undefined") {
     return res.status(400).json({

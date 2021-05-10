@@ -8,6 +8,12 @@ export const selectBox = (box) => {
     payload: box,
   };
 };
+export const selectComment = (comment) => {
+  return {
+    type: "COMMENT_SELECT",
+    payload: comment,
+  };
+};
 
 export const profileSelect = (prof) => {
   return {
@@ -141,7 +147,6 @@ export const getComments = (boxId) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from getComments");
           return response;
         } else {
           const error = new Error(
@@ -176,7 +181,6 @@ export const register = (formValues) => {
     password: formValues.password,
     password_confirmation: formValues.confirmPassword,
   });
-  console.log(json);
   return (dispatch) => {
     backendApi
       .post("/register", json, {
@@ -223,7 +227,6 @@ export const login = (formValues) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from log in ");
           localStorage.setItem("user", JSON.stringify(response));
           return response;
         } else {
@@ -338,7 +341,6 @@ export const selectUser = (user) => {
 
 export const addLikeUser = (ids) => {
   const json = JSON.stringify(ids);
-  console.log(ids.userId, "json.userId");
   return async (dispatch) => {
     await backendApi
       .put(`/users/add/${ids.userId}`, json, {
@@ -348,7 +350,6 @@ export const addLikeUser = (ids) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from addLikeUser");
           return response;
         } else {
           const error = new Error(
@@ -372,9 +373,7 @@ export const addLikeBox = (ids) => {
         },
       })
       .then((response) => {
-        console.log(response, "response");
         if (response) {
-          console.log(response, "from addLikeBox");
           return response;
         } else {
           const error = new Error(
@@ -392,7 +391,6 @@ export const addLikeBox = (ids) => {
 };
 export const delLikeUser = (ids) => {
   const json = JSON.stringify(ids);
-  console.log(ids.userId, "json.userId");
   return async (dispatch) => {
     await backendApi
       .put(`/users/del/${ids.userId}`, json, {
@@ -402,7 +400,6 @@ export const delLikeUser = (ids) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from delLikeUser");
           return response;
         } else {
           const error = new Error(
@@ -429,7 +426,6 @@ export const delLikeBox = (ids) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response, "from delLikeBox");
           return response;
         } else {
           const error = new Error(
@@ -454,7 +450,6 @@ export const updateBox = (box) => {
 };
 
 export const editProfilePic = (item) => {
-  console.log(item, "item");
   let formData = new FormData();
   formData.append("image", item.profilePic[0]);
   return async (dispatch) => {
@@ -466,7 +461,6 @@ export const editProfilePic = (item) => {
       })
       .then((response) => {
         if (response) {
-          console.log(response);
           return response;
         } else {
           const error = new Error(
@@ -507,7 +501,6 @@ export const editBackground = (item) => {
 
 export const editBio = (items) => {
   const json = JSON.stringify(items);
-  console.log("items", items);
   return async (dispatch) => {
     await backendApi
       .put(`/users/bio/${items.id}`, json, {
@@ -527,5 +520,96 @@ export const editBio = (items) => {
         }
       })
       .then((response) => dispatch(loggedin(response)));
+  };
+};
+
+
+
+export const postReply = (reply) => {
+  const json = JSON.stringify(reply);
+  return (dispatch) => {
+    backendApi
+      .post("/replies", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((replies) => dispatch(addReply(replies.data.result)))
+      .catch((error) => {
+        console.log("postReply", error.result);
+      });
+  };
+};
+
+export const addReplyToComment = (item) => {
+  console.log(item, "FROM addReplyToComment")
+  const json = JSON.stringify(item);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/comments/replies/${item.commentId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(updateBox(response)));
+  };
+};
+
+export const getReplies = (commentId) => {
+  return async (dispatch) => {
+    await backendApi
+      .get(`/replies/${commentId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((replies) => dispatch(addReplies(replies.data.result)));
+  };
+};
+
+export const addReply = (reply) => {
+  return {
+    type: "ADD_REPLY",
+    payload: reply,
+  };
+};
+
+export const addReplies = (replies) => {
+  return {
+    type: "ADD_REPLIES",
+    payload: replies,
   };
 };
