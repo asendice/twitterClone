@@ -23,6 +23,9 @@ const {
   getBox,
   uploadBackgroundPic,
   editBio,
+  getReplies,
+  postReply,
+  addReplyToComment,
 } = require("../controllers/auth");
 
 router.post("/login", login);
@@ -35,6 +38,9 @@ router.get("/boxes/:boxId", getBox);
 router.post("/comments", postComment);
 router.get("/comments/:boxId", getComments);
 router.put("/comments/:boxId", putComment);
+router.put("/comments/replies/:commentId", addReplyToComment);
+router.get("/replies/:commentId", getReplies);
+router.post("/replies", postReply)
 router.put("/users/add/:userId", addLikeUser);
 router.put("/users/del/:userId", delLikeUser);
 router.put("/users/add/:userId", addLikeUser);

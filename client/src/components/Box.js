@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Feed,
   Image,
@@ -8,6 +8,8 @@ import {
   Card,
   Segment,
   Divider,
+  Accordion,
+  Label,
 } from "semantic-ui-react";
 import { convertMili, readableDate } from "../utils/Helper";
 import {
@@ -16,12 +18,13 @@ import {
   addLikeBox,
   delLikeUser,
   delLikeBox,
+  getReplies,
 } from "../actions";
 import { connect } from "react-redux";
 
 const Box = (props) => {
-  // console.log(props.likes, "props.likes");
-  // console.log(props.selectedBox.likes, "props.selectedBox.likes");
+  const [activeIndex, setActiveIndex] = useState(1);
+  const [index] = useState(0);
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
@@ -53,7 +56,6 @@ const Box = (props) => {
     return name.profilePic;
   });
   const postDate = new Date(props.time).toString();
-  console.log(postDate);
 
   const renderBoxInfo = () => {
     if (props.info) {
@@ -112,7 +114,7 @@ const Box = (props) => {
       <Segment
         style={{ padding: 0 }}
         basic
-        href={`http://localhost:3000/comment/${props.link}`}
+        href={props.noLink ? "" : `http://localhost:3000/comment/${props.link}`}
       >
         {renderLikeMsg()}
         {renderReplyMsg()}
@@ -167,11 +169,14 @@ const Box = (props) => {
         </Card>
       </Segment>
       {renderBoxInfo()}
-      <Feed.Meta style={{ display: `${props.display}` }}>
+      <Feed.Meta>
         <Grid>
           <Grid.Row columns={2} textAlign="center">
             <Grid.Column>
-              <button className="box-btn-heart">
+              <button
+                className="box-btn-heart"
+                style={{ display: `${props.display}` }}
+              >
                 <Icon
                   onClick={() => onHeartClick()}
                   size="large"
@@ -227,6 +232,7 @@ const mapStateToProps = (state) => {
     allUsers: state.allUsers.users,
     selectedUser: state.selectedUser,
     selectedBox: state.selectedBox,
+    replies: state.replies.replies,
   };
 };
 

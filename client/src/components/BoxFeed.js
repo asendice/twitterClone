@@ -28,7 +28,6 @@ const BoxFeed = (props) => {
   });
 
   const setSelectedBox = (box) => {
-    console.log("I SELECTED A USER ")
     props.selectBox(box);
   };
 

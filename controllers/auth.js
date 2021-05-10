@@ -1,11 +1,9 @@
 const Boxes = require("../models/Boxes");
 const User = require("../models/User");
 const Comment = require("../models/Comment");
+const Reply = require("../models/Reply");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const fs = require("fs");
-const path = require("path");
-const multer = require("multer");
 require("dotenv").config();
 const { createJWT } = require("../utils/auth.js");
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -453,3 +451,65 @@ exports.editBio = (req, res) => {
   });
 };
 // END OF EDIT PROFILE ///////////////
+
+//<---------REPLIES--------------->///
+exports.getReplies = (req, res) => {
+  const { commentId } = req.params;
+  Reply.find({ commentId: commentId }).then((replies) => {
+    if (!replies) {
+      return res.status(404).json({
+        errors: [{ replies: `None` }],
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        result: replies,
+      });
+    }
+  });
+};
+
+exports.postReply = (req, res) => {
+  const { userId, content, commentId, id } = req.body;
+  const reply = new Reply({
+    id: id,
+    userId: userId,
+    commentId: commentId,
+    content: content,
+  });
+  reply
+    .save()
+    .then((response) => {
+      res.status(200).json({
+        success: true,
+        result: response,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        errors: [{ error: err }],
+      });
+    });
+};
+// -- Worry about this later --
+
+exports.addReplyToComment = (req, res) => {
+  const { commentId, replyId } = req.body;
+  console.log(replyId, "ReplyID");
+  Comment.findOne({ id: commentId }).then((comment) => {
+    comment.replies.push(replyId);
+    comment
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
