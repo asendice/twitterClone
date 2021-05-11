@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, TextArea, Button } from "semantic-ui-react";
-import {
-  Field,
-  reduxForm,
-  formValueSelector,
-} from "redux-form";
+import { Field, reduxForm, formValueSelector, reset } from "redux-form";
 
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
   return (
@@ -38,15 +34,16 @@ const required = (value) => {
 
 const maxLength = (value) =>
   value && value.length > 240 ? (
-    <span style={{color: "red"}}></span>
+    <span style={{ color: "red" }}></span>
   ) : undefined;
-
-// const afterSubmit = (result, dispatch) => {
-//   dispatch(reset("PostBoxForm"));
-// };
 
 let PostBoxForm = (props) => {
   const [char, setChar] = useState(0);
+
+  useEffect(() => {
+    setChar(0);
+  }, [props.onFormSubmit]);
+
   return (
     <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
       <Field
@@ -83,7 +80,9 @@ let PostBoxForm = (props) => {
 
 PostBoxForm = reduxForm({
   form: "box",
-  // onSubmitSuccess: () => afterSubmit,
+  onSubmitSuccess: (result, dispatch, props) => {
+    props.reset("PostBoxForm");
+  },
 })(PostBoxForm);
 
 const selector = formValueSelector("box");

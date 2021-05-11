@@ -5,7 +5,7 @@ import { Segment } from "semantic-ui-react";
 
 const Profile = () => {
   return (
-    <Segment compact basic style={{ margin: "auto", padding: "0px" }}>
+    <Segment basic style={{ margin: "auto", padding: "0px" }}>
       <ProfileBox />
       <ProfileFeed />
     </Segment>

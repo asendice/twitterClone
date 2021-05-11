@@ -119,6 +119,7 @@ const ProfileFeed = (props) => {
             basic
             onClick={() => setSelectedBox(box)}
             className="box-feed-item"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Box
               id={box._id}
@@ -142,7 +143,7 @@ const ProfileFeed = (props) => {
       return (
         <Segment basic className="box-feed-item">
           {" "}
-          <span style={{color: "#fff"}}>Nothing to display{" "}</span>
+          <span style={{ color: "#fff", cursor: "pointer" }}>Nothing to display </span>
         </Segment>
       );
     }

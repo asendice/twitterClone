@@ -577,10 +577,10 @@ export const addReplyToComment = (item) => {
   };
 };
 
-export const getReplies = (commentId) => {
+export const getReplies = (boxId) => {
   return async (dispatch) => {
     await backendApi
-      .get(`/replies/${commentId}`, {
+      .get(`/replies/${boxId}`, {
         headers: {
           "Content-Type": "application/json",
         },

@@ -39,7 +39,7 @@ router.post("/comments", postComment);
 router.get("/comments/:boxId", getComments);
 router.put("/comments/:boxId", putComment);
 router.put("/comments/replies/:commentId", addReplyToComment);
-router.get("/replies/:commentId", getReplies);
+router.get("/replies/:boxId", getReplies);
 router.post("/replies", postReply)
 router.put("/users/add/:userId", addLikeUser);
 router.put("/users/del/:userId", delLikeUser);

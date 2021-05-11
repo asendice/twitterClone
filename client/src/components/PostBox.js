@@ -5,7 +5,6 @@ import { postBoxes } from "../actions";
 import { connect } from "react-redux";
 
 const PostBox = (props) => {
-
   const onFormSubmit = (values) => {
     const box = {
       userId: props.userId,
@@ -17,7 +16,12 @@ const PostBox = (props) => {
   };
 
   return (
-    <Segment basic padded className="post-box">
+    <Segment
+      basic
+      padded
+      className="post-box"
+      style={{ marginLeft: "auto", marginRight: "auto" }}
+    >
       <PostBoxForm onFormSubmit={onFormSubmit} />
       <Divider hidden />
     </Segment>
@@ -26,7 +30,7 @@ const PostBox = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
-    userId: state.userInfo.user.data.result._id
+    userId: state.userInfo.user.data.result._id,
   };
 };
 

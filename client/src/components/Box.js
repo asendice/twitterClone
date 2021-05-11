@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Feed,
   Image,
@@ -9,7 +9,6 @@ import {
   Segment,
   Divider,
   Accordion,
-  Label,
 } from "semantic-ui-react";
 import { convertMili, readableDate } from "../utils/Helper";
 import {
@@ -25,9 +24,15 @@ import { connect } from "react-redux";
 const Box = (props) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [index] = useState(0);
+console.log(props)
+  useEffect(() => {
+    props.getReplies(props.selectedBox._id);
+  }, [activeIndex]);
+
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
+
   const onHeartClick = () => {
     const ids = {
       userId: props.currentUserId,
@@ -99,7 +104,7 @@ const Box = (props) => {
     }
   };
 
-  const renderReplyMsg = () => {
+  const renderCommentMsg = () => {
     return props.reply ? (
       <span className="reply-text">
         Replying to <span>{props.reply}</span>
@@ -107,6 +112,133 @@ const Box = (props) => {
     ) : (
       ""
     );
+  };
+
+  const renderReplyMsg = (name) => {
+    return <span>{`Replying to ${name}`}</span>;
+  };
+
+  const renderAccordion = () => {
+    if (props.replyIds && props.replyIds.length > 0) {
+      return (
+        <Accordion>
+          <Accordion.Title
+            onClick={() => accordionClick()}
+            index={index}
+            active={activeIndex === 0}
+            icon={
+              <Icon
+                style={{ color: "#4da8da" }}
+                name={activeIndex === 0 ? "minus" : "plus"}
+              />
+            }
+            content={
+              <span style={{ color: "#4da8da" }}>
+                {activeIndex === 0 ? `Viewing Replies` : "View Replies"}
+              </span>
+            }
+          />
+          <Accordion.Content
+            active={activeIndex === 0}
+            // active={activeIndex === 0}
+            content={renderReplies()}
+          />
+        </Accordion>
+      );
+    }
+  };
+
+  const renderReplies = () => {
+    const currentReplies = props.replies.filter((reply) => {
+      return reply.commentId === props.id;
+    });
+    if (currentReplies.length > 0) {
+      return currentReplies.map((reply) => {
+        const userName = props.allUsers.filter((user) => {
+          if (user.id === reply.userId) {
+            return user;
+          }
+        });
+        const name = userName.map((name) => {
+          return name.name;
+        });
+        const profilePic = userName.map((name) => {
+          return name.profilePic;
+        });
+        const date = new Date();
+        const postDate = new Date(reply.createdAt);
+        const ago = date - postDate;
+        if (currentReplies)
+          return (
+            <>
+              <Segment
+                key={reply.id}
+                style={{
+                  background: "#203647",
+                  maxWidth: 650,
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  border: "1px solid black",
+                }}
+              >
+                {renderReplyMsg()}
+                <Card
+                  key={reply._id}
+                  fluid
+                  style={{
+                    background: "#203647",
+                    boxShadow: "none",
+                  }}
+                >
+                  <Header as="h3">
+                    {" "}
+                    <Image
+                      circular
+                      href={`http://localhost:3000/profile/${name}`}
+                      src={`http://localhost:8000/${profilePic}`}
+                      style={{
+                        minWidth: 60,
+                        minHeight: 60,
+                        maxHeight: 60,
+                        maxWidth: 60,
+                      }}
+                    />{" "}
+                    <a href={`http://localhost:3000/profile/${name}`}>
+                      <span style={{ color: "#EEFBFB" }}>{name}</span>
+                    </a>
+                    <span
+                      style={{
+                        color: "grey",
+                        fontSize: "15px",
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {" - "}
+                      {convertMili(ago)}
+                    </span>
+                  </Header>
+                  <Feed.Content>
+                    <span
+                      style={{
+                        color: "#fff",
+                        overflowWrap: "anywhere",
+                        fontSize: "20px",
+                      }}
+                    >
+                      {reply.content}
+                    </span>
+                  </Feed.Content>
+                </Card>
+              </Segment>
+            </>
+          );
+      });
+    }
+  };
+
+  const accordionClick = () => {
+    const newIndex = activeIndex === index ? -1 : index;
+    setActiveIndex(newIndex);
   };
 
   return (
@@ -117,7 +249,7 @@ const Box = (props) => {
         href={props.noLink ? "" : `http://localhost:3000/comment/${props.link}`}
       >
         {renderLikeMsg()}
-        {renderReplyMsg()}
+        {renderCommentMsg()}
         <Card
           key={props.id}
           fluid
@@ -221,6 +353,7 @@ const Box = (props) => {
           </Grid.Row>
         </Grid>
       </Feed.Meta>
+      {renderAccordion()}
     </>
   );
 };
@@ -233,6 +366,8 @@ const mapStateToProps = (state) => {
     selectedUser: state.selectedUser,
     selectedBox: state.selectedBox,
     replies: state.replies.replies,
+    selectedComment: state.selectedComment,
+    comments: state.comment.comments,
   };
 };
 
@@ -242,6 +377,7 @@ const mapDispatchToProps = {
   addLikeBox: (ids) => addLikeBox(ids),
   delLikeUser: (ids) => delLikeUser(ids),
   delLikeBox: (ids) => delLikeBox(ids),
+  getReplies: (boxId) => getReplies(boxId),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Box);
