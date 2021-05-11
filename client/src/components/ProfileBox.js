@@ -72,6 +72,8 @@ const ProfileBox = (props) => {
       style={{
         backgroundImage: `url('${`http://localhost:8000/${props.selectedUser.background}`}')`,
         backgroundSize: "655px 350px, cover",
+        marginLeft: "auto",
+        marginRight: "auto",
       }}
     >
       <Grid>

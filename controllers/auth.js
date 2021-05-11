@@ -454,8 +454,8 @@ exports.editBio = (req, res) => {
 
 //<---------REPLIES--------------->///
 exports.getReplies = (req, res) => {
-  const { commentId } = req.params;
-  Reply.find({ commentId: commentId }).then((replies) => {
+  const { boxId } = req.params;
+  Reply.find({ boxId: boxId }).then((replies) => {
     if (!replies) {
       return res.status(404).json({
         errors: [{ replies: `None` }],
@@ -470,10 +470,11 @@ exports.getReplies = (req, res) => {
 };
 
 exports.postReply = (req, res) => {
-  const { userId, content, commentId, id } = req.body;
+  const { userId, content, commentId, id, boxId } = req.body;
   const reply = new Reply({
     id: id,
     userId: userId,
+    boxId: boxId,
     commentId: commentId,
     content: content,
   });
@@ -491,7 +492,6 @@ exports.postReply = (req, res) => {
       });
     });
 };
-// -- Worry about this later --
 
 exports.addReplyToComment = (req, res) => {
   const { commentId, replyId } = req.body;
@@ -513,3 +513,4 @@ exports.addReplyToComment = (req, res) => {
       });
   });
 };
+//<------End of Replies----------->///

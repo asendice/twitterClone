@@ -20,8 +20,6 @@ import { Segment, Modal, Divider, Icon, Accordion } from "semantic-ui-react";
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
   const [replyOpen, setReplyOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(1);
-  const [index] = useState(0);
 
   const url = window.location.pathname.slice(9);
   if (!props.selectedBox.likes) {
@@ -30,7 +28,7 @@ const BoxComment = (props) => {
   useEffect(() => {
     // setActiveIndex(1);
     props.getComments(url);
-    props.getReplies(props.selectedComment.id);
+    props.getReplies(props.selectedBox._id);
     props.getUsers();
   }, [url, open, replyOpen, props.selectedComment]);
 
@@ -53,65 +51,10 @@ const BoxComment = (props) => {
     return two - one;
   });
 
-  const renderReplies = () => {
-    return props.replies.map((reply) => {
-      return (
-        <>
-          <Segment
-            key={reply.id}
-            style={{
-              background: "#203647",
-              maxWidth: 650,
-              marginLeft: "auto",
-              marginRight: "auto",
-              border: "1px solid black",
-            }}
-          >
-            <Box
-              noLink={true}
-              id={reply.id}
-              comments="none"
-              likes={reply.likes}
-              reply={mappedName}
-              userId={reply.userId}
-              content={reply.content}
-              time={reply.createdAt}
-              ago={reply.createdAt}
-              setOpen={setReplyOpen}
-              display="none"
-              currentUserId={props.userInfo._id}
-            />
-          </Segment>
-        </>
-      );
-    });
-  };
-
-  const accordionClick = () => {
-    props.getReplies(props.selectedComment.id);
-    const newIndex = activeIndex === index ? -1 : index;
-    setActiveIndex(newIndex);
-  };
-
-
-  // const currentReplies = props.replies.map((reply) => {
-  //   if (reply.commentId === props.selectedComment.id) {
-  //     return reply;
-  //   }
-  // });
   // console.log(currentReplies, "currentReplies");
 
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
-      const currentReplies = props.replies.map((reply) => {
-        if(props.selectedComment.id === reply.commentId){
-          return reply.commentId;
-        }
-      })
-      const item = (currentReplies.includes(props.selectedComment.id) ? 0 : 1)
-      console.log(activeIndex === 0, "currentReplies")
-      console.log(item, "item")
-
       return sorted.map((comment) => {
         const date = new Date();
         const postDate = new Date(comment.createdAt);
@@ -131,6 +74,7 @@ const BoxComment = (props) => {
           >
             <Box
               noLink={true}
+              replyIds={comment.replies}
               id={comment.id}
               comments="none"
               likes={comment.likes}
@@ -144,41 +88,25 @@ const BoxComment = (props) => {
               display="none"
               currentUserId={props.userInfo._id}
             />
-
-            {comment.replies.length > 0 ? (
-              <Accordion>
-                <Accordion.Title
-                  onClick={() => accordionClick()}
-                  index={index}
-                  active={activeIndex === item}
-                  icon={
-                    <Icon
-                      style={{ color: "#4da8da" }}
-                      name={activeIndex === item ? "up arrow" : "down arrow"}
-                    />
-                  }
-                  content={
-                    <span style={{ color: "#4da8da" }}>
-                      {activeIndex === item ? `Viewing Replies` : "View Replies"}
-                    </span>
-                  }
-                />
-                <Accordion.Content
-                  active={activeIndex === item}
-                  // active={activeIndex === 0}
-                  content={renderReplies()}
-                />
-              </Accordion>
-            ) : (
-              " "
-            )}
           </Segment>
         );
       });
     } else {
       return (
-        <Segment basic className="box-feed-item">
-          <a onClick={() => setOpen(true)}>Add a comment? </a>
+        <Segment
+          basic
+          style={{
+            background: "#203647",
+            minWidth: 420,
+            maxWidth: 650,
+            marginLeft: "auto",
+            marginRight: "auto",
+            border: "1px solid black",
+          }}
+        >
+          <a onClick={() => setOpen(true)} style={{ cursor: "pointer" }}>
+            Add a comment?{" "}
+          </a>
         </Segment>
       );
     }
@@ -204,6 +132,7 @@ const BoxComment = (props) => {
     const reply = {
       id: uuid(),
       content: values.content,
+      boxId: props.selectedBox._id,
       userId: props.userInfo._id,
       commentId: props.selectedComment.id,
     };
@@ -261,6 +190,15 @@ const BoxComment = (props) => {
   };
   const renderCommentModal = () => {
     if (props.selectedComment) {
+      const userName = props.allUsers.filter((user) => {
+        if (user.id === props.selectedComment.userId) {
+          return user;
+        }
+      });
+
+      const name = userName.map((name) => {
+        return name.name;
+      });
       return (
         <Modal
           centered={false}
@@ -290,7 +228,7 @@ const BoxComment = (props) => {
             <Divider />
             <span
               style={{ marginLeft: "20px", color: "#4da8da" }}
-            >{`Replying to ${mappedName}`}</span>
+            >{`Replying to ${name}`}</span>
             <CommentForm onFormSubmit={onCommentFormSubmit} />
           </Modal.Content>
         </Modal>
@@ -344,7 +282,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   addReplyToComment: (item) => addReplyToComment(item),
-  getReplies: (commentId) => getReplies(commentId),
+  getReplies: (boxId) => getReplies(boxId),
   postReply: (reply) => postReply(reply),
   getBox: (id) => getBox(id),
   postComment: (comment) => postComment(comment),

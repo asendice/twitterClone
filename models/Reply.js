@@ -7,6 +7,10 @@ const replySchema = new Schema(
       type: String,
       required: true,
     },
+    boxId: {
+      type: String,
+      required: true,
+    },
     commentId: {
       type: String,
       required: true,

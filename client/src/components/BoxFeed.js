@@ -107,6 +107,7 @@ const BoxFeed = (props) => {
             basic
             onClick={() => setSelectedBox(box)}
             className="box-feed-item"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Box
               id={box._id}
