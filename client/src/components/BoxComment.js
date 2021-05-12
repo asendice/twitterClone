@@ -15,7 +15,7 @@ import {
   addReplyToComment,
   postReply,
 } from "../actions";
-import { Segment, Modal, Divider, Icon, Accordion } from "semantic-ui-react";
+import { Segment, Modal, Divider, Icon } from "semantic-ui-react";
 
 const BoxComment = (props) => {
   const [open, setOpen] = useState(false);
@@ -23,12 +23,14 @@ const BoxComment = (props) => {
 
   const url = window.location.pathname.slice(9);
   if (!props.selectedBox.likes) {
+    console.log('how many times are we executing')
     props.getBox(url);
   }
   useEffect(() => {
-    // setActiveIndex(1);
+    if (props.selectedBox) {
+      props.getReplies(props.selectedBox._id);
+    }
     props.getComments(url);
-    props.getReplies(props.selectedBox._id);
     props.getUsers();
   }, [url, open, replyOpen, props.selectedComment]);
 
@@ -43,7 +45,9 @@ const BoxComment = (props) => {
   const numOfLikes = props.selectedBox.likes
     ? props.selectedBox.likes.length
     : 0;
-  const numOfComments = props.comments ? props.comments.length : null;
+  const numOfComments = props.selectedBox.comments
+    ? props.selectedBox.comments.length
+    : null;
 
   const sorted = props.comments.sort((a, b) => {
     const one = new Date(a.createdAt);
@@ -73,6 +77,7 @@ const BoxComment = (props) => {
             }}
           >
             <Box
+              box="comment"
               noLink={true}
               replyIds={comment.replies}
               id={comment.id}
@@ -85,7 +90,7 @@ const BoxComment = (props) => {
               time={comment.createdAt}
               ago={commentAgo}
               setOpen={setReplyOpen}
-              display="none"
+              heartDisplay="none"
               currentUserId={props.userInfo._id}
             />
           </Segment>
@@ -175,7 +180,8 @@ const BoxComment = (props) => {
               comments={props.selectedBox.comments}
               time={props.selectedBox.createdAt}
               ago={postAgo}
-              display="none"
+              heartDisplay="none"
+              commentDisplay="none"
               currentUserId={props.userInfo._id}
             />
             <Divider />
@@ -222,7 +228,8 @@ const BoxComment = (props) => {
               content={props.selectedComment.content}
               time={props.selectedComment.createdAt}
               ago={postAgo}
-              display="none"
+              heartDisplay="none"
+              commentDisplay="none"
               currentUserId={props.userInfo._id}
             />
             <Divider />
@@ -241,7 +248,7 @@ const BoxComment = (props) => {
       <>
         <Segment basic padded className="focus-box">
           <Box
-            link={props._id}
+            link={props.selectedBox._id}
             likes={props.selectedBox.likes}
             id={props.selectedBox._id}
             userId={props.selectedBox.userId}

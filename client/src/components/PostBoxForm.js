@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Form, TextArea, Button } from "semantic-ui-react";
-import { Field, reduxForm, formValueSelector, reset } from "redux-form";
+import { Field, reduxForm, formValueSelector } from "redux-form";
 
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
   return (

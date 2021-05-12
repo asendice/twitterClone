@@ -38,7 +38,7 @@ const readableDate = (str) => {
         " " +
         `AM`;
 
-  return `${timeTwelve}` + " - " + ` ${date}`;
+  return `${timeTwelve} - ${date}`;
 };
 
 export { convertMili, rounder, readableDate };

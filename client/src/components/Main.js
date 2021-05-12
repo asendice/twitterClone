@@ -37,7 +37,7 @@ const Main = (props) => {
               <Route exact path="/home" component={Home} />
               <Route exact path="/notifications" component={Notifications} />
               <Route exact path={`/profile/${name}`} component={Profile} />
-              <Route exact path={`/follow`} component={Follow} />
+              <Route exact path={`/proflile/${name}/follow`} component={Follow} />
               <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
             <Grid.Column computer={5} tablet={1} mobile={2}>

@@ -6,7 +6,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 const { createJWT } = require("../utils/auth.js");
-const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const emailRegexp =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 exports.register = (req, res, next) => {
   const { name, email, password, password_confirmation } = req.body;
@@ -381,7 +382,7 @@ exports.getUser = (req, res) => {
   });
 };
 
-// EDIT PROFILE //////////////////////////
+//<---------EDIT PROFILE --------------->///
 exports.uploadProfilePic = (req, res) => {
   console.log(req.file, "req.file");
   let image = req.file.path;
@@ -450,7 +451,7 @@ exports.editBio = (req, res) => {
       });
   });
 };
-// END OF EDIT PROFILE ///////////////
+//<---END OF-EDIT PROFILE --------------->///
 
 //<---------REPLIES--------------->///
 exports.getReplies = (req, res) => {
@@ -514,3 +515,97 @@ exports.addReplyToComment = (req, res) => {
   });
 };
 //<------End of Replies----------->///
+
+//<----Beginning of Follow------->////
+
+// adds currentUserId to followers array in the selectedUser's followers list
+exports.addFollower = (req, res) => {
+  const { currentUserId, selectedUserId } = req.body;
+  User.findById(selectedUserId, (err, user) => {
+    user.followers.push(currentUserId);
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+
+
+// adds selectedUserId to following array in the currentUsers's following list
+exports.addFollowing = (req, res) => {
+  const { currentUserId, selectedUserId } = req.body;
+  User.findById(currentUserId, (err, user) => {
+    user.following.push(selectedUserId);
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+
+// deletes currentUserId if currentUserId is already in selectedUsers's followers list
+exports.delFollower = (req, res) => {
+  const { currentUserId, selectedUserId } = req.body;
+  User.findById(selectedUserId, (err, user) => {
+    const index = user.followers.indexOf(currentUserId);
+    if (index > -1) {
+      user.followers.splice(index, 1);
+    }
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+
+//deletes selectedUserId from currentUser's Id if it already exists in currentUserId's following list
+exports.delFollowing = (req, res) => {
+  const { currentUserId, selectedUserId } = req.body;
+  User.findById(currentUserId, (err, user) => {
+    const index = user.following.indexOf(selectedUserId);
+    if (index > -1) {
+      user.following.splice(index, 1);
+    }
+    user
+      .save()
+      .then((response) => {
+        res.status(200).json({
+          success: true,
+          result: response,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          errors: [{ error: err }],
+        });
+      });
+  });
+};
+//<------End of Follow----------->///

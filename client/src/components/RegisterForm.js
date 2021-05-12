@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Header, Button, Divider, Segment } from "semantic-ui-react";
+import { Form, Header, Button, Divider } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 const required = (x) => {
   if (!x || x === "") {

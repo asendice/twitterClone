@@ -1,6 +1,6 @@
 import React from "react";
 import { Segment, Header, Sticky } from "semantic-ui-react";
-// #007CC7
+
 const Title = (props) => {
   return (
     <Sticky context={props.contextRef} offset={-8}>

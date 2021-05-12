@@ -1,5 +1,4 @@
 import React from "react"
-import WhoToFollow from "./WhoToFollow"
 import SearchClone from "./SearchClone"
 import { Sticky } from "semantic-ui-react"
 
@@ -9,7 +8,6 @@ const RightContent = (props) => {
     <>
       <Sticky context={props.contextRef} offset={100}>
         <SearchClone />
-        {/* <WhoToFollow /> */}
         {""}
       </Sticky>
     </>

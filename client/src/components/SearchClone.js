@@ -83,7 +83,7 @@ const SearchClone = (props) => {
     } else {
       return preSelectedUsers.map((user) => {
         return (
-          <Table.Row>
+          <Table.Row key={user.name}>
             <Table.Cell>
               <a href={`/profile/${user.name}`}>
                 <Image
