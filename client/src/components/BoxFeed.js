@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "./Box";
-import { Modal, Segment, Divider, Icon, Header } from "semantic-ui-react";
+import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import {
   getBoxes,
@@ -15,7 +15,6 @@ import { connect } from "react-redux";
 const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
 
-  
   useEffect(() => {
     props.getBoxes();
     props.getUsers();
@@ -48,9 +47,6 @@ const BoxFeed = (props) => {
     props.postComment(comment);
     props.putComment(comment);
     setOpen(false);
-    setTimeout(() => {
-      props.getBoxes();
-    }, 500);
   };
 
   const renderModal = () => {
@@ -79,7 +75,8 @@ const BoxFeed = (props) => {
               content={props.selectedBox.content}
               time={props.selectedBox.createdAt}
               ago={props.selectedBox.createdAt}
-              display="none"
+              heartDisplay="none"
+              commentDisplay="none"
               currentUserId={props.userInfo.data.result._id}
             />
             <Divider />
@@ -114,7 +111,6 @@ const BoxFeed = (props) => {
               userId={box.userId}
               link={box._id}
               likes={box.likes}
-              userName="@userName"
               content={box.content}
               comments={box.comments}
               ago={ago}
@@ -128,7 +124,11 @@ const BoxFeed = (props) => {
       });
     } else {
       return (
-        <Segment basic className="box-feed-item" >
+        <Segment
+          basic
+          className="box-feed-item"
+          style={{ marginLeft: "auto", marginRight: "auto" }}
+        >
           {" "}
           Loading
         </Segment>

@@ -1,17 +1,21 @@
 import React from "react";
 import { Segment, Tab } from "semantic-ui-react";
 
-const Follow = () => {
+const Follow = (props) => {
   const renderFollowers = () => {
-    return(
-      <div>renderFollowers</div>
-    )
+    if (props.selectedUser) {
+      return props.selectedUser.followers.map((follower) => {
+        return <span>{follower.name}</span>;
+      });
+    }
   };
 
   const renderFollowing = () => {
-    return(
-      <div>renderFollowing</div>
-    )
+    if (props.selectedUser) {
+      return props.selectedUser.following.map((following) => {
+        return <span>{following.name}</span>;
+      });
+    }
   };
 
   const panes = [
@@ -26,8 +30,7 @@ const Follow = () => {
   ];
 
   return (
-    <Segment style={{ height: "50vh", background: "#203647",  }}>
-
+    <Segment style={{ height: "50vh", background: "#203647" }}>
       <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
     </Segment>
   );

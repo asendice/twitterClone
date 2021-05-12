@@ -10,7 +10,16 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { getUser, editProfilePic, editBackground, editBio } from "../actions";
+import {
+  getUser,
+  editProfilePic,
+  editBackground,
+  editBio,
+  addFollower,
+  addFollowing,
+  delFollower,
+  delFollowing,
+} from "../actions";
 
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
@@ -45,6 +54,23 @@ const ProfileBox = (props) => {
     setOpen(false);
   };
 
+  const onFollowBtnClick = () => {
+    const item = {
+      currentUserId: props.userInfo._id,
+      selectedUserId: props.selectedUser.id,
+    };
+    if (
+      props.userInfo.following.includes(props.selectedUser.Id) &&
+      props.selectedUser.followers.includes(props.userInfo._id)
+    ) {
+      props.delFollower(item);
+      props.delFollowing(item);
+    } else {
+      props.addFollower(item);
+      props.addFollowing(item);
+    }
+  };
+
   const renderModal = () => {
     return (
       <Modal
@@ -68,7 +94,6 @@ const ProfileBox = (props) => {
       textAlign="center"
       className="profile-box"
       padded
-      fluid
       style={{
         backgroundImage: `url('${`http://localhost:8000/${props.selectedUser.background}`}')`,
         backgroundSize: "655px 350px, cover",
@@ -96,17 +121,27 @@ const ProfileBox = (props) => {
             </Header>
           </Grid.Column>
           <Grid.Column>
-            <Button style={{ marginLeft: 35 }} className="follow-btn">
-              Follow
-            </Button>
-            <span style={{ float: "right" }}>
-              <Icon
-                onClick={() => setOpen(true)}
-                size="large"
-                name="setting"
-                style={{ color: "#4DA8DA" }}
-              />
-            </span>
+            <Segment basic style={{ float: "right" }}>
+              {props.userInfo._id === props.selectedUser.id ? (
+                <Icon
+                  onClick={() => setOpen(true)}
+                  size="large"
+                  name="setting"
+                  style={{ color: "#4DA8DA" }}
+                />
+              ) : (
+                <Button
+                  onClick={() => onFollowBtnClick()}
+                  style={{ marginLeft: 35 }}
+                  className="follow-btn"
+                  content={
+                    props.userInfo.following.includes(props.selectedUser.Id)
+                      ? "Unfollow"
+                      : "Follow"
+                  }
+                />
+              )}
+            </Segment>
             <Segment basic style={{ marginTop: 150, color: "#fff" }}>
               {props.selectedUser.bio}
             </Segment>
@@ -114,10 +149,16 @@ const ProfileBox = (props) => {
         </Grid.Row>
         <Grid.Row columns={2}>
           <Grid.Column>
-            <h4 style={{ color: "#fff" }}>Followers {"-"} 0</h4>
+            <h4 style={{ color: "#fff" }}>
+              Followers {"-"}{" "}
+              {props.selectedUser.followers ? props.selectedUser.followers.length : "0"}
+            </h4>
           </Grid.Column>
           <Grid.Column>
-            <h4 style={{ color: "#fff" }}>Following{"-"}0 </h4>
+            <h4 style={{ color: "#fff" }}>
+              Following{"-"}{" "}
+              {props.selectedUser.following ? props.selectedUser.following.length : "0"}{" "}
+            </h4>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -139,6 +180,10 @@ const mapDispatchToProps = {
   editProfilePic: (item) => editProfilePic(item),
   editBackground: (item) => editBackground(item),
   editBio: (item) => editBio(item),
+  addFollower: (item) => addFollower(item),
+  addFollowing: (item) => addFollowing(item),
+  delFollower: (item) => delFollower(item),
+  delFollowing: (item) => delFollowing(item),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileBox);

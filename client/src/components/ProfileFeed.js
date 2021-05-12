@@ -59,9 +59,6 @@ const ProfileFeed = (props) => {
     props.postComment(comment);
     props.putComment(comment);
     setOpen(false);
-    setTimeout(() => {
-      props.getBoxes();
-    }, 500);
   };
 
   const renderModal = () => {
@@ -91,7 +88,8 @@ const ProfileFeed = (props) => {
               content={props.selectedBox.content}
               time={props.selectedBox.createdAt}
               ago={props.selectedBox.createdAt}
-              display="none"
+              heartDisplay="none"
+              commentDisplay="none"
               currentUserId={props.userInfo._id}
             />
             <Divider />
@@ -143,7 +141,9 @@ const ProfileFeed = (props) => {
       return (
         <Segment basic className="box-feed-item">
           {" "}
-          <span style={{ color: "#fff", cursor: "pointer" }}>Nothing to display </span>
+          <span style={{ color: "#fff", cursor: "pointer" }}>
+            Nothing to display{" "}
+          </span>
         </Segment>
       );
     }

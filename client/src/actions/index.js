@@ -523,8 +523,6 @@ export const editBio = (items) => {
   };
 };
 
-
-
 export const postReply = (reply) => {
   const json = JSON.stringify(reply);
   return (dispatch) => {
@@ -553,7 +551,7 @@ export const postReply = (reply) => {
 };
 
 export const addReplyToComment = (item) => {
-  console.log(item, "FROM addReplyToComment")
+  console.log(item, "FROM addReplyToComment");
   const json = JSON.stringify(item);
   return async (dispatch) => {
     await backendApi
@@ -611,5 +609,107 @@ export const addReplies = (replies) => {
   return {
     type: "ADD_REPLIES",
     payload: replies,
+  };
+};
+
+export const addFollower = (item) => {
+  const json = JSON.stringify(item);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/followers/add/${item.selectedUserId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => dispatch(selectUser(response.data.result)));
+  };
+};
+
+export const addFollowing = (item) => {
+  const json = JSON.stringify(item);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/following/add/${item.currentUserId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => {
+        dispatch(loggedin(response));
+      });
+  };
+};
+
+export const delFollower = (item) => {
+  const json = JSON.stringify(item);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/followers/del/${item.selectedUserId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => {
+        dispatch(loggedin(response.data.result));
+      });
+  };
+};
+
+export const delFollowing = (item) => {
+  const json = JSON.stringify(item);
+  return async (dispatch) => {
+    await backendApi
+      .put(`/users/following/del/${item.currentUserId}`, json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      })
+      .then((response) => {
+        dispatch(loggedin(response));
+      });
   };
 };

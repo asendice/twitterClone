@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Feed,
   Image,
@@ -17,18 +17,12 @@ import {
   addLikeBox,
   delLikeUser,
   delLikeBox,
-  getReplies,
 } from "../actions";
 import { connect } from "react-redux";
 
 const Box = (props) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [index] = useState(0);
-console.log(props)
-  useEffect(() => {
-    props.getReplies(props.selectedBox._id);
-  }, [activeIndex]);
-
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
@@ -115,7 +109,7 @@ console.log(props)
   };
 
   const renderReplyMsg = (name) => {
-    return <span>{`Replying to ${name}`}</span>;
+    return <span className="reply-text">{`Replying to ${name}`}</span>;
   };
 
   const renderAccordion = () => {
@@ -129,7 +123,7 @@ console.log(props)
             icon={
               <Icon
                 style={{ color: "#4da8da" }}
-                name={activeIndex === 0 ? "minus" : "plus"}
+                name={activeIndex === 0 ? "arrow up" : "arrow down"}
               />
             }
             content={
@@ -159,6 +153,15 @@ console.log(props)
             return user;
           }
         });
+        const commentUserName = props.allUsers.filter((user) => {
+          if (user.id === props.userId) {
+            return user;
+          }
+        });
+        console.log(commentUserName, "commentUserName");
+        const commentName = commentUserName.map((name) => {
+          return name.name;
+        });
         const name = userName.map((name) => {
           return name.name;
         });
@@ -170,67 +173,65 @@ console.log(props)
         const ago = date - postDate;
         if (currentReplies)
           return (
-            <>
-              <Segment
-                key={reply.id}
+            <Segment
+              key={reply.id}
+              style={{
+                background: "#203647",
+                maxWidth: 650,
+                marginLeft: "auto",
+                marginRight: "auto",
+                border: "1px solid black",
+              }}
+            >
+              {renderReplyMsg(commentName)}
+              <Card
+                key={reply._id}
+                fluid
                 style={{
                   background: "#203647",
-                  maxWidth: 650,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  border: "1px solid black",
+                  boxShadow: "none",
                 }}
               >
-                {renderReplyMsg()}
-                <Card
-                  key={reply._id}
-                  fluid
-                  style={{
-                    background: "#203647",
-                    boxShadow: "none",
-                  }}
-                >
-                  <Header as="h3">
-                    {" "}
-                    <Image
-                      circular
-                      href={`http://localhost:3000/profile/${name}`}
-                      src={`http://localhost:8000/${profilePic}`}
-                      style={{
-                        minWidth: 60,
-                        minHeight: 60,
-                        maxHeight: 60,
-                        maxWidth: 60,
-                      }}
-                    />{" "}
-                    <a href={`http://localhost:3000/profile/${name}`}>
-                      <span style={{ color: "#EEFBFB" }}>{name}</span>
-                    </a>
-                    <span
-                      style={{
-                        color: "grey",
-                        fontSize: "15px",
-                        fontWeight: "normal",
-                      }}
-                    >
-                      {" - "}
-                      {convertMili(ago)}
-                    </span>
-                  </Header>
-                  <Feed.Content>
-                    <span
-                      style={{
-                        color: "#fff",
-                        overflowWrap: "anywhere",
-                        fontSize: "20px",
-                      }}
-                    >
-                      {reply.content}
-                    </span>
-                  </Feed.Content>
-                </Card>
-              </Segment>
-            </>
+                <Header as="h3">
+                  {" "}
+                  <Image
+                    circular
+                    href={`http://localhost:3000/profile/${name}`}
+                    src={`http://localhost:8000/${profilePic}`}
+                    style={{
+                      minWidth: 60,
+                      minHeight: 60,
+                      maxHeight: 60,
+                      maxWidth: 60,
+                    }}
+                  />{" "}
+                  <a href={`http://localhost:3000/profile/${name}`}>
+                    <span style={{ color: "#EEFBFB" }}>{name}</span>
+                  </a>
+                  <span
+                    style={{
+                      color: "grey",
+                      fontSize: "15px",
+                      fontWeight: "normal",
+                    }}
+                  >
+                    {" - "}
+                    {convertMili(ago)}
+                  </span>
+                </Header>
+                <Feed.Content>
+                  <span
+                    style={{
+                      color: "#fff",
+                      overflowWrap: "anywhere",
+                      fontSize: "20px",
+                    }}
+                  >
+                    {reply.content}
+                  </span>
+                </Feed.Content>
+              </Card>
+            </Segment>
           );
       });
     }
@@ -307,12 +308,14 @@ console.log(props)
             <Grid.Column>
               <button
                 className="box-btn-heart"
-                style={{ display: `${props.display}` }}
+                style={{ display: `${props.heartDisplay}` }}
               >
                 <Icon
                   onClick={() => onHeartClick()}
                   size="large"
-                  color={props.likes.includes(props.userInfo._id) ? "red" : ""}
+                  color={
+                    props.likes.includes(props.userInfo._id) ? "red" : "grey"
+                  }
                   name={
                     props.likes.includes(props.userInfo._id)
                       ? "heart"
@@ -334,6 +337,7 @@ console.log(props)
             <Grid.Column>
               <button
                 onClick={() => props.setOpen(true)}
+                style={{ display: `${props.commentDisplay}` }}
                 className="box-btn-comment"
               >
                 <Icon size="large" name="comment outline" />
@@ -377,7 +381,6 @@ const mapDispatchToProps = {
   addLikeBox: (ids) => addLikeBox(ids),
   delLikeUser: (ids) => delLikeUser(ids),
   delLikeBox: (ids) => delLikeBox(ids),
-  getReplies: (boxId) => getReplies(boxId),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Box);
