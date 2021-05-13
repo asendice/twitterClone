@@ -44,6 +44,8 @@ const Box = (props) => {
   const userName = props.allUsers.filter((user) => {
     if (user.id === props.userId) {
       return user;
+    }else{
+      return;
     }
   });
 
@@ -66,7 +68,6 @@ const Box = (props) => {
               fontSize: "15px",
               fontWeight: "normal",
               marginLeft: 12,
-              fontSize: 14,
             }}
           >
             {readableDate(postDate)}
@@ -88,7 +89,7 @@ const Box = (props) => {
 
   const renderLikeMsg = () => {
     if (props.likes) {
-      return props.likes.includes(props.selectedUser.id) && props.profile ? (
+      return props.likes.includes(props.selectedUser._id) && props.profile ? (
         <span className="reply-text">
           {props.selectedUser.name} liked this post:{" "}
         </span>
@@ -365,7 +366,7 @@ const Box = (props) => {
 const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
-    userInfo: state.userInfo.user.data.result,
+    userInfo: state.userInfo.user,
     allUsers: state.allUsers.users,
     selectedUser: state.selectedUser,
     selectedBox: state.selectedBox,

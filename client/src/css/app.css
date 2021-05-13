@@ -21,7 +21,7 @@
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1275px) {
   .media-right-card {
     display: none !important;
   }
@@ -68,10 +68,18 @@
 
 .follow-btn {
   cursor: pointer !important;
+  background-color: #4da8da !important;
   color: #fff !important;
-  background-color: #203647 !important;
   border: solid black 1px !important;
   overflow: hidden !important;
+  box-shadow: 0 0 0 2px black !important;
+}
+.edit-profile-btn {
+  background-color: black !important;
+  cursor: pointer !important;
+  color: #4da8da !important;
+  overflow: hidden !important;
+  border: #4da8da solid 1px !important;
 }
 
 .follow-btn:hover {
@@ -89,11 +97,11 @@
 }
 
 .profile-box {
-  min-width: 420px;
-  min-height: 330px;
+  min-height: 300px;
   max-width: 650px;
   cursor: pointer;
   border: 1px solid black !important;
+  margin: auto !important;
 }
 
 .focus-box {

@@ -32,7 +32,7 @@ const LeftMenu = (props) => {
       comments: [],
     };
     props.postBoxes(box);
-    props.getUser(props.selectedUser.id);
+    props.getUser(props.selectedUser._id);
     setOpen(false);
   };
 
@@ -320,7 +320,7 @@ const LeftMenu = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
-    userInfo: state.userInfo.user.data.result,
+    userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
   };

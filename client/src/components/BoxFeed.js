@@ -77,7 +77,7 @@ const BoxFeed = (props) => {
               ago={props.selectedBox.createdAt}
               heartDisplay="none"
               commentDisplay="none"
-              currentUserId={props.userInfo.data.result._id}
+              currentUserId={props.userInfo._id}
             />
             <Divider />
             <span
@@ -117,7 +117,7 @@ const BoxFeed = (props) => {
               numOfLikes={numOfLikes}
               numOfComments={numOfComments}
               setOpen={setOpen}
-              currentUserId={props.userInfo.data.result._id}
+              currentUserId={props.userInfo._id}
             />
           </Segment>
         );

@@ -71,7 +71,7 @@ const Landing = (props) => {
     if (props.loggedIn) {
       return <Redirect to="/home" />;
     } else if (!props.loggedIn) {
-      const mapUserInfoError = props.userInfo.data.errors.map((errors) => {
+      const mapUserInfoError = props.userInfo.result.data.errors.map((errors) => {
         return errors.user || errors.password;
       });
       return (

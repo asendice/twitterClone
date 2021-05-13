@@ -279,7 +279,7 @@ const mapStateToProps = (state) => {
     selectedBox: state.selectedBox,
     selectedComment: state.selectedComment,
     comments: state.comment.comments,
-    userInfo: state.userInfo.user.data.result,
+    userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
     selectedUser: state.selectedUser,

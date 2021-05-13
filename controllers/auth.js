@@ -341,9 +341,11 @@ exports.getUsers = (req, res) => {
           id: user.id,
           name: user.name,
           profilePic: user.profilePic,
+          backgtound: user.background,
           followers: user.followers,
           following: user.following,
           liked: user.liked,
+          bio: user.bio,
         };
       });
       return res.status(200).json({
@@ -362,9 +364,8 @@ exports.getUser = (req, res) => {
         errors: [{ user: "Zero users found" }],
       });
     } else {
-      console.log(user);
       const theUser = {
-        id: user[0]._id,
+        _id: user[0]._id,
         name: user[0].name,
         profilePic: user[0].profilePic,
         bio: user[0].bio,
@@ -373,7 +374,6 @@ exports.getUser = (req, res) => {
         following: user[0].following,
         liked: user[0].liked,
       };
-      console.log(theUser);
       return res.status(200).json({
         success: true,
         result: theUser,

@@ -23,7 +23,7 @@ const ProfileFeed = (props) => {
     if (props.selectedUser.name) {
       if (
         props.selectedUser.liked.includes(box._id) ||
-        box.userId === props.selectedUser.id
+        box.userId === props.selectedUser._id
       ) {
         return box;
       }
@@ -162,10 +162,10 @@ const mapStateToProps = (state) => {
     boxes: state.box.boxes,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
-    userInfo: state.userInfo.user.data.result,
+    userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
-    selectedUser: state.selectedUser ? state.selectedUser : "sdfs",
+    selectedUser: state.selectedUser ? state.selectedUser : "",
   };
 };
 

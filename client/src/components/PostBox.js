@@ -30,7 +30,7 @@ const PostBox = (props) => {
 const mapStateToProps = (state) => {
   return {
     box: state.box,
-    userId: state.userInfo.user.data.result._id,
+    userId: state.userInfo.user._id,
   };
 };
 
