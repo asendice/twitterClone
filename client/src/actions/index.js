@@ -227,7 +227,7 @@ export const login = (formValues) => {
       })
       .then((response) => {
         if (response) {
-          localStorage.setItem("user", JSON.stringify(response));
+          localStorage.setItem("user", JSON.stringify(response.data.result));
           return response;
         } else {
           const error = new Error(
@@ -250,6 +250,12 @@ export const loggedin = (res) => {
     payload: res,
   };
 };
+export const updateUser = (res) => {
+  return {
+    type: "UPDATE_USER",
+    payload: res,
+  };
+};
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("user");
@@ -258,6 +264,8 @@ export const logout = () => (dispatch) => {
     type: "LOGOUT",
   });
 };
+
+
 
 export const getUsers = () => {
   return async (dispatch) => {
@@ -359,7 +367,7 @@ export const addLikeUser = (ids) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)));
+      .then((response) => dispatch(updateUser(response)));
   };
 };
 
@@ -410,7 +418,7 @@ export const delLikeUser = (ids) => {
         }
       })
       .then((response) => {
-        dispatch(updateBox(response));
+        dispatch(updateUser(response));
       });
   };
 };
@@ -470,7 +478,10 @@ export const editProfilePic = (item) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)));
+      .then((response) => {
+        dispatch(loggedin(response))
+        dispatch(selectUser(response.data.result))
+      })
   };
 };
 
@@ -495,7 +506,10 @@ export const editBackground = (item) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)));
+      .then((response) => {
+        dispatch(loggedin(response))
+        dispatch(selectUser(response.data.result))
+      })
   };
 };
 
@@ -519,7 +533,10 @@ export const editBio = (items) => {
           throw error;
         }
       })
-      .then((response) => dispatch(loggedin(response)));
+      .then((response) => {
+        dispatch(loggedin(response))
+        dispatch(selectUser(response.data.result))
+      })
   };
 };
 
@@ -657,7 +674,7 @@ export const addFollowing = (item) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response));
+        dispatch(updateUser(response));
       });
   };
 };
@@ -683,7 +700,7 @@ export const delFollower = (item) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response.data.result));
+        dispatch(selectUser(response.data.result));
       });
   };
 };
@@ -709,7 +726,7 @@ export const delFollowing = (item) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response));
+        dispatch(updateUser(response));
       });
   };
 };

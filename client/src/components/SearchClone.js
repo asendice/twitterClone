@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 const SearchClone = (props) => {
   const [term, setTerm] = useState("");
 
-  const arr = ["batman", "capndreadful", "DylanTravis"];
+  const arr = ["DarkHelmet", "MichaelScott", "SenSanders"];
   const preSelectedUsers = props.allUsers.filter((user) => {
     if (arr.includes(user.name)) {
       return user;

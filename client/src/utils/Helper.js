@@ -26,6 +26,7 @@ const convertMili = (num) => {
   }
 };
 
+// Argument format needs to be "Wed May 12 2021 18:50:46 GMT-0700 (Pacific Daylight Time)"
 const readableDate = (str) => {
   const date = str.slice(3, 15);
   const timeTwentyFour = str.slice(15, 24);

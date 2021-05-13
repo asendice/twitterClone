@@ -5,7 +5,6 @@ import Home from "./Home";
 import Landing from "./Landing";
 import Notifications from "./Notifications";
 import Profile from "./Profile";
-import Follow from "./Follow";
 import Title from "./Title";
 import LeftMenu from "./LeftMenu";
 import RightContent from "./RightContent";
@@ -37,7 +36,6 @@ const Main = (props) => {
               <Route exact path="/home" component={Home} />
               <Route exact path="/notifications" component={Notifications} />
               <Route exact path={`/profile/${name}`} component={Profile} />
-              <Route exact path={`/proflile/${name}/follow`} component={Follow} />
               <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
             <Grid.Column computer={5} tablet={1} mobile={2}>

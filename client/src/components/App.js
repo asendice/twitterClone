@@ -4,9 +4,11 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Route path="/" component={Main} />
-    </BrowserRouter>
+    <div style={{height: "100vh"}}>
+      <BrowserRouter>
+        <Route path="/" component={Main} />
+      </BrowserRouter>
+    </div>
   );
 };
 
