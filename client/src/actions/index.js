@@ -700,7 +700,7 @@ export const delFollower = (item) => {
         }
       })
       .then((response) => {
-        dispatch(selectUser(response.data.result));
+        dispatch(selectUser(response.data.result)); 
       });
   };
 };
