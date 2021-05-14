@@ -9,15 +9,26 @@ import {
   Image,
   Divider,
 } from "semantic-ui-react";
-import { getUsers } from "../actions/index";
+import {
+  getUsers,
+  addFollower,
+  addFollowing,
+  delFollower,
+  delFollowing,
+} from "../actions/index";
 import { connect } from "react-redux";
 
 const SearchClone = (props) => {
   const [term, setTerm] = useState("");
 
-  const arr = ["DarkHelmet", "MichaelScott", "SenSanders"];
+  const preSelectedUserArr = [
+    "DarkHelmet",
+    "MichaelScott",
+    "SenSanders",
+    "DwightSchrute",
+  ];
   const preSelectedUsers = props.allUsers.filter((user) => {
-    if (arr.includes(user.name)) {
+    if (preSelectedUserArr.includes(user.name)) {
       return user;
     }
   });
@@ -46,9 +57,27 @@ const SearchClone = (props) => {
     }
   };
 
+  const onFollowBtnClick = (user) => {
+    console.log(user, "user")
+    const item = {
+      currentUserId: props.userInfo._id,
+      selectedUserId: user.id
+    };
+    if (user.followers.includes(props.userInfo._id)) {
+      props.delFollower(item);
+      props.delFollowing(item);
+      props.getUsers();
+    } else {
+      props.addFollower(item);
+      props.addFollowing(item);
+      props.getUsers();
+    }
+  }
+
   const renderRow = () => {
     if (term.length > 0) {
-      return filteredUsers.map((user) => {
+      const newArr = filteredUsers.slice(0, 4);
+      return newArr.map((user) => {
         return (
           <Table.Row key={user.id}>
             <Table.Cell>
@@ -71,11 +100,26 @@ const SearchClone = (props) => {
                   {user.name}
                 </Header>
               </a>
+              <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
             <Table.Cell>
-              <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-                Follow
-              </Button>
+              {user.followers.includes(props.userInfo._id) ? (
+                <Button
+                  fluid
+                  content="Following"
+                  circular
+                  className="edit-profile-btn"
+                  onClick={() => onFollowBtnClick(user)}
+                />
+              ) : (
+                <Button
+                  fluid
+                  content="Follow"
+                  circular
+                  className="follow-btn"
+                  onClick={() => onFollowBtnClick(user)}
+                />
+              )}
             </Table.Cell>
           </Table.Row>
         );
@@ -104,11 +148,26 @@ const SearchClone = (props) => {
                   {user.name}
                 </Header>
               </a>
+              <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
             <Table.Cell>
-              <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-                Follow
-              </Button>
+              {user.followers.includes(props.userInfo._id) ? (
+                <Button
+                  fluid
+                  content="Following"
+                  circular
+                  className="edit-profile-btn"
+                  onClick={() => onFollowBtnClick(user)}
+                />
+              ) : (
+                <Button
+                  fluid
+                  content="Follow"
+                  circular
+                  className="follow-btn"
+                  onClick={() => onFollowBtnClick(user)}
+                />
+              )}
             </Table.Cell>
           </Table.Row>
         );
@@ -119,7 +178,7 @@ const SearchClone = (props) => {
   return (
     <Segment
       className="search-clone-card media-right-card"
-      style={{ minHeight: 404 }}
+      style={{ minHeight: 300 }}
     >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />
@@ -142,11 +201,16 @@ const SearchClone = (props) => {
 const mapStateToProps = (state) => {
   return {
     allUsers: state.allUsers.users,
+    userInfo: state.userInfo.user,
   };
 };
 
 const mapDispatchToProps = {
   getUsers: () => getUsers(),
+  addFollower: (item) => addFollower(item),
+  addFollowing: (item) => addFollowing(item),
+  delFollower: (item) => delFollower(item),
+  delFollowing: (item) => delFollowing(item),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchClone);

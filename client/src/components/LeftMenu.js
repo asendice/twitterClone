@@ -37,10 +37,21 @@ const LeftMenu = (props) => {
   };
 
   const logout = () => {
-    props.logout()
-    return <Redirect to="/login"/>
-  }
+    props.logout();
+    return <Redirect to="/login" />;
+  };
 
+  const updatedUser = props.allUsers.filter((users) => {
+    if (users.id === props.userInfo._id) {
+      return users;
+    }
+  });
+
+  const updatedUserPic = updatedUser.map((user) => {
+    return user.profilePic;
+  });
+
+  console.log(updatedUserPic, "updatedUserPic");
 
   const renderModal = () => {
     return (
@@ -87,7 +98,7 @@ const LeftMenu = (props) => {
         >
           <NavLink
             onClick={() => onProfileClick()}
-            to={`/profile/${props.userInfo.name}`}
+            to={`/profile/${updatedUserPic}`}
           >
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
@@ -98,7 +109,7 @@ const LeftMenu = (props) => {
                   maxHeight: 120,
                 }}
                 circular
-                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+                src={`http://localhost:8000/${updatedUserPic}`}
               />
             </Header>
             <Header as="h1" style={{ color: "#fff" }}>
@@ -191,7 +202,7 @@ const LeftMenu = (props) => {
                   right: "6px",
                 }}
                 circular
-                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+                src={`http://localhost:8000/${updatedUserPic}`}
               />
             </NavLink>
           </Menu.Item>
@@ -266,7 +277,7 @@ const LeftMenu = (props) => {
                   right: "6px",
                 }}
                 circular
-                src={`http://localhost:8000/${props.userInfo.profilePic}`}
+                src={`http://localhost:8000/${updatedUserPic}`}
               />
             </NavLink>
           </Menu.Item>
@@ -323,6 +334,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
+    allUsers: state.allUsers.users,
   };
 };
 

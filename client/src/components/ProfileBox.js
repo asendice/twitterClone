@@ -3,6 +3,7 @@ import SettingsForm from "./SettingsForm";
 import {
   Segment,
   Grid,
+  Menu,
   Image,
   Header,
   Button,
@@ -20,6 +21,7 @@ import {
   addFollowing,
   delFollower,
   delFollowing,
+  getUsers,
 } from "../actions";
 
 const ProfileBox = (props) => {
@@ -28,6 +30,7 @@ const ProfileBox = (props) => {
 
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
+    props.getUsers()
   }, [open]);
 
   const onFormSubmit = (values) => {
@@ -88,12 +91,6 @@ const ProfileBox = (props) => {
     );
   };
   const renderFollowModal = () => {
-    // const followers = props.allUsers.map((user) => {
-    //     if(props.selectedUser.followers.includes(user.id)) {
-    //       return user;
-    //     }
-
-    // }
     if (props.selectedUser.followers || props.selectedUser.following) {
       const followers = props.allUsers.filter((user) => {
         if (props.selectedUser.followers.includes(user.id)) {
@@ -106,14 +103,28 @@ const ProfileBox = (props) => {
         }
       });
 
-      console.log(followers, "followers");
+      const onFollowBtnClickFromModal = (follower) => {
+        console.log(follower)
+        const item = {
+          currentUserId: props.userInfo._id,
+          selectedUserId: follower.id
+        };
+        if (follower.followers.includes(props.userInfo._id)) {
+          props.delFollower(item);
+          props.delFollowing(item);
+        } else {
+          props.addFollower(item);
+          props.addFollowing(item);
+        }
+      }
+
 
       const followerContent = () => {
         return followers.map((follower) => {
           return (
             <Table.Row key={follower._id}>
               <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
+                <a >
                   <Image
                     style={{
                       maxWidth: 80,
@@ -127,16 +138,31 @@ const ProfileBox = (props) => {
                 </a>
               </Table.Cell>
               <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
+                <a >
                   <Header as="h3" style={{ color: "#fff" }}>
                     {follower.name}
                   </Header>
                 </a>
+                <p style={{ color: "grey" }}>{follower.bio}</p>
               </Table.Cell>
               <Table.Cell>
-                <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-                  Follow
-                </Button>
+                {follower.followers.includes(props.userInfo._id) ? (
+                  <Button
+                  fluid
+                    content="Following"
+                    circular
+                    className="edit-profile-btn"
+                    onClick={() => onFollowBtnClickFromModal(follower)}
+                  />
+                ) : (
+                  <Button
+                  fluid
+                    content="Follow"
+                    circular
+                    className="follow-btn"
+                    onClick={() => onFollowBtnClickFromModal(follower)}
+                  />
+                )}
               </Table.Cell>
             </Table.Row>
           );
@@ -148,7 +174,7 @@ const ProfileBox = (props) => {
           return (
             <Table.Row key={follower._id}>
               <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
+                <a >
                   <Image
                     style={{
                       maxWidth: 80,
@@ -162,16 +188,31 @@ const ProfileBox = (props) => {
                 </a>
               </Table.Cell>
               <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
+                <a >
                   <Header as="h3" style={{ color: "#fff" }}>
                     {follower.name}
                   </Header>
                 </a>
+                <p style={{ color: "grey" }}>{follower.bio}</p>
               </Table.Cell>
               <Table.Cell>
-                <Button style={{ background: "#4DA8DA", color: "#fff" }}>
-                  Follow
-                </Button>
+                {follower.followers.includes(props.userInfo._id) ? (
+                  <Button
+                  fluid
+                    content="Following"
+                    circular
+                    className="edit-profile-btn"
+                    onClick={() => onFollowBtnClickFromModal(follower)}
+                  />
+                ) : (
+                  <Button
+                  fluid
+                    content="Follow"
+                    circular
+                    className="follow-btn"
+                    onClick={() => onFollowBtnClickFromModal(follower)}
+                  />
+                )}
               </Table.Cell>
             </Table.Row>
           );
@@ -180,13 +221,28 @@ const ProfileBox = (props) => {
 
       const panes = [
         {
-          menuItem: "Followers",
+          menuItem: (
+            <Menu.Item>
+              <span style={{ color: "#fff" }}>Followers</span>
+            </Menu.Item>
+          ),
           render: () => (
             <Tab.Pane
-              style={{ background: "#203647", border: "none" }}
+              style={{
+                background: "#203647",
+                border: "none",
+                boxShadow: "none",
+              }}
               attached={false}
               content={
-                <Table style={{ background: "#203647" }}>
+                <Table
+                  unstackable
+                  style={{
+                    background: "#203647",
+                    maxHeight: 500,
+                    border: "none",
+                  }}
+                >
                   <Table.Body>{followerContent()}</Table.Body>
                 </Table>
               }
@@ -194,13 +250,28 @@ const ProfileBox = (props) => {
           ),
         },
         {
-          menuItem: "Following",
+          menuItem: (
+            <Menu.Item>
+              <span style={{ color: "#fff" }}>Following</span>
+            </Menu.Item>
+          ),
           render: () => (
             <Tab.Pane
-              style={{ background: "#203647" , color: "#fff"}}
+              style={{
+                background: "#203647",
+                border: "none",
+                boxShadow: "none",
+              }}
               attached={false}
               content={
-                <Table style={{ background: "#203647" }}>
+                <Table
+                  unstackable
+                  style={{
+                    background: "#203647",
+                    border: "none",
+                    maxHeight: 500,
+                  }}
+                >
                   <Table.Body>{followingContent()}</Table.Body>
                 </Table>
               }
@@ -215,10 +286,18 @@ const ProfileBox = (props) => {
           onClose={() => setFollowOpen(false)}
           onOpen={() => setFollowOpen(true)}
           open={followOpen}
-          style={{ maxWidth: 400 }}
+          style={{ maxWidth: 600 }}
         >
-          <Modal.Content style={{ backgroundColor: "#203647" }}>
-            <Tab menu={{ secondary: true, pointing: true, white: true, grid: { paneWidth: 12, tabWidth: 6 } }} panes={panes} />
+          <Modal.Content style={{ backgroundColor: "#203647", minHeight: 600 }}>
+            <Tab
+              menu={{
+                secondary: true,
+                pointing: true,
+                white: true,
+                grid: { paneWidth: 12, tabWidth: 6 },
+              }}
+              panes={panes}
+            />
           </Modal.Content>
         </Modal>
       );
@@ -300,19 +379,24 @@ const ProfileBox = (props) => {
                       size="small"
                       content="Edit Profile"
                     />
+                  ) : props.selectedUser.followers &&
+                    props.selectedUser.followers.includes(
+                      props.userInfo._id
+                    ) ? (
+                    <Button
+                      content="Following"
+                      circular
+                      className="edit-profile-btn"
+                      style={{ marginLeft: 35 }}
+                      onClick={() => onFollowBtnClick()}
+                    />
                   ) : (
                     <Button
-                      onClick={() => onFollowBtnClick()}
-                      style={{ marginLeft: 35 }}
+                      content="Follow"
+                      circular
                       className="follow-btn"
-                      content={
-                        props.selectedUser.followers &&
-                        props.selectedUser.followers.includes(
-                          props.userInfo._id
-                        )
-                          ? "Unfollow"
-                          : "Follow"
-                      }
+                      style={{ marginLeft: 35 }}
+                      onClick={() => onFollowBtnClick()}
                     />
                   )}
                 </Segment>
@@ -336,6 +420,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getUser: (name) => getUser(name),
+  getUsers: () =>  getUsers(),
   editProfilePic: (item) => editProfilePic(item),
   editBackground: (item) => editBackground(item),
   editBio: (item) => editBio(item),

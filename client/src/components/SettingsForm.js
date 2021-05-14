@@ -67,6 +67,13 @@ const renderTextArea = ({
   );
 };
 
+const bioMaxLength = (value) =>
+  value && value.length > 180 ? (
+    <span style={{ color: "pink" }}>
+      {`*Your Bio cannot be longer than 180 characters.`}
+    </span>
+  ) : undefined;
+
 let SettingsForm = (props) => {
   return (
     <div style={{ backgroundColor: "#203647", height: "100%" }}>
@@ -107,7 +114,7 @@ let SettingsForm = (props) => {
         />
         <Divider hidden />
         <Divider hidden />
-        <Field name="bio" component={renderTextArea} label="update your bio" />
+        <Field name="bio" component={renderTextArea} label="update your bio" validate={[bioMaxLength]} />
         <Segment basic>
           <Button
             type="submit"
