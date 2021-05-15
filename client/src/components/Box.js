@@ -17,7 +17,9 @@ import {
   addLikeBox,
   delLikeUser,
   delLikeBox,
+  selectUser,
 } from "../actions";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Box = (props) => {
@@ -42,9 +44,9 @@ const Box = (props) => {
   };
 
   const userName = props.allUsers.filter((user) => {
-    if (user.id === props.userId) {
+    if (user.id === props.userId || user._id === props.userId) {
       return user;
-    }else{
+    } else {
       return;
     }
   });
@@ -150,16 +152,15 @@ const Box = (props) => {
     if (currentReplies.length > 0) {
       return currentReplies.map((reply) => {
         const userName = props.allUsers.filter((user) => {
-          if (user.id === reply.userId) {
+          if (user._id === reply.userId) {
             return user;
           }
         });
         const commentUserName = props.allUsers.filter((user) => {
-          if (user.id === props.userId) {
+          if (user._id === props.userId) {
             return user;
           }
         });
-        console.log(commentUserName, "commentUserName");
         const commentName = commentUserName.map((name) => {
           return name.name;
         });
@@ -197,7 +198,7 @@ const Box = (props) => {
                   {" "}
                   <Image
                     circular
-                    href={`http://localhost:3000/profile/${name}`}
+                    to={`/profile/${name}`}
                     src={`http://localhost:8000/${profilePic}`}
                     style={{
                       minWidth: 60,
@@ -205,10 +206,11 @@ const Box = (props) => {
                       maxHeight: 60,
                       maxWidth: 60,
                     }}
+                    onClick={() => props.selectUser(userName)}
                   />{" "}
-                  <a href={`http://localhost:3000/profile/${name}`}>
+                  <Link to={`/profile/${name}`}>
                     <span style={{ color: "#EEFBFB" }}>{name}</span>
-                  </a>
+                  </Link>
                   <span
                     style={{
                       color: "grey",
@@ -245,63 +247,64 @@ const Box = (props) => {
 
   return (
     <>
-      <Segment
-        style={{ padding: 0 }}
-        basic
-        href={props.noLink ? "" : `http://localhost:3000/comment/${props.link}`}
-      >
-        {renderLikeMsg()}
-        {renderCommentMsg()}
-        <Card
-          key={props.id}
-          fluid
-          style={{
-            background: "#203647",
-            boxShadow: "none",
-          }}
-        >
-          {/* */}
+      <Link to={ `/comment/${props.link}`}>
+        <Segment style={{ padding: 0 }} basic>
+          {renderLikeMsg()}
+          {renderCommentMsg()}
+          <Card
+            key={props.id}
+            fluid
+            style={{
+              background: "#203647",
+              boxShadow: "none",
+            }}
+          >
+            {/* */}
 
-          <Header as="h3">
-            {" "}
-            <Image
-              circular
-              href={`http://localhost:3000/profile/${name}`}
-              src={`http://localhost:8000/${profilePic}`}
-              style={{
-                minWidth: 60,
-                minHeight: 60,
-                maxHeight: 60,
-                maxWidth: 60,
-              }}
-            />{" "}
-            <a href={`http://localhost:3000/profile/${name}`}>
-              <span style={{ color: "#EEFBFB" }}>{name}</span>
-            </a>
-            <span
-              style={{
-                color: "grey",
-                fontSize: "15px",
-                fontWeight: "normal",
-              }}
-            >
-              {" - "}
-              {convertMili(props.ago)}
-            </span>
-          </Header>
-          <Feed.Content>
-            <span
-              style={{
-                color: "#fff",
-                overflowWrap: "anywhere",
-                fontSize: "20px",
-              }}
-            >
-              {props.content}
-            </span>
-          </Feed.Content>
-        </Card>
-      </Segment>
+            <Header as="h3">
+              {" "}
+              <Link to={`/profile/${name}`} style={{ display: "flex" }}>
+                <Image
+                  circular
+                  to={`/profile/${name}`}
+                  src={`http://localhost:8000/${profilePic}`}
+                  style={{
+                    minWidth: 60,
+                    minHeight: 60,
+                    maxHeight: 60,
+                    maxWidth: 60,
+                  }}
+                />
+              </Link>{" "}
+              <Link to={`/profile/${name}`}>
+                <span style={{ color: "#EEFBFB" }}>{name}</span>
+              </Link>
+              <span
+                style={{
+                  color: "grey",
+                  fontSize: "15px",
+                  fontWeight: "normal",
+                }}
+              >
+                {" - "}
+                {convertMili(props.ago)}
+              </span>
+            </Header>
+            <Feed.Content>
+              <span
+                style={{
+                  color: "#fff",
+                  overflowWrap: "anywhere",
+                  fontSize: "20px",
+                }}
+              >
+                {props.content}
+              </span>
+            </Feed.Content>
+          </Card>
+        </Segment>
+      </Link>
+
       {renderBoxInfo()}
       <Feed.Meta>
         <Grid>
@@ -382,6 +385,7 @@ const mapDispatchToProps = {
   addLikeBox: (ids) => addLikeBox(ids),
   delLikeUser: (ids) => delLikeUser(ids),
   delLikeBox: (ids) => delLikeBox(ids),
+  selectUser: (user) => selectUser(user),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Box);

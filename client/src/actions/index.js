@@ -265,8 +265,6 @@ export const logout = () => (dispatch) => {
   });
 };
 
-
-
 export const getUsers = () => {
   return async (dispatch) => {
     await backendApi
@@ -331,6 +329,13 @@ export const getBox = (id) => {
         }
       })
       .then((box) => dispatch(selectBox(box.data.result)));
+  };
+};
+
+export const updateUsers = (users) => {
+  return {
+    type: "UPDATE_USERS",
+    payload: users,
   };
 };
 
@@ -479,9 +484,9 @@ export const editProfilePic = (item) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response))
-        dispatch(selectUser(response.data.result))
-      })
+        dispatch(loggedin(response));
+        dispatch(selectUser(response.data.result));
+      });
   };
 };
 
@@ -507,9 +512,9 @@ export const editBackground = (item) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response))
-        dispatch(selectUser(response.data.result))
-      })
+        dispatch(loggedin(response));
+        dispatch(selectUser(response.data.result));
+      });
   };
 };
 
@@ -534,9 +539,9 @@ export const editBio = (items) => {
         }
       })
       .then((response) => {
-        dispatch(loggedin(response))
-        dispatch(selectUser(response.data.result))
-      })
+        dispatch(loggedin(response));
+        dispatch(selectUser(response.data.result));
+      });
   };
 };
 
@@ -639,6 +644,7 @@ export const addFollower = (item) => {
         },
       })
       .then((response) => {
+        console.log(response, "response")
         if (response) {
           return response;
         } else {
@@ -649,7 +655,9 @@ export const addFollower = (item) => {
           throw error;
         }
       })
-      .then((response) => dispatch(selectUser(response.data.result)));
+      .then((response) => {
+        dispatch(updateUsers(response.data.result));
+      });
   };
 };
 
@@ -663,6 +671,7 @@ export const addFollowing = (item) => {
         },
       })
       .then((response) => {
+        console.log(response, "response")
         if (response) {
           return response;
         } else {
@@ -674,7 +683,7 @@ export const addFollowing = (item) => {
         }
       })
       .then((response) => {
-        dispatch(updateUser(response));
+        dispatch(updateUsers(response.data.result));
       });
   };
 };
@@ -689,6 +698,7 @@ export const delFollower = (item) => {
         },
       })
       .then((response) => {
+        console.log(response, "response")
         if (response) {
           return response;
         } else {
@@ -700,7 +710,7 @@ export const delFollower = (item) => {
         }
       })
       .then((response) => {
-        dispatch(selectUser(response.data.result)); 
+        dispatch(updateUsers(response.data.result));
       });
   };
 };
@@ -715,6 +725,7 @@ export const delFollowing = (item) => {
         },
       })
       .then((response) => {
+        console.log(response, "response")
         if (response) {
           return response;
         } else {
@@ -726,7 +737,7 @@ export const delFollowing = (item) => {
         }
       })
       .then((response) => {
-        dispatch(updateUser(response));
+        dispatch(updateUsers(response.data.result));
       });
   };
 };

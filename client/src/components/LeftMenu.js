@@ -42,7 +42,7 @@ const LeftMenu = (props) => {
   };
 
   const updatedUser = props.allUsers.filter((users) => {
-    if (users.id === props.userInfo._id) {
+    if ((users.id === props.userInfo._id) || (users._id === props.userInfo._id)) {
       return users;
     }
   });
@@ -51,7 +51,6 @@ const LeftMenu = (props) => {
     return user.profilePic;
   });
 
-  console.log(updatedUserPic, "updatedUserPic");
 
   const renderModal = () => {
     return (
