@@ -11,11 +11,13 @@ import {
 } from "semantic-ui-react";
 import {
   getUsers,
+  selectUser,
   addFollower,
   addFollowing,
   delFollower,
   delFollowing,
 } from "../actions/index";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const SearchClone = (props) => {
@@ -58,30 +60,28 @@ const SearchClone = (props) => {
   };
 
   const onFollowBtnClick = (user) => {
-    console.log(user, "user")
+    console.log(user, "user");
     const item = {
       currentUserId: props.userInfo._id,
-      selectedUserId: user.id
+      selectedUserId: user._id,
     };
     if (user.followers.includes(props.userInfo._id)) {
       props.delFollower(item);
       props.delFollowing(item);
-      props.getUsers();
     } else {
       props.addFollower(item);
       props.addFollowing(item);
-      props.getUsers();
     }
-  }
+  };
 
   const renderRow = () => {
     if (term.length > 0) {
-      const newArr = filteredUsers.slice(0, 4);
+      const newArr = filteredUsers.slice(0, 7);
       return newArr.map((user) => {
         return (
-          <Table.Row key={user.id}>
+          <Table.Row key={user._id}>
             <Table.Cell>
-              <a href={`/profile/${user.name}`}>
+              <Link to={`/profile/${user.name}`}>
                 <Image
                   style={{
                     maxWidth: 80,
@@ -91,21 +91,27 @@ const SearchClone = (props) => {
                   }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
+                  onClick={() => props.selectUser(user)}
                 />
-              </a>
+              </Link>
             </Table.Cell>
             <Table.Cell>
-              <a href={`/${user.name}`}>
-                <Header as="h3" style={{ color: "#fff" }}>
+              <Link to={`/profile/${user.name}`}>
+                <Header
+                  onClick={() => props.selectUser(user)}
+                  as="h3"
+                  style={{ color: "#fff" }}
+                >
                   {user.name}
                 </Header>
-              </a>
+              </Link>
               <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
             <Table.Cell>
-              {user.followers.includes(props.userInfo._id) ? (
+              {user._id === props.userInfo._id ? (
+                ""
+              ) : user.followers.includes(props.userInfo._id) ? (
                 <Button
-                  fluid
                   content="Following"
                   circular
                   className="edit-profile-btn"
@@ -113,7 +119,6 @@ const SearchClone = (props) => {
                 />
               ) : (
                 <Button
-                  fluid
                   content="Follow"
                   circular
                   className="follow-btn"
@@ -129,7 +134,7 @@ const SearchClone = (props) => {
         return (
           <Table.Row key={user.name}>
             <Table.Cell>
-              <a href={`/profile/${user.name}`}>
+              <Link to={`/profile/${user.name}`}>
                 <Image
                   style={{
                     maxWidth: 80,
@@ -139,21 +144,27 @@ const SearchClone = (props) => {
                   }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
+                  onClick={() => props.selectUser(user)}
                 />
-              </a>
+              </Link>
             </Table.Cell>
             <Table.Cell>
-              <a href={`/profile/${user.name}`}>
-                <Header as="h3" style={{ color: "#fff" }}>
+              <Link to={`/profile/${user.name}`}>
+                <Header
+                  onClick={() => props.selectUser(user)}
+                  as="h3"
+                  style={{ color: "#fff" }}
+                >
                   {user.name}
                 </Header>
-              </a>
+              </Link>
               <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
             <Table.Cell>
-              {user.followers.includes(props.userInfo._id) ? (
+              {user._id === props.userInfo._id ? (
+                ""
+              ) : user.followers.includes(props.userInfo._id) ? (
                 <Button
-                  fluid
                   content="Following"
                   circular
                   className="edit-profile-btn"
@@ -161,7 +172,6 @@ const SearchClone = (props) => {
                 />
               ) : (
                 <Button
-                  fluid
                   content="Follow"
                   circular
                   className="follow-btn"
@@ -211,6 +221,7 @@ const mapDispatchToProps = {
   addFollowing: (item) => addFollowing(item),
   delFollower: (item) => delFollower(item),
   delFollowing: (item) => delFollowing(item),
+  selectUser: (user) => selectUser(user),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchClone);

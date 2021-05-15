@@ -9,6 +9,7 @@ import {
   Button,
   Tab,
   Table,
+  Label,
   Modal,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -27,11 +28,15 @@ import {
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
   const [followOpen, setFollowOpen] = useState(false);
-
+  const [pathName, setPathName] = useState()
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
-    props.getUsers()
-  }, [open]);
+    props.getUsers();
+  }, [open, followOpen, window.location.pathname]);
+
+  const currentSelectedUser = props.allUsers.filter(
+    (user) => user._id === props.selectedUser._id
+  )[0];
 
   const onFormSubmit = (values) => {
     if (values.profilePic) {
@@ -57,6 +62,7 @@ const ProfileBox = (props) => {
       props.editBio(items);
     }
     setOpen(false);
+    props.getUsers();
   };
 
   const onFollowBtnClick = () => {
@@ -64,7 +70,8 @@ const ProfileBox = (props) => {
       currentUserId: props.userInfo._id,
       selectedUserId: props.selectedUser._id,
     };
-    if (props.selectedUser.followers.includes(props.userInfo._id)) {
+
+    if (props.currentUser.following.includes(props.selectedUser._id)) {
       props.delFollower(item);
       props.delFollowing(item);
     } else {
@@ -93,21 +100,21 @@ const ProfileBox = (props) => {
   const renderFollowModal = () => {
     if (props.selectedUser.followers || props.selectedUser.following) {
       const followers = props.allUsers.filter((user) => {
-        if (props.selectedUser.followers.includes(user.id)) {
+        if (user.following.includes(props.selectedUser._id)) {
           return user;
         }
       });
       const following = props.allUsers.filter((user) => {
-        if (props.selectedUser.following.includes(user.id)) {
+        if (user.followers.includes(props.selectedUser._id)) {
           return user;
         }
       });
 
       const onFollowBtnClickFromModal = (follower) => {
-        console.log(follower)
+        console.log(follower);
         const item = {
           currentUserId: props.userInfo._id,
-          selectedUserId: follower.id
+          selectedUserId: follower._id,
         };
         if (follower.followers.includes(props.userInfo._id)) {
           props.delFollower(item);
@@ -116,15 +123,14 @@ const ProfileBox = (props) => {
           props.addFollower(item);
           props.addFollowing(item);
         }
-      }
-
+      };
 
       const followerContent = () => {
         return followers.map((follower) => {
           return (
             <Table.Row key={follower._id}>
               <Table.Cell>
-                <a >
+                <a href={`/profile/${follower.name}`}>
                   <Image
                     style={{
                       maxWidth: 80,
@@ -138,7 +144,7 @@ const ProfileBox = (props) => {
                 </a>
               </Table.Cell>
               <Table.Cell>
-                <a >
+                <a href={`/profile/${follower.name}`}>
                   <Header as="h3" style={{ color: "#fff" }}>
                     {follower.name}
                   </Header>
@@ -146,9 +152,11 @@ const ProfileBox = (props) => {
                 <p style={{ color: "grey" }}>{follower.bio}</p>
               </Table.Cell>
               <Table.Cell>
-                {follower.followers.includes(props.userInfo._id) ? (
+                {follower._id === props.userInfo._id ? (
+                  ""
+                ) : follower.followers.includes(props.userInfo._id) ? (
                   <Button
-                  fluid
+                    fluid
                     content="Following"
                     circular
                     className="edit-profile-btn"
@@ -156,7 +164,7 @@ const ProfileBox = (props) => {
                   />
                 ) : (
                   <Button
-                  fluid
+                    fluid
                     content="Follow"
                     circular
                     className="follow-btn"
@@ -174,7 +182,7 @@ const ProfileBox = (props) => {
           return (
             <Table.Row key={follower._id}>
               <Table.Cell>
-                <a >
+                <a href={`/profile/${follower.name}`}>
                   <Image
                     style={{
                       maxWidth: 80,
@@ -188,7 +196,7 @@ const ProfileBox = (props) => {
                 </a>
               </Table.Cell>
               <Table.Cell>
-                <a >
+                <a href={`/profile/${follower.name}`}>
                   <Header as="h3" style={{ color: "#fff" }}>
                     {follower.name}
                   </Header>
@@ -196,9 +204,11 @@ const ProfileBox = (props) => {
                 <p style={{ color: "grey" }}>{follower.bio}</p>
               </Table.Cell>
               <Table.Cell>
-                {follower.followers.includes(props.userInfo._id) ? (
+                {follower._id === props.userInfo._id ? (
+                  ""
+                ) : follower.followers.includes(props.userInfo._id) ? (
                   <Button
-                  fluid
+                    fluid
                     content="Following"
                     circular
                     className="edit-profile-btn"
@@ -206,7 +216,7 @@ const ProfileBox = (props) => {
                   />
                 ) : (
                   <Button
-                  fluid
+                    fluid
                     content="Follow"
                     circular
                     className="follow-btn"
@@ -354,15 +364,15 @@ const ProfileBox = (props) => {
                   style={{ padding: 0, cursor: "pointer" }}
                 >
                   <span style={{ color: "#fff" }}>
-                    {props.selectedUser.followers
-                      ? props.selectedUser.followers.length
+                    {currentSelectedUser
+                      ? currentSelectedUser.followers.length
                       : "0"}
                   </span>
                   <span style={{ color: "grey" }}> Followers</span>
                   <span style={{ color: "#fff", marginLeft: 15 }}>
                     {" "}
-                    {props.selectedUser.following
-                      ? props.selectedUser.following.length
+                    {props.selectedUser && currentSelectedUser
+                      ? currentSelectedUser.following.length
                       : "0"}{" "}
                   </span>
 
@@ -379,8 +389,8 @@ const ProfileBox = (props) => {
                       size="small"
                       content="Edit Profile"
                     />
-                  ) : props.selectedUser.followers &&
-                    props.selectedUser.followers.includes(
+                  ) : currentSelectedUser &&
+                    currentSelectedUser.followers.includes(
                       props.userInfo._id
                     ) ? (
                     <Button
@@ -414,13 +424,17 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
+
     allUsers: state.allUsers.users,
+    currentUser: state.allUsers.users.filter(
+      (user) => user._id === state.userInfo.user._id
+    )[0],
   };
 };
 
 const mapDispatchToProps = {
   getUser: (name) => getUser(name),
-  getUsers: () =>  getUsers(),
+  getUsers: () => getUsers(),
   editProfilePic: (item) => editProfilePic(item),
   editBackground: (item) => editBackground(item),
   editBio: (item) => editBio(item),

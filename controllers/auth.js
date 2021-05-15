@@ -338,10 +338,10 @@ exports.getUsers = (req, res) => {
     } else {
       const allUsers = users.map((user) => {
         return {
-          id: user.id,
+          _id: user.id,
           name: user.name,
           profilePic: user.profilePic,
-          backgtound: user.background,
+          background: user.background,
           followers: user.followers,
           following: user.following,
           liked: user.liked,
@@ -388,7 +388,6 @@ exports.uploadProfilePic = (req, res) => {
   let image = req.file.path;
   const { userId } = req.params;
   User.findById(userId).then((user) => {
-    console.log(user, "user");
     user.profilePic = image;
     user
       .save()

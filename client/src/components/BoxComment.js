@@ -55,7 +55,6 @@ const BoxComment = (props) => {
     return two - one;
   });
 
-  // console.log(currentReplies, "currentReplies");
 
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
