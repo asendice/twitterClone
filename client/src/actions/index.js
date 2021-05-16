@@ -593,9 +593,16 @@ export const addReplyToComment = (item) => {
           throw error;
         }
       })
-      .then((response) => dispatch(updateBox(response)));
+      .then((response) => dispatch(updateComment(response.data.result)));
   };
 };
+
+export const updateComment = (comment) => {
+  return {
+    type: "UPDATE_COMMENT",
+    payload: comment,
+  };
+}
 
 export const getReplies = (boxId) => {
   return async (dispatch) => {

@@ -50,6 +50,14 @@ const BoxFeed = (props) => {
   };
 
   const renderModal = () => {
+    const user = props.allUsers.filter((item) => {
+      const name = item._id === props.selectedBox.userId ? item : null;
+      return name;
+    });
+  
+    const mappedName = user.map((item) => {
+      return item.name;
+    });
     if (props.selectedBox.likes) {
       return (
         <Modal
@@ -68,7 +76,7 @@ const BoxFeed = (props) => {
             />
             <Divider />
             <Box
-              id={props.selectedBox.id}
+              id={props.selectedBox._id}
               likes={props.selectedBox.likes}
               comments={props.selectedBox.comments}
               userId={props.selectedBox.userId}

@@ -23,7 +23,6 @@ const BoxComment = (props) => {
 
   const url = window.location.pathname.slice(9);
   if (!props.selectedBox.likes) {
-    console.log('how many times are we executing')
     props.getBox(url);
   }
   useEffect(() => {
@@ -35,7 +34,7 @@ const BoxComment = (props) => {
   }, [url, open, replyOpen, props.selectedComment]);
 
   const user = props.allUsers.filter((item) => {
-    const name = item.id === props.selectedBox.userId ? item : null;
+    const name = item._id === props.selectedBox.userId ? item : null;
     return name;
   });
 
@@ -54,7 +53,6 @@ const BoxComment = (props) => {
     const two = new Date(b.createdAt);
     return two - one;
   });
-
 
   const renderCommentFeed = () => {
     if (props.comments.length > 0) {
@@ -108,9 +106,9 @@ const BoxComment = (props) => {
             border: "1px solid black",
           }}
         >
-          <a onClick={() => setOpen(true)} style={{ cursor: "pointer" }}>
+          <span onClick={() => setOpen(true)} style={{ cursor: "pointer", color: "#4da8da" }}>
             Add a comment?{" "}
-          </a>
+          </span>
         </Segment>
       );
     }

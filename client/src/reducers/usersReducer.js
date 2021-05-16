@@ -3,13 +3,10 @@ const usersReducer = (state = { users: [] }, action) => {
     case "ADD_USERS":
       return { ...state, users: action.payload };
     case "UPDATE_USERS":
-      const combineArr = [...state.users, action.payload];
-      const names = combineArr.map((x) => x.name);
-      const updatedUsers = combineArr.filter(
-        ({ name }, index) => !names.includes(name, index + 1)
+      const newList = state.users.map(
+        (user) => [action.payload].find((item) => item._id === user._id) || user
       );
-      console.log(updatedUsers, "updatedUsers")
-      return { ...state, users: updatedUsers };
+      return { ...state, users: newList };
     default:
       return state;
   }
