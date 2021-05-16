@@ -115,12 +115,12 @@ const Landing = (props) => {
           <Segment basic>
             <LoginForm onLogIn={onLogIn} setLoginResult={setLoginResult} />
             <Segment basic textAlign="center">
-              <a
+              <span
                 onClick={() => logLinkClick()}
                 style={{ color: "#4DA8DA", cursor: "pointer" }}
               >
                 Need An Account? | Register to twitterClone!
-              </a>
+              </span>
             </Segment>
           </Segment>
         </Modal.Content>
@@ -141,12 +141,12 @@ const Landing = (props) => {
           <Segment basic>
             <RegisterForm onRegister={onRegister} />
             <Segment basic textAlign="center">
-              <a
+              <span
                 onClick={() => regLinkClick()}
                 style={{ color: "#4DA8DA", cursor: "pointer" }}
               >
                 Already Have An Account? | Login to twitterClone!
-              </a>
+              </span>
             </Segment>
           </Segment>
         </Modal.Content>

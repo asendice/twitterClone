@@ -176,7 +176,7 @@ const Box = (props) => {
         if (currentReplies)
           return (
             <Segment
-              key={reply.id}
+              key={reply._id}
               style={{
                 background: "#203647",
                 maxWidth: 650,
@@ -194,34 +194,33 @@ const Box = (props) => {
                   boxShadow: "none",
                 }}
               >
-                <Header as="h3">
-                  {" "}
-                  <Image
-                    circular
-                    to={`/profile/${name}`}
-                    src={`http://localhost:8000/${profilePic}`}
-                    style={{
-                      minWidth: 60,
-                      minHeight: 60,
-                      maxHeight: 60,
-                      maxWidth: 60,
-                    }}
-                    onClick={() => props.selectUser(userName)}
-                  />{" "}
-                  <Link to={`/profile/${name}`}>
+                <Link to={`/profile/${name}`} style={{ width: "60%" }}>
+                  <Header as="h3" onClick={() => props.selectUser(userName)}>
+                    {" "}
+                    <Image
+                      circular
+                      to={`/profile/${name}`}
+                      src={`http://localhost:8000/${profilePic}`}
+                      style={{
+                        minWidth: 60,
+                        minHeight: 60,
+                        maxHeight: 60,
+                        maxWidth: 60,
+                      }}
+                    />{" "}
                     <span style={{ color: "#EEFBFB" }}>{name}</span>
-                  </Link>
-                  <span
-                    style={{
-                      color: "grey",
-                      fontSize: "15px",
-                      fontWeight: "normal",
-                    }}
-                  >
-                    {" - "}
-                    {convertMili(ago)}
-                  </span>
-                </Header>
+                    <span
+                      style={{
+                        color: "grey",
+                        fontSize: "15px",
+                        fontWeight: "normal",
+                      }}
+                    >
+                      {" - "}
+                      {convertMili(props.ago)}
+                    </span>
+                  </Header>
+                </Link>
                 <Feed.Content>
                   <span
                     style={{
@@ -247,7 +246,7 @@ const Box = (props) => {
 
   return (
     <>
-      <Link to={ `/comment/${props.link}`}>
+      {/* <Link to={`/comment/${props.link}`}> */}
         <Segment style={{ padding: 0 }} basic>
           {renderLikeMsg()}
           {renderCommentMsg()}
@@ -260,10 +259,9 @@ const Box = (props) => {
             }}
           >
             {/* */}
-
-            <Header as="h3">
-              {" "}
-              <Link to={`/profile/${name}`} style={{ display: "flex" }}>
+            <Link to={`/profile/${name}`} style={{ width: "60%" }}>
+              <Header as="h3" onClick={() => props.selectUser(userName[0])}>
+                {" "}
                 <Image
                   circular
                   to={`/profile/${name}`}
@@ -274,22 +272,20 @@ const Box = (props) => {
                     maxHeight: 60,
                     maxWidth: 60,
                   }}
-                />
-              </Link>{" "}
-              <Link to={`/profile/${name}`}>
+                />{" "}
                 <span style={{ color: "#EEFBFB" }}>{name}</span>
-              </Link>
-              <span
-                style={{
-                  color: "grey",
-                  fontSize: "15px",
-                  fontWeight: "normal",
-                }}
-              >
-                {" - "}
-                {convertMili(props.ago)}
-              </span>
-            </Header>
+                <span
+                  style={{
+                    color: "grey",
+                    fontSize: "15px",
+                    fontWeight: "normal",
+                  }}
+                >
+                  {" - "}
+                  {convertMili(props.ago)}
+                </span>
+              </Header>
+            </Link>
             <Feed.Content>
               <span
                 style={{
@@ -303,7 +299,7 @@ const Box = (props) => {
             </Feed.Content>
           </Card>
         </Segment>
-      </Link>
+      {/* </Link> */}
 
       {renderBoxInfo()}
       <Feed.Meta>

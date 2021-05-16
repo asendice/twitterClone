@@ -9,7 +9,7 @@ import {
   Button,
   Tab,
   Table,
-  Label,
+  Divider,
   Modal,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
@@ -24,11 +24,12 @@ import {
   delFollowing,
   getUsers,
 } from "../actions";
+import { Link } from "react-router-dom";
 
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
   const [followOpen, setFollowOpen] = useState(false);
-  const [pathName, setPathName] = useState()
+  const [pathName, setPathName] = useState();
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
     props.getUsers();
@@ -299,11 +300,31 @@ const ProfileBox = (props) => {
           style={{ maxWidth: 600 }}
         >
           <Modal.Content style={{ backgroundColor: "#203647", minHeight: 600 }}>
+            <Segment basic style={{ display: "flex" }}>
+              <Image
+                style={{
+                  maxWidth: 80,
+                  minHeight: 80,
+                  minWidth: 80,
+                  maxHeight: 80,
+                  margin: "auto",
+                  marginRight: 5,
+                }}
+                circular
+                src={`http://localhost:8000/${props.selectedUser.profilePic}`}
+              />
+              <Header
+                as="h2"
+                style={{ color: "#fff", margin: "auto", marginLeft: 5 }}
+              >
+                {props.selectedUser.name}
+              </Header>
+            </Segment>
+            <Divider />
             <Tab
               menu={{
                 secondary: true,
                 pointing: true,
-                white: true,
                 grid: { paneWidth: 12, tabWidth: 6 },
               }}
               panes={panes}

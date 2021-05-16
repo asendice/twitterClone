@@ -198,6 +198,16 @@ const SearchClone = (props) => {
         />
       </Input>
       <Divider />
+      {term.length === 0 ? (
+        <Header textAlign="center" style={{ margin: "auto", color: "#4da8da" }}>
+          Who to follow
+        </Header>
+      ) : (
+        <Header textAlign="center" style={{ margin: "auto", color: "#4da8da" }}>
+          Search Results
+        </Header>
+      )}
+      <Divider />
       <Table basic="very">
         <Table.Body>
           {renderRow()}
