@@ -99,18 +99,13 @@ let Login = (props) => {
         />
         <Divider />
         <Button
-          onClick={() =>
-            setTimeout(() => {
-              props.setLoginResult(true);
-            }, 1500)
-          }
           type="submit"
           fluid
-          style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
+          circular
+          className="edit-profile-btn"
         >
           Login
         </Button>
-        
       </Form>
     </div>
   );

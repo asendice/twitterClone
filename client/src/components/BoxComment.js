@@ -75,6 +75,7 @@ const BoxComment = (props) => {
           >
             <Box
               box="comment"
+              suggestion={false}
               noLink={true}
               replyIds={comment.replies}
               id={comment.id}
@@ -106,7 +107,10 @@ const BoxComment = (props) => {
             border: "1px solid black",
           }}
         >
-          <span onClick={() => setOpen(true)} style={{ cursor: "pointer", color: "#4da8da" }}>
+          <span
+            onClick={() => setOpen(true)}
+            style={{ cursor: "pointer", color: "#4da8da" }}
+          >
             Add a comment?{" "}
           </span>
         </Segment>
@@ -171,6 +175,7 @@ const BoxComment = (props) => {
             <Divider />
             <Box
               likes={props.selectedBox.likes}
+              suggestion={false}
               id={props.selectedBox.id}
               userId={props.selectedBox.userId}
               content={props.selectedBox.content}
@@ -194,7 +199,7 @@ const BoxComment = (props) => {
   const renderCommentModal = () => {
     if (props.selectedComment) {
       const userName = props.allUsers.filter((user) => {
-        if (user.id === props.selectedComment.userId) {
+        if (user._id === props.selectedComment.userId) {
           return user;
         }
       });
@@ -220,6 +225,8 @@ const BoxComment = (props) => {
             <Divider />
             <Box
               likes={props.selectedComment.likes}
+              suggestion={false}
+              reply={props.selectedComment.name}
               id={props.selectedComment.id}
               userId={props.selectedComment.userId}
               content={props.selectedComment.content}
@@ -247,6 +254,7 @@ const BoxComment = (props) => {
           <Box
             link={props.selectedBox._id}
             likes={props.selectedBox.likes}
+            suggestion={false}
             id={props.selectedBox._id}
             userId={props.selectedBox.userId}
             content={props.selectedBox.content}

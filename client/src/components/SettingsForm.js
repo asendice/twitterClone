@@ -88,7 +88,7 @@ let SettingsForm = (props) => {
 
       <Divider />
       <Form onSubmit={props.handleSubmit(props.onFormSubmit)}>
-        <Label style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
+        <Label style={{ backgroundColor: "black", color: "#4DA8DA" }}>
           {" "}
           Change your Profile Image
         </Label>
@@ -101,7 +101,7 @@ let SettingsForm = (props) => {
         />
         <Divider hidden />
 
-        <Label style={{ backgroundColor: "#4DA8DA", color: "#fff" }}>
+        <Label style={{ backgroundColor: "black", color: "#4DA8DA" }}>
           {" "}
           Change your Background Image
         </Label>

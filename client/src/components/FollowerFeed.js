@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Segment, Modal, Icon, Divider } from "semantic-ui-react";
 import Box from "./Box";
-import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
+import uuid from "react-uuid";
 import {
   getBoxes,
   selectBox,
@@ -9,18 +10,35 @@ import {
   putComment,
   getUsers,
 } from "../actions";
-import uuid from "react-uuid";
 import { connect } from "react-redux";
 
-const BoxFeed = (props) => {
+const FollowerFeed = (props) => {
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     props.getBoxes();
     props.getUsers();
   }, []);
 
-  const sorted = props.boxes.sort((a, b) => {
+  const filterFollowing = props.allUsers.filter((user) => {
+    if (props.currentUser.following.includes(user._id)) return user;
+  });
+
+  console.log(filterFollowing, "filterFollowing");
+
+  const followingLikesList = filterFollowing.map((user) => {
+    let list = user.liked[user.liked.length - 1];
+    return list;
+  });
+
+  const filterBoxesByCurrentUserFollowing = props.boxes.filter((box) => {
+    let arr = props.currentUser.following.concat(followingLikesList);
+    console.log(arr);
+    if (arr.includes(box.userId) || arr.includes(box._id)) {
+      return box;
+    }
+  });
+
+  const sortFollowingBoxes = filterBoxesByCurrentUserFollowing.sort((a, b) => {
     const one = new Date(a.createdAt);
     const two = new Date(b.createdAt);
     return two - one;
@@ -39,9 +57,6 @@ const BoxFeed = (props) => {
   };
 
   const renderModal = () => {
-    const postDate = new Date(props.selectedBox.createdAt);
-    const date = new Date();
-    const ago = date - postDate;
     const user = props.allUsers.filter((item) => {
       const name = item._id === props.selectedBox.userId ? item : null;
       return name;
@@ -51,6 +66,9 @@ const BoxFeed = (props) => {
       return item.name;
     });
     if (props.selectedBox.likes) {
+      const postDate = new Date(props.selectedBox.createdAt);
+      const date = new Date();
+      const ago = date - postDate;
       return (
         <Modal
           centered={false}
@@ -68,8 +86,8 @@ const BoxFeed = (props) => {
             />
             <Divider />
             <Box
-              id={props.selectedBox._id}
               suggestion={false}
+              id={props.selectedBox._id}
               likes={props.selectedBox.likes}
               comments={props.selectedBox.comments}
               userId={props.selectedBox.userId}
@@ -91,57 +109,44 @@ const BoxFeed = (props) => {
     }
   };
 
-  const renderFeed = () => {
-    if (props.boxes.length > 0) {
-      return sorted.map((box) => {
-        const postDate = new Date(box.createdAt);
-        const date = new Date();
-        const ago = date - postDate;
-        console.log(ago, "ago from boxfeed");
-        const numOfLikes = box.likes.length;
-        const numOfComments = box.comments.length;
-        return (
-          <Segment
-            key={box._id}
-            basic
-            onClick={() => props.selectBox(box)}
-            className="box-feed-item"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
-          >
-            <Box
-              id={box._id}
-              userId={box.userId}
-              link={box._id}
-              likes={box.likes}
-              suggestion={false}
-              content={box.content}
-              comments={box.comments}
-              ago={ago}
-              numOfLikes={numOfLikes}
-              numOfComments={numOfComments}
-              setOpen={setOpen}
-              currentUserId={props.userInfo._id}
-            />
-          </Segment>
-        );
-      });
-    } else {
+  const renderFollowingFeed = () => {
+    return sortFollowingBoxes.map((box) => {
+      const postDate = new Date(box.createdAt);
+      const date = new Date();
+      const ago = date - postDate;
+      const numOfLikes = box.likes.length;
+      const numOfComments = box.comments.length;
+      console.log(!props.currentUser.following.includes(box.userId));
       return (
         <Segment
+          key={box._id}
           basic
-          className="box-feed-item"
+          onClick={() => props.selectBox(box)}
+          className="box-follower-item"
           style={{ marginLeft: "auto", marginRight: "auto" }}
         >
-          {" "}
-          Loading
+          <Box
+            id={box._id}
+            userId={box.userId}
+            link={box._id}
+            likes={box.likes}
+            suggestion={!props.currentUser.following.includes(box.userId)}
+            content={box.content}
+            comments={box.comments}
+            ago={ago}
+            numOfLikes={numOfLikes}
+            numOfComments={numOfComments}
+            setOpen={setOpen}
+            currentUserId={props.userInfo._id}
+          />
         </Segment>
       );
-    }
+    });
   };
 
   return (
     <>
-      {renderFeed()}
+      {renderFollowingFeed()}
       {renderModal()}
     </>
   );
@@ -153,8 +158,10 @@ const mapStateToProps = (state) => {
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
     userInfo: state.userInfo.user,
-    loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
+    currentUser: state.allUsers.users.filter(
+      (user) => user._id === state.userInfo.user._id
+    )[0],
   };
 };
 
@@ -166,4 +173,4 @@ const mapDispatchToProps = {
   getUsers: () => getUsers(),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoxFeed);
+export default connect(mapStateToProps, mapDispatchToProps)(FollowerFeed);

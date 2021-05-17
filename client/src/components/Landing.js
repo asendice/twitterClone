@@ -25,11 +25,15 @@ const Landing = (props) => {
 
   const onLogIn = (formValues) => {
     props.login(formValues);
+    setLoginResult(true);
   };
 
   const onRegister = (formValues) => {
     props.register(formValues);
   };
+
+  console.log(loginResult, "loginResult");
+  console.log(loginResult, "loginResult");
 
   // const renderRegisterResultModal = () => {
   //   if (props.registerInfo.status === 200) {
@@ -67,40 +71,15 @@ const Landing = (props) => {
   //   }
   // };
 
-  const renderLoginResultModal = () => {
-    if (props.loggedIn) {
-      return <Redirect to="/home" />;
-    } else if (!props.loggedIn) {
-      const mapUserInfoError = props.userInfo.result.data.errors.map((errors) => {
-        return errors.user || errors.password;
-      });
-      return (
-        <Modal
-          centered={false}
-          size="tiny"
-          onClose={() => setLoginResult(false)}
-          onOpen={() => setLoginResult(true)}
-          open={loginResult}
-        >
-          <Modal.Content style={{ backgroundColor: "#203647" }}>
-            <Segment basic style={{ color: "#fff" }}>
-              {" "}
-              Login failed: {mapUserInfoError}
-              <Icon
-                onClick={() => setLoginResult(false)}
-                name="x"
-                style={{ cursor: "pointer", color: "#4DA8DA", float: "right" }}
-                name="x"
-                size="large"
-              />
-            </Segment>
-          </Modal.Content>
-        </Modal>
-      );
-    } else {
-      return <Redirect to="/home" />;
-    }
+  const renderLoginResults = () => {
+    const mapUserInfoError = props.userInfo.result.data.errors.map((errors) => {
+      return errors.user || errors.password;
+    });
+    return <span style={{ color: "#fff" }}> Login failed: {mapUserInfoError}</span>;
   };
+
+  console.log(props.error, "props.error")
+
 
   const renderLoginModal = () => {
     return (
@@ -113,7 +92,12 @@ const Landing = (props) => {
       >
         <Modal.Content style={{ backgroundColor: "#203647" }}>
           <Segment basic>
-            <LoginForm onLogIn={onLogIn} setLoginResult={setLoginResult} />
+            {props.error ? renderLoginResults() : ""}
+            <LoginForm
+              onLogIn={onLogIn}
+              setLoginResult={setLoginResult}
+              loginResult={loginResult}
+            />
             <Segment basic textAlign="center">
               <span
                 onClick={() => logLinkClick()}
@@ -156,50 +140,51 @@ const Landing = (props) => {
 
   return (
     <Segment style={{ backgroundColor: "#12232e", height: "100vh" }}>
-      <Grid columns={3}>
-        <Grid.Column mobile={1} tablet={5} computer={6}></Grid.Column>
-        <Grid.Column mobile={14} tablet={6} computer={6} style={{ top: 200 }}>
-          <Segment basic style={{ minWidth: "400px", maxWidth: "400px" }}>
-            <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
-              It's
-            </Header>
-            <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
-              Happening
-            </Header>
-            <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
-              Now.
-            </Header>
-            <Header as="h2" style={{ color: "#fff" }}>
-              Join twitterClone Today.
-            </Header>
-          </Segment>
-          <Segment basic style={{ minWidth: "400px", maxWidth: "400px" }}>
-            <Button
-              fluid
-              onClick={() => setRegisterOpen(true)}
-              style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
-            >
-              Register
-            </Button>
-            <Button
-              fluid
-              onClick={() => setLoginOpen(true)}
-              style={{
-                backgroundColor: "#12232e",
-                border: "solid 1px #4DA8DA",
-                marginTop: 10,
-                color: "#fff",
-              }}
-            >
-              Login
-            </Button>
-          </Segment>
-        </Grid.Column>
-        <Grid.Column mobile={1} tablet={5} computer={6}></Grid.Column>
-      </Grid>
+      <Segment
+        padded="very"
+        rounded
+        style={{
+          minWidth: "420px",
+          maxWidth: "600px",
+          backgroundColor: "black",
+          margin: "auto",
+          marginTop: "200px",
+        }}
+      >
+        <Header as="h1" style={{ color: "#4da8da", fontSize: "4.5rem" }}>
+          It's
+        </Header>
+        <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
+          Happening
+        </Header>
+        <Header as="h1" style={{ color: "#4da8da", fontSize: "4.5rem" }}>
+          Now.
+        </Header>
+        <Header as="h2" style={{ color: "#fff" }}>
+          Join <span style={{ color: "#4da8da" }}>twitterClone</span> Today.
+        </Header>
+        <Button
+          fluid
+          circular
+          className="follow-btn"
+          onClick={() => setRegisterOpen(true)}
+        >
+          Register
+        </Button>
+        <Button
+          fluid
+          circular
+          className="edit-profile-btn"
+          onClick={() => setLoginOpen(true)}
+          style={{
+            marginTop: 10,
+          }}
+        >
+          Login
+        </Button>
+      </Segment>
       {renderLoginModal()}
       {renderRegisterModal()}
-      {props.userInfo ? renderLoginResultModal() : null}
       {/* {props.registerInfo ? renderRegisterResultModal() : null} */}
     </Segment>
   );
@@ -207,9 +192,9 @@ const Landing = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     registerInfo: state.registerInfo,
+    error: state.userInfo.result ? state.userInfo.result.data.errors : null,
   };
 };
 

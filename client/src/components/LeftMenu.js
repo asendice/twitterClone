@@ -42,7 +42,7 @@ const LeftMenu = (props) => {
   };
 
   const updatedUser = props.allUsers.filter((users) => {
-    if ((users.id === props.userInfo._id) || (users._id === props.userInfo._id)) {
+    if (users._id === props.userInfo._id) {
       return users;
     }
   });
@@ -50,7 +50,6 @@ const LeftMenu = (props) => {
   const updatedUserPic = updatedUser.map((user) => {
     return user.profilePic;
   });
-
 
   const renderModal = () => {
     return (
@@ -97,7 +96,7 @@ const LeftMenu = (props) => {
         >
           <NavLink
             onClick={() => onProfileClick()}
-            to={`/profile/${updatedUserPic}`}
+            to={`/profile/${props.userInfo.name}`}
           >
             <Header as="h1" style={{ color: "#fff" }}>
               <Image
