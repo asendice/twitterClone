@@ -84,10 +84,10 @@ const SearchClone = (props) => {
               <Link to={`/profile/${user.name}`}>
                 <Image
                   style={{
-                    maxWidth: 80,
-                    minHeight: 80,
-                    minWidth: 80,
-                    maxHeight: 80,
+                    maxWidth: 60,
+                    minHeight: 60,
+                    minWidth: 60,
+                    maxHeight: 60,
                   }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
@@ -137,10 +137,10 @@ const SearchClone = (props) => {
               <Link to={`/profile/${user.name}`}>
                 <Image
                   style={{
-                    maxWidth: 80,
-                    minHeight: 80,
-                    minWidth: 80,
-                    maxHeight: 80,
+                    maxWidth: 60,
+                    minHeight: 60,
+                    minWidth: 60,
+                    maxHeight: 60,
                   }}
                   circular
                   src={`http://localhost:8000/${user.profilePic}`}
@@ -188,7 +188,7 @@ const SearchClone = (props) => {
   return (
     <Segment
       className="search-clone-card media-right-card"
-      style={{ minHeight: 300 }}
+      style={{ minHeight: 300}}
     >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />

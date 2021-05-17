@@ -5,7 +5,7 @@ const Title = (props) => {
   return (
     <Sticky context={props.contextRef} offset={-8}>
       <Segment textAlign="center" style={{ backgroundColor: "black" }}>
-        <Header style={{ color: "#fff" }}>twitterClone</Header>
+        <Header style={{ color: "#4da8da" }}>twitterClone</Header>
       </Segment>
     </Sticky>
   );

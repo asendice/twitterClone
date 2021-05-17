@@ -24,12 +24,10 @@ import {
   delFollowing,
   getUsers,
 } from "../actions";
-import { Link } from "react-router-dom";
 
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
   const [followOpen, setFollowOpen] = useState(false);
-  const [pathName, setPathName] = useState();
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
     props.getUsers();
@@ -233,7 +231,7 @@ const ProfileBox = (props) => {
       const panes = [
         {
           menuItem: (
-            <Menu.Item>
+            <Menu.Item key={123}>
               <span style={{ color: "#fff" }}>Followers</span>
             </Menu.Item>
           ),
@@ -262,7 +260,7 @@ const ProfileBox = (props) => {
         },
         {
           menuItem: (
-            <Menu.Item>
+            <Menu.Item key={1234}>
               <span style={{ color: "#fff" }}>Following</span>
             </Menu.Item>
           ),
@@ -445,7 +443,6 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
-
     allUsers: state.allUsers.users,
     currentUser: state.allUsers.users.filter(
       (user) => user._id === state.userInfo.user._id

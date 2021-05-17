@@ -28,7 +28,6 @@ const Box = (props) => {
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
-
   const onHeartClick = () => {
     const ids = {
       userId: props.currentUserId,
@@ -98,6 +97,11 @@ const Box = (props) => {
       ) : (
         ""
       );
+    }
+  };
+  const renderSuggestion = () => {
+    if (props.suggestion) {
+     return <span className="reply-text"> Suggested from Following   </span>;
     }
   };
 
@@ -246,9 +250,10 @@ const Box = (props) => {
 
   return (
     <>
-      {/* <Link to={`/comment/${props.link}`}> */}
+      <Link to={`/comment/${props.link}`}>
         <Segment style={{ padding: 0 }} basic>
           {renderLikeMsg()}
+          {renderSuggestion()}
           {renderCommentMsg()}
           <Card
             key={props.id}
@@ -299,7 +304,7 @@ const Box = (props) => {
             </Feed.Content>
           </Card>
         </Segment>
-      {/* </Link> */}
+      </Link>
 
       {renderBoxInfo()}
       <Feed.Meta>

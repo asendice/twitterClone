@@ -62,6 +62,9 @@ const ProfileFeed = (props) => {
   };
 
   const renderModal = () => {
+    const postDate = new Date(props.selectedBox.createdAt);
+    const date = new Date();
+    const ago = date - postDate;
     if (props.selectedBox.likes) {
       return (
         <Modal
@@ -80,6 +83,7 @@ const ProfileFeed = (props) => {
             />
             <Divider />
             <Box
+              suggestion={false}
               id={props.selectedBox.id}
               likes={props.selectedBox.likes}
               userName="@userName"
@@ -87,7 +91,7 @@ const ProfileFeed = (props) => {
               userId={props.selectedBox.userId}
               content={props.selectedBox.content}
               time={props.selectedBox.createdAt}
-              ago={props.selectedBox.createdAt}
+              ago={ago}
               heartDisplay="none"
               commentDisplay="none"
               currentUserId={props.userInfo._id}
@@ -120,6 +124,7 @@ const ProfileFeed = (props) => {
             style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Box
+              suggestion={false}
               id={box._id}
               profile={true}
               userId={box.userId}
@@ -165,7 +170,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
-    selectedUser: state.selectedUser ? state.selectedUser : "",
+    selectedUser: state.selectedUser ? state.selectedUser : null,
   };
 };
 
