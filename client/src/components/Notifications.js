@@ -16,8 +16,7 @@ const Notifications = () => {
         }}
       >
         <Header as="h3" style={{ color: "#fff" }}>
-          Sorry... You don't have any notificaitons because the programmer
-          decided to wait until version 2 to release them...
+          Notifations will be working in version 2 of twitterClone. 
         </Header>
         <Icon size="massive" name="time" style={{ color: "#fff" }} />
       </Segment>

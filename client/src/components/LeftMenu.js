@@ -151,6 +151,7 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Menu.Item>
             <Button
+              circular
               onClick={onPostClick}
               style={{ backgroundColor: "#4DA8DA" }}
             >
@@ -162,6 +163,7 @@ const LeftMenu = (props) => {
           <Divider hidden />
           <Menu.Item>
             <Button
+              circular
               onClick={() => logout()}
               style={{ backgroundColor: "grey" }}
             >
@@ -235,12 +237,32 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <Segment basic style={{ right: 20 }}>
+            <Segment basic style={{ right: 25 }}>
               <Button
-                onClick={onPostClick}
+                circular
+                onClick={() => onPostClick()}
                 style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
               >
-                P
+                <Icon
+                  name="pencil"
+                  onClick={() => onPostClick()}
+                  style={{ margin: "auto" }}
+                />
+              </Button>
+            </Segment>
+          </Menu.Item>
+          <Menu.Item>
+            <Segment basic style={{ right: 25 }}>
+              <Button
+                circular
+                onClick={() => logout()}
+                style={{ backgroundColor: "grey" }}
+              >
+                <Icon
+                  name="x"
+                  onClick={() => onPostClick()}
+                  style={{ margin: "auto" }}
+                />
               </Button>
             </Segment>
           </Menu.Item>
@@ -310,12 +332,32 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Divider hidden />
           <Menu.Item>
-            <Segment basic style={{ right: 22 }}>
+            <Segment basic style={{ right: 25 }}>
               <Button
-                onClick={onPostClick}
+                circular
+                onClick={() => onPostClick()}
                 style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
               >
-                P
+                <Icon
+                  name="pencil"
+                  onClick={() => onPostClick()}
+                  style={{ margin: "auto" }}
+                />
+              </Button>
+            </Segment>
+          </Menu.Item>
+          <Menu.Item>
+            <Segment basic style={{ right: 25 }}>
+              <Button
+                circular
+                onClick={() => logout()}
+                style={{ backgroundColor: "grey" }}
+              >
+                <Icon
+                  name="x"
+                  onClick={() => onPostClick()}
+                  style={{ margin: "auto" }}
+                />
               </Button>
             </Segment>
           </Menu.Item>

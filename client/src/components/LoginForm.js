@@ -72,7 +72,7 @@ let Login = (props) => {
   return (
     <div style={{ backgroundColor: "#203647" }}>
       <Header as="h2" style={{ color: "#fff" }}>
-        Log in to twitterClone
+        Log in to <span style={{color: "#4da8da"}}>twitterClone</span>
       </Header>
       <Divider hidden />
       <Form onSubmit={props.handleSubmit(props.onLogIn)}>

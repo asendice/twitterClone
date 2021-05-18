@@ -36,8 +36,15 @@ export const addBoxes = (boxes) => {
   };
 };
 
+export const boxesLoading = () => {
+  return {
+    type: "BOXES_LOADING",
+  };
+};
+
 export const getBoxes = () => {
   return async (dispatch) => {
+    dispatch(boxesLoading());
     await backendApi
       .get("/boxes", {
         headers: {
@@ -139,6 +146,7 @@ export const putComment = (comment) => {
 
 export const getComments = (boxId) => {
   return async (dispatch) => {
+    dispatch(commentsLoading());
     await backendApi
       .get(`/comments/${boxId}`, {
         headers: {
@@ -157,6 +165,12 @@ export const getComments = (boxId) => {
         }
       })
       .then((comments) => dispatch(addComments(comments.data.result)));
+  };
+};
+
+export const commentsLoading = () => {
+  return {
+    type: "COMMENTS_LOADING",
   };
 };
 
@@ -259,7 +273,6 @@ export const updateUser = (res) => {
 
 export const logout = () => (dispatch) => {
   localStorage.removeItem("user");
-
   dispatch({
     type: "LOGOUT",
   });
@@ -329,6 +342,12 @@ export const getBox = (id) => {
         }
       })
       .then((box) => dispatch(selectBox(box.data.result)));
+  };
+};
+
+export const usersLoading = () => {
+  return {
+    type: "USERS_LOADING",
   };
 };
 
@@ -602,7 +621,7 @@ export const updateComment = (comment) => {
     type: "UPDATE_COMMENT",
     payload: comment,
   };
-}
+};
 
 export const getReplies = (boxId) => {
   return async (dispatch) => {
@@ -651,7 +670,7 @@ export const addFollower = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response")
+        console.log(response, "response");
         if (response) {
           return response;
         } else {
@@ -678,7 +697,7 @@ export const addFollowing = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response")
+        console.log(response, "response");
         if (response) {
           return response;
         } else {
@@ -705,7 +724,7 @@ export const delFollower = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response")
+        console.log(response, "response");
         if (response) {
           return response;
         } else {
@@ -732,7 +751,7 @@ export const delFollowing = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response")
+        console.log(response, "response");
         if (response) {
           return response;
         } else {
