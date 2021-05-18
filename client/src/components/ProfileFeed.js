@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "./Box";
+import Loading from "./Loading";
 import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import {
@@ -144,33 +145,39 @@ const ProfileFeed = (props) => {
       });
     } else {
       return (
-        <Segment basic className="box-feed-item">
+        <Segment style={{background: "#203647"}}>
           {" "}
-          <span style={{ color: "#fff", cursor: "pointer" }}>
-            Nothing to display{" "}
+          <span style={{ color: "#fff" }}>
+            {props.selectedUser.name} has not posted anything yet...{" "}
           </span>
         </Segment>
       );
     }
   };
 
-  return (
-    <>
-      {renderFeed()}
-      {renderModal()}
-    </>
-  );
+  if (props.boxesLoading) {
+    return <Loading />;
+  }
+  if (props.boxes) {
+    return (
+      <>
+        {renderFeed()}
+        {renderModal()}
+      </>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
+    boxesLoading: state.box.isLoading,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
-    selectedUser: state.selectedUser ? state.selectedUser : null,
+    selectedUser:  state.selectedUser,
   };
 };
 

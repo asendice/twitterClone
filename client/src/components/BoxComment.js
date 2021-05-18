@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Box from "./Box";
+import Loading from "./Loading";
 import { connect } from "react-redux";
 import uuid from "react-uuid";
 import CommentForm from "./CommentForm";
@@ -31,7 +32,7 @@ const BoxComment = (props) => {
     }
     props.getComments(url);
     props.getUsers();
-  }, [url, open, replyOpen, props.selectedComment]);
+  }, [url, open]);
 
   const user = props.allUsers.filter((item) => {
     const name = item._id === props.selectedBox.userId ? item : null;
@@ -55,7 +56,10 @@ const BoxComment = (props) => {
   });
 
   const renderCommentFeed = () => {
-    if (props.comments.length > 0) {
+    if (props.commentsLoading) {
+      return <Loading />;
+    }
+    if (props.comments) {
       return sorted.map((comment) => {
         const date = new Date();
         const postDate = new Date(comment.createdAt);
@@ -90,6 +94,7 @@ const BoxComment = (props) => {
               setOpen={setReplyOpen}
               heartDisplay="none"
               currentUserId={props.userInfo._id}
+              disabled={true}
             />
           </Segment>
         );
@@ -185,6 +190,7 @@ const BoxComment = (props) => {
               heartDisplay="none"
               commentDisplay="none"
               currentUserId={props.userInfo._id}
+              disabled={true}
             />
             <Divider />
             <span
@@ -235,6 +241,7 @@ const BoxComment = (props) => {
               heartDisplay="none"
               commentDisplay="none"
               currentUserId={props.userInfo._id}
+              disabled={true}
             />
             <Divider />
             <span
@@ -266,6 +273,7 @@ const BoxComment = (props) => {
             setOpen={setOpen}
             currentUserId={props.userInfo._id}
             info={true}
+            disabled={true}
           />
         </Segment>
         {renderCommentFeed()}
@@ -284,6 +292,7 @@ const mapStateToProps = (state) => {
     selectedBox: state.selectedBox,
     selectedComment: state.selectedComment,
     comments: state.comment.comments,
+    commentsLoading: state.comment.isLoading,
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,

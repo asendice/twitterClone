@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Loading from "./Loading";
 import {
   Segment,
   Input,
@@ -44,7 +45,7 @@ const SearchClone = (props) => {
   });
 
   const renderSearchNf = () => {
-    if (filteredUsers.length === 0) {
+    if (filteredUsers.length === 0 && !props.allUsersLoading) {
       return (
         <Table.Row>
           <Table.Cell>
@@ -60,7 +61,6 @@ const SearchClone = (props) => {
   };
 
   const onFollowBtnClick = (user) => {
-    console.log(user, "user");
     const item = {
       currentUserId: props.userInfo._id,
       selectedUserId: user._id,
@@ -75,6 +75,15 @@ const SearchClone = (props) => {
   };
 
   const renderRow = () => {
+    if (props.allUsersLoading) {
+      return (
+        <Table.Row>
+          <Table.Cell>
+            <Loading />
+          </Table.Cell>
+        </Table.Row>
+      );
+    }
     if (term.length > 0) {
       const newArr = filteredUsers.slice(0, 7);
       return newArr.map((user) => {
@@ -188,7 +197,7 @@ const SearchClone = (props) => {
   return (
     <Segment
       className="search-clone-card media-right-card"
-      style={{ minHeight: 300}}
+      style={{ minHeight: 300 }}
     >
       <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
         <Icon name="search" style={{ color: "#fff" }} />
@@ -222,6 +231,7 @@ const mapStateToProps = (state) => {
   return {
     allUsers: state.allUsers.users,
     userInfo: state.userInfo.user,
+    allUsersLoading: state.allUsers.isLoading,
   };
 };
 

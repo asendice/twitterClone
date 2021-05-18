@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Segment, Modal, Icon, Divider } from "semantic-ui-react";
 import Box from "./Box";
+import Loading from "./Loading";
 import CommentForm from "./CommentForm";
 import uuid from "react-uuid";
 import {
@@ -23,8 +24,6 @@ const FollowerFeed = (props) => {
     if (props.currentUser.following.includes(user._id)) return user;
   });
 
-  console.log(filterFollowing, "filterFollowing");
-
   const followingLikesList = filterFollowing.map((user) => {
     let list = user.liked[user.liked.length - 1];
     return list;
@@ -32,7 +31,6 @@ const FollowerFeed = (props) => {
 
   const filterBoxesByCurrentUserFollowing = props.boxes.filter((box) => {
     let arr = props.currentUser.following.concat(followingLikesList);
-    console.log(arr);
     if (arr.includes(box.userId) || arr.includes(box._id)) {
       return box;
     }
@@ -110,58 +108,80 @@ const FollowerFeed = (props) => {
   };
 
   const renderFollowingFeed = () => {
-    return sortFollowingBoxes.map((box) => {
-      const postDate = new Date(box.createdAt);
-      const date = new Date();
-      const ago = date - postDate;
-      const numOfLikes = box.likes.length;
-      const numOfComments = box.comments.length;
-      console.log(!props.currentUser.following.includes(box.userId));
+    if (sortFollowingBoxes.length > 0) {
+      return sortFollowingBoxes.map((box) => {
+        const postDate = new Date(box.createdAt);
+        const date = new Date();
+        const ago = date - postDate;
+        const numOfLikes = box.likes.length;
+        const numOfComments = box.comments.length;
+        return (
+          <Segment
+            key={box._id}
+            basic
+            onClick={() => props.selectBox(box)}
+            className="box-follower-item"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          >
+            <Box
+              id={box._id}
+              userId={box.userId}
+              link={box._id}
+              likes={box.likes}
+              suggestion={!props.currentUser.following.includes(box.userId)}
+              content={box.content}
+              comments={box.comments}
+              ago={ago}
+              numOfLikes={numOfLikes}
+              numOfComments={numOfComments}
+              setOpen={setOpen}
+              currentUserId={props.userInfo._id}
+            />
+          </Segment>
+        );
+      });
+    } else {
       return (
-        <Segment
-          key={box._id}
-          basic
-          onClick={() => props.selectBox(box)}
-          className="box-follower-item"
-          style={{ marginLeft: "auto", marginRight: "auto" }}
-        >
-          <Box
-            id={box._id}
-            userId={box.userId}
-            link={box._id}
-            likes={box.likes}
-            suggestion={!props.currentUser.following.includes(box.userId)}
-            content={box.content}
-            comments={box.comments}
-            ago={ago}
-            numOfLikes={numOfLikes}
-            numOfComments={numOfComments}
-            setOpen={setOpen}
-            currentUserId={props.userInfo._id}
-          />
+        <Segment style={{background: "#203647", maxWidth: "650px", minWidth:"420px", margin: "auto", marginTop: "20px"}}>
+          {" "}
+          <span style={{ color: "#fff" }}>
+             You don't have any followers! Check out Who to follow, or Everyone's feed and start following! {" "}
+          </span>
         </Segment>
       );
-    });
+    }
   };
 
-  return (
-    <>
-      {renderFollowingFeed()}
-      {renderModal()}
-    </>
-  );
+  if (props.boxesLoading) {
+    return (
+      <Segment basic>
+        <Loading />
+      </Segment>
+    );
+  }
+  if (!props.boxesLoading) {
+    return (
+      <>
+        {renderFollowingFeed()}
+        {renderModal()}
+      </>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
+    boxesLoading: state.box.isLoading,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
     userInfo: state.userInfo.user,
     allUsers: state.allUsers.users,
-    currentUser: state.allUsers.users.filter(
-      (user) => user._id === state.userInfo.user._id
-    )[0],
+    currentUser: !state.allUsers.isLoading
+      ? state.allUsers.users.filter(
+          (user) => user._id === state.userInfo.user._id
+        )[0]
+      : state.userInfo.user,
   };
 };
 

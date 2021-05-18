@@ -63,6 +63,7 @@ let PostBoxForm = (props) => {
         {char} / 240
       </span>
       <Button
+        circular
         type="submit"
         disabled={char === 0 || char > 240}
         style={{

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import { Segment, Grid, Header, Button, Modal, Icon } from "semantic-ui-react";
+import {
+  Segment,
+  Message,
+  Header,
+  Button,
+  Modal,
+  Divider,
+} from "semantic-ui-react";
 import { Redirect } from "react-router";
 import { login, register } from "../actions";
 import { connect } from "react-redux";
@@ -9,8 +16,7 @@ import { connect } from "react-redux";
 const Landing = (props) => {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
-  const [loginResult, setLoginResult] = useState(false);
-  const [registerResult, setRegisterResult] = useState(false);
+
   if (props.loggedIn) {
     return <Redirect to="/home" />;
   }
@@ -25,61 +31,64 @@ const Landing = (props) => {
 
   const onLogIn = (formValues) => {
     props.login(formValues);
-    setLoginResult(true);
   };
 
   const onRegister = (formValues) => {
     props.register(formValues);
   };
 
-  console.log(loginResult, "loginResult");
-  console.log(loginResult, "loginResult");
-
-  // const renderRegisterResultModal = () => {
-  //   if (props.registerInfo.status === 200) {
-  //     setLoginOpen(true);
-  //   } else if (props.registerInfo.status === 200) {
-  //     console.log("this should be working ---", props.registerInfo.status);
-  //     const mapRegInfoError = props.registerInfo.data.errors.map((errors) => {
-  //       return errors.user || errors.password;
-  //     });
-  //     return (
-  //       <Modal
-  //         centered={false}
-  //         size="tiny"
-  //         onClose={() => setRegisterResult(false)}
-  //         onOpen={() => setRegisterResult(true)}
-  //         open={registerResult}
-  //       >
-  //         <Modal.Content style={{ backgroundColor: "#203647" }}>
-  //           <Segment basic style={{ color: "#fff" }}>
-  //             {" "}
-  //             Registration failed: {mapRegInfoError}
-  //             <Icon
-  //               onClick={() => setRegisterResult(false)}
-  //               name="x"
-  //               style={{ cursor: "pointer", color: "#4DA8DA", float: "right" }}
-  //               name="x"
-  //               size="large"
-  //             />
-  //           </Segment>
-  //         </Modal.Content>
-  //       </Modal>
-  //     );
-  //   } else {
-  //     return null;
-  //   }
-  // };
-
   const renderLoginResults = () => {
-    const mapUserInfoError = props.userInfo.result.data.errors.map((errors) => {
+    const mapUserInfoError = props.error.map((errors) => {
       return errors.user || errors.password;
     });
-    return <span style={{ color: "#fff" }}> Login failed: {mapUserInfoError}</span>;
+    return (
+      <>
+        <Message style={{ background: "#12232e" }}>
+          <Message.Header style={{ color: "pink" }}>
+            Login Failed:{" "}
+          </Message.Header>
+          <p style={{ color: "pink" }}>{mapUserInfoError}</p>
+        </Message>
+        <Divider hidden />
+      </>
+    );
   };
-
-  console.log(props.error, "props.error")
-
+  const renderRegisterResults = () => {
+    if (props.regError) {
+      const mapUserInfoError = props.regError.map((errors) => {
+        return errors.user || errors.password;
+      });
+      return (
+        <>
+          <Message style={{ background: "#12232e" }}>
+            <Message.Header style={{ color: "pink" }}>
+              Registration Failed:{" "}
+            </Message.Header>
+            <p style={{ color: "pink" }}>{mapUserInfoError}</p>
+          </Message>
+          <Divider hidden />
+        </>
+      );
+    }
+    if (props.registerInfo.status === 200) {
+      return (
+        <>
+          <Message style={{ background: "#12232e" }}>
+            <Message.Header style={{ color: "#fff" }}>
+              Registration Successful:{" "}
+              <span
+                style={{ color: "#4da8da", cursor: "pointer" }}
+                onClick={() => regLinkClick()}
+              >
+                Login
+              </span>
+            </Message.Header>
+          </Message>
+          <Divider hidden />
+        </>
+      );
+    }
+  };
 
   const renderLoginModal = () => {
     return (
@@ -93,11 +102,7 @@ const Landing = (props) => {
         <Modal.Content style={{ backgroundColor: "#203647" }}>
           <Segment basic>
             {props.error ? renderLoginResults() : ""}
-            <LoginForm
-              onLogIn={onLogIn}
-              setLoginResult={setLoginResult}
-              loginResult={loginResult}
-            />
+            <LoginForm onLogIn={onLogIn} />
             <Segment basic textAlign="center">
               <span
                 onClick={() => logLinkClick()}
@@ -122,6 +127,9 @@ const Landing = (props) => {
         open={registerOpen}
       >
         <Modal.Content style={{ backgroundColor: "#203647" }}>
+          {props.regError || props.registerInfo.status
+            ? renderRegisterResults()
+            : ""}
           <Segment basic>
             <RegisterForm onRegister={onRegister} />
             <Segment basic textAlign="center">
@@ -142,7 +150,6 @@ const Landing = (props) => {
     <Segment style={{ backgroundColor: "#12232e", height: "100vh" }}>
       <Segment
         padded="very"
-        rounded
         style={{
           minWidth: "420px",
           maxWidth: "600px",
@@ -185,7 +192,6 @@ const Landing = (props) => {
       </Segment>
       {renderLoginModal()}
       {renderRegisterModal()}
-      {/* {props.registerInfo ? renderRegisterResultModal() : null} */}
     </Segment>
   );
 };
@@ -194,7 +200,9 @@ const mapStateToProps = (state) => {
   return {
     loggedIn: state.userInfo.loggedIn,
     registerInfo: state.registerInfo,
+    userInfo: state.userInfo,
     error: state.userInfo.result ? state.userInfo.result.data.errors : null,
+    regError: state.registerInfo.data ? state.registerInfo.data.errors : null,
   };
 };
 

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Box from "./Box";
+import Loading from "./Loading";
 import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
 import CommentForm from "./CommentForm";
 import {
@@ -97,7 +98,6 @@ const BoxFeed = (props) => {
         const postDate = new Date(box.createdAt);
         const date = new Date();
         const ago = date - postDate;
-        console.log(ago, "ago from boxfeed");
         const numOfLikes = box.likes.length;
         const numOfComments = box.comments.length;
         return (
@@ -125,7 +125,7 @@ const BoxFeed = (props) => {
           </Segment>
         );
       });
-    } else {
+    } else if (props.boxesLoading === false) {
       return (
         <Segment
           basic
@@ -133,23 +133,32 @@ const BoxFeed = (props) => {
           style={{ marginLeft: "auto", marginRight: "auto" }}
         >
           {" "}
-          Loading
+          No posts able to be rendered:
         </Segment>
       );
     }
   };
 
-  return (
-    <>
-      {renderFeed()}
-      {renderModal()}
-    </>
-  );
+  if (props.boxesLoading) {
+    return (
+      <Segment basic>
+        <Loading />
+      </Segment>
+    );
+  } else {
+    return (
+      <>
+        {renderFeed()}
+        {renderModal()}
+      </>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
   return {
     boxes: state.box.boxes,
+    boxesLoading: state.box.isLoading,
     selectedBox: state.selectedBox,
     comments: state.comment.comments,
     userInfo: state.userInfo.user,

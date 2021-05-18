@@ -110,7 +110,6 @@ const ProfileBox = (props) => {
       });
 
       const onFollowBtnClickFromModal = (follower) => {
-        console.log(follower);
         const item = {
           currentUserId: props.userInfo._id,
           selectedUserId: follower._id,

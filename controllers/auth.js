@@ -154,7 +154,12 @@ exports.postBoxes = (req, res) => {
 };
 
 exports.getBoxes = (req, res) => {
+  const values = {
+    first: req.body.first,
+    second: req.body.second
+  }
   Boxes.find().then((posts) => {
+    let pag = posts.reverse().slice(values.first, values.second);
     if (!posts) {
       return res.status(404).json({
         errors: [{ user: `does not have posts` }],
@@ -163,6 +168,7 @@ exports.getBoxes = (req, res) => {
       return res.status(200).json({
         success: true,
         result: posts,
+        pag: pag,
       });
     }
   });

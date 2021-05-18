@@ -118,7 +118,6 @@ let SettingsForm = (props) => {
         <Segment basic>
           <Button
             type="submit"
-            disable={!props.valid}
             style={{
               backgroundColor: "#4DA8DA",
               color: "#fff",

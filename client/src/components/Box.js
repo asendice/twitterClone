@@ -101,7 +101,7 @@ const Box = (props) => {
   };
   const renderSuggestion = () => {
     if (props.suggestion) {
-     return <span className="reply-text"> Suggested from Following   </span>;
+      return <span className="reply-text"> Suggested from following:  </span>;
     }
   };
 
@@ -141,7 +141,6 @@ const Box = (props) => {
           />
           <Accordion.Content
             active={activeIndex === 0}
-            // active={activeIndex === 0}
             content={renderReplies()}
           />
         </Accordion>
@@ -250,7 +249,10 @@ const Box = (props) => {
 
   return (
     <>
-      <Link to={`/comment/${props.link}`}>
+      <Link
+        to={`/comment/${props.link}`}
+        className={props.disabled ? "disabled-link" : ""}
+      >
         <Segment style={{ padding: 0 }} basic>
           {renderLikeMsg()}
           {renderSuggestion()}
@@ -264,7 +266,7 @@ const Box = (props) => {
             }}
           >
             {/* */}
-            <Link to={`/profile/${name}`} style={{ width: "60%" }}>
+            <Link to={`/profile/${name}`} style={{ width: "60%", pointerEvents: "visible" }}>
               <Header as="h3" onClick={() => props.selectUser(userName[0])}>
                 {" "}
                 <Image

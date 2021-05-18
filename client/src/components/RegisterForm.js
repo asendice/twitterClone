@@ -128,7 +128,8 @@ let Register = (props) => {
         <Button
           type="submit"
           fluid
-          style={{ backgroundColor: "#4DA8DA", color: "#fff" }}
+          circular
+          className="follow-btn"
         >
           Register
         </Button>
