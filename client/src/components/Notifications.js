@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Segment, Header, Icon } from "semantic-ui-react";
+import { selectUser } from "../actions/index";
+import { connect } from "react-redux";
 
-const Notifications = () => {
+const Notifications = (props) => {
+  useEffect(() => {
+    props.selectUser(props.userInfo);
+  }, []);
   return (
     <>
       <Segment
@@ -16,12 +21,23 @@ const Notifications = () => {
         }}
       >
         <Header as="h3" style={{ color: "#fff" }}>
-          Notifations will be working in version 2 of twitterClone. 
+          Notifations will be working in version 2 of twitterClone.
         </Header>
         <Icon size="massive" name="time" style={{ color: "#fff" }} />
       </Segment>
     </>
   );
 };
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo.user,
+    boxesLoading: state.box.isLoading,
+    numOfBoxes: state.box.boxes.length,
+  };
+};
 
-export default Notifications;
+const mapDispatchToProps = {
+  selectUser: (user) => selectUser(user),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

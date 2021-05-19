@@ -42,4 +42,8 @@ const readableDate = (str) => {
   return `${timeTwelve} - ${date}`;
 };
 
-export { convertMili, rounder, readableDate };
+const justDate = (str) => {
+  return str.slice(3, 15);
+}
+
+export { convertMili, rounder, readableDate, justDate };

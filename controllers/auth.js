@@ -154,11 +154,11 @@ exports.postBoxes = (req, res) => {
 };
 
 exports.getBoxes = (req, res) => {
-  console.log(req.query)
+  console.log(req.query);
   const values = {
     firstIndex: req.query.firstIndex,
-    secondIndex: req.query.secondIndex
-  }
+    secondIndex: req.query.secondIndex,
+  };
   Boxes.find().then((posts) => {
     let pag = posts.reverse().slice(values.firstIndex, values.secondIndex);
     if (!posts) {
@@ -352,6 +352,7 @@ exports.getUsers = (req, res) => {
           following: user.following,
           liked: user.liked,
           bio: user.bio,
+          createdAt: user.createdAt,
         };
       });
       return res.status(200).json({
@@ -379,6 +380,7 @@ exports.getUser = (req, res) => {
         followers: user[0].followers,
         following: user[0].following,
         liked: user[0].liked,
+        createdAt: user[0].createdAt,
       };
       return res.status(200).json({
         success: true,
@@ -543,7 +545,6 @@ exports.addFollower = (req, res) => {
       });
   });
 };
-
 
 // adds selectedUserId to following array in the currentUsers's following list
 exports.addFollowing = (req, res) => {

@@ -28,7 +28,7 @@ const FollowerFeed = (props) => {
 
       props.getBoxes(indexes);
       props.getUsers();
-    }else {
+    } else {
       const indexes = {
         firstIndex: props.firstIndex,
         secondIndex: props.secondIndex,
