@@ -1,9 +1,23 @@
+body {
+  overscroll-behavior-y: none;
+  overflow: overlay;
+  scrollbar-color: "black"
+}
+
 .search-clone-card {
   margin-right: auto !important;
   min-width: 100px !important;
   max-width: 400px !important;
   background: #203647 !important;
   border: 1px solid black !important;
+}
+
+.copy-right {
+  margin-right: auto !important;
+  min-width: 100px !important;
+  max-width: 400px !important;
+  margin-top: 5px !important;
+  padding: 0 !important;
 }
 
 .reply-text {
@@ -170,16 +184,16 @@
 .box-btn-comment:hover {
   color: #4da8da !important;
 }
-
-/* body::-webkit-scrollbar {
-  display: none;
+/* 
+body::-webkit-scrollbar {
+  display: none !important;
 } */
-/* body::-webkit-scrollbar-thumb {
-  background: grey;
-  border-radius: 20px;
-  height: 30px;
+body::-webkit-scrollbar-track-piece {
+  background: black !important;
+  border-radius: 20px !important;
+  height: 30px !important;
 }
 
 body::-webkit-scrollbar-track {
-  display: none;
-}  */
+  width: 0 !important;
+}

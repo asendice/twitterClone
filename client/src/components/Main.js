@@ -13,48 +13,41 @@ import { connect } from "react-redux";
 
 const Main = (props) => {
   const contextRef = useRef();
-  const pagContextRef = useRef();
   const name = window.location.pathname.slice(9);
 
   if (window.location.pathname === "/" && props.loggedIn) {
     return <Redirect to="/home" />;
   }
 
-  window.addEventListener("scroll", console.log('scrolling mother fucker'), true);
-
   if (props.loggedIn) {
     return (
-      <>
-        <div
-          onScroll={() => console.log("SCROLLING BITCHES")}
-          ref={contextRef}
-          style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
-        >
-          <Title contextRef={contextRef} />
-          <Divider hidden />
-          <Grid columns={3} centered>
-            <Grid.Row>
-              <Grid.Column computer={5} tablet={2} mobile={2}>
-                <LeftMenu contextRef={contextRef} />
-              </Grid.Column>
-              <Grid.Column computer={6} tablet={11} mobile={12}>
-                <Route
-                  exact
-                  path="/home"
-                  render={() => <Home contextRef={contextRef} />}
-                  pagContextRef={pagContextRef}
-                />
-                <Route exact path="/notifications" component={Notifications} />
-                <Route exact path={`/profile/${name}`} component={Profile} />
-                <Route exact path={`/comment/${name}`} component={BoxComment} />
-              </Grid.Column>
-              <Grid.Column computer={5} tablet={1} mobile={2}>
-                <RightContent contextRef={contextRef} />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </div>
-      </>
+      <div
+        ref={contextRef}
+        style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
+      >
+        <Title contextRef={contextRef} />
+        <Divider hidden />
+        <Grid columns={3} centered>
+          <Grid.Row>
+            <Grid.Column computer={5} tablet={2} mobile={2}>
+              <LeftMenu contextRef={contextRef} />
+            </Grid.Column>
+            <Grid.Column computer={6} tablet={11} mobile={12}>
+              <Route
+                exact
+                path="/home"
+                render={() => <Home contextRef={contextRef} />}
+              />
+              <Route exact path="/notifications" component={Notifications} />
+              <Route exact path={`/profile/${name}`} component={Profile} />
+              <Route exact path={`/comment/${name}`} component={BoxComment} />
+            </Grid.Column>
+            <Grid.Column computer={5} tablet={1} mobile={2}>
+              <RightContent contextRef={contextRef} />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
     );
   } else {
     return (

@@ -1,6 +1,6 @@
 import React from "react"
 import SearchClone from "./SearchClone"
-import { Sticky } from "semantic-ui-react"
+import { Sticky, Segment } from "semantic-ui-react"
 
 
 const RightContent = (props) => {
@@ -9,6 +9,7 @@ const RightContent = (props) => {
       <Sticky context={props.contextRef} offset={100}>
         <SearchClone />
         {""}
+        
       </Sticky>
     </>
 

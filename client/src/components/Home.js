@@ -8,34 +8,30 @@ import { selectUser } from "../actions";
 
 const Home = (props) => {
   const [value, setValue] = useState(true);
-  const pagContextRef = useRef();
+  const [firstIndex, setFirstIndex] = useState(0);
+  const [secondIndex, setSecondIndex] = useState(25);
 
   useEffect(() => {
     props.selectUser(props.userInfo);
-    console.log(props.contextRef);
-    window.addEventListener("scroll", onScroll(), true);
-  }, []);
+    window.onscroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+        setSecondIndex(props.numOfBoxes + 25);
+        console.log("at the bottom of the page");
+      }
+    };
+  }, [props.numOfBoxes]);
 
   const feedSelector = () => {
-    return value ? <BoxFeed /> : <FollowerFeed />;
-  };
-  const onScroll = () => {
-    console.log("scrolling");
-    console.log(pagContextRef);
-    if (pagContextRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } = pagContextRef.current;
-      console.log(scrollTop, scrollHeight, clientHeight);
-      if (scrollTop + clientHeight === scrollHeight) {
-        // TO SOMETHING HERE
-        console.log("Reached bottom");
-      }
-    }
+    return value ? (
+      <BoxFeed firstIndex={firstIndex} secondIndex={secondIndex} />
+    ) : (
+      <FollowerFeed firstIndex={firstIndex} secondIndex={secondIndex} />
+    );
   };
 
   return (
     <Segment
       basic
-      onScroll={() => onScroll()}
       ref={props.pagContextRef}
       style={{ margin: "auto", padding: "0px" }}
     >
@@ -58,6 +54,8 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
   return {
     userInfo: state.userInfo.user,
+    boxesLoading: state.box.isLoading,
+    numOfBoxes: state.box.boxes.length,
   };
 };
 

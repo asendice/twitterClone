@@ -19,12 +19,14 @@ import {
   delLikeBox,
   selectUser,
 } from "../actions";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Box = (props) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [index] = useState(0);
+
+  
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
@@ -101,7 +103,7 @@ const Box = (props) => {
   };
   const renderSuggestion = () => {
     if (props.suggestion) {
-      return <span className="reply-text"> Suggested from following:  </span>;
+      return <span className="reply-text"> Suggested from following: </span>;
     }
   };
 
@@ -197,7 +199,7 @@ const Box = (props) => {
                   boxShadow: "none",
                 }}
               >
-                <Link to={`/profile/${name}`} style={{ width: "60%" }}>
+                <Link to={`/profile/${name}`}>
                   <Header as="h3" onClick={() => props.selectUser(userName)}>
                     {" "}
                     <Image
@@ -266,10 +268,14 @@ const Box = (props) => {
             }}
           >
             {/* */}
-            <Link to={`/profile/${name}`} style={{ width: "60%", pointerEvents: "visible" }}>
+            <Link
+              to={`/profile/${name}`}
+              style={{ width: "60%", pointerEvents: "visible" }}
+            >
               <Header as="h3" onClick={() => props.selectUser(userName[0])}>
                 {" "}
                 <Image
+                  // onClick={() => onUserInfoClick(userName[0])}
                   circular
                   to={`/profile/${name}`}
                   src={`http://localhost:8000/${profilePic}`}
@@ -280,7 +286,9 @@ const Box = (props) => {
                     maxWidth: 60,
                   }}
                 />{" "}
-                <span style={{ color: "#EEFBFB" }}>{name}</span>
+                <span style={{ color: "#EEFBFB", sdisplay: "flex" }}>
+                  {name}
+                </span>
                 <span
                   style={{
                     color: "grey",
