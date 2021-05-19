@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SettingsForm from "./SettingsForm";
+import { justDate } from "../utils/Helper";
 import {
   Segment,
   Grid,
@@ -11,6 +12,7 @@ import {
   Table,
   Divider,
   Modal,
+  Icon,
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import {
@@ -36,6 +38,8 @@ const ProfileBox = (props) => {
   const currentSelectedUser = props.allUsers.filter(
     (user) => user._id === props.selectedUser._id
   )[0];
+
+  const postDate = new Date(props.selectedUser.createdAt).toString();
 
   const onFormSubmit = (values) => {
     if (values.profilePic) {
@@ -154,7 +158,6 @@ const ProfileBox = (props) => {
                   ""
                 ) : follower.followers.includes(props.userInfo._id) ? (
                   <Button
-
                     content="Following"
                     circular
                     className="edit-profile-btn"
@@ -162,7 +165,6 @@ const ProfileBox = (props) => {
                   />
                 ) : (
                   <Button
-
                     content="Follow"
                     circular
                     className="follow-btn"
@@ -340,6 +342,7 @@ const ProfileBox = (props) => {
           minWidth: "420px",
           maxWidth: 650,
           margin: "auto",
+          marginBottom: "10px",
         }}
       >
         <Segment
@@ -376,6 +379,14 @@ const ProfileBox = (props) => {
                 <Segment basic style={{ color: "#fff", padding: 0 }}>
                   {props.selectedUser.bio}
                 </Segment>
+                <Divider />
+                <span style={{ color: "grey" }}>
+                  {" "}
+                  <Icon color="grey" name="calendar outline" />
+                  Joined,{" "}
+                  {justDate(new Date(props.selectedUser.createdAt).toString())}
+                </span>
+                <Divider />
                 <Segment
                   onClick={() => setFollowOpen(true)}
                   basic

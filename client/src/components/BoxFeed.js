@@ -110,7 +110,7 @@ const BoxFeed = (props) => {
             basic
             onClick={() => props.selectBox(box)}
             className="box-feed-item"
-            style={{ marginLeft: "auto", marginRight: "auto" }}
+            style={{ marginLeft: "auto", marginRight: "auto",  }}
           >
             <Box
               id={box._id}
@@ -132,7 +132,6 @@ const BoxFeed = (props) => {
     } else if (props.boxesLoading === false) {
       return (
         <Segment
-          onScroll={() => console.log("Scrollin from BoxFeed")}
           basic
           className="box-feed-item"
           style={{ marginLeft: "auto", marginRight: "auto" }}

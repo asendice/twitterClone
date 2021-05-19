@@ -48,7 +48,7 @@ const ProfileFeed = (props) => {
   };
 
   const replyName = props.allUsers.filter((item) => {
-    const name = item.id === props.selectedBox.userId ? item.name : null;
+    const name = item._id === props.selectedBox.userId ? item.name : null;
     return name;
   });
   const mappedName = replyName.map((item) => {

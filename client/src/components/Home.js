@@ -36,14 +36,14 @@ const Home = (props) => {
       style={{ margin: "auto", padding: "0px" }}
     >
       <PostBox />
-      <Sticky context={props.contextRef} offset={40}>
+      <Sticky context={props.contextRef} offset={50}>
         <Button
           circular
           fluid
           onClick={() => setValue(!value)}
           className={value ? "follow-btn" : "edit-profile-btn"}
           content={value ? "Everyone" : "Following"}
-          style={{ maxWidth: "650px", margin: "auto", minWidth: "420px" }}
+          style={{ maxWidth: "650px", margin: "auto", minWidth: "420px", marginBottom: "10px" }}
         />
       </Sticky>
       {feedSelector()}
