@@ -154,12 +154,13 @@ exports.postBoxes = (req, res) => {
 };
 
 exports.getBoxes = (req, res) => {
+  console.log(req.query)
   const values = {
-    first: req.body.first,
-    second: req.body.second
+    firstIndex: req.query.firstIndex,
+    secondIndex: req.query.secondIndex
   }
   Boxes.find().then((posts) => {
-    let pag = posts.reverse().slice(values.first, values.second);
+    let pag = posts.reverse().slice(values.firstIndex, values.secondIndex);
     if (!posts) {
       return res.status(404).json({
         errors: [{ user: `does not have posts` }],
@@ -167,8 +168,7 @@ exports.getBoxes = (req, res) => {
     } else {
       return res.status(200).json({
         success: true,
-        result: posts,
-        pag: pag,
+        result: pag,
       });
     }
   });

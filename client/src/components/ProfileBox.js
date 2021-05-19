@@ -154,7 +154,7 @@ const ProfileBox = (props) => {
                   ""
                 ) : follower.followers.includes(props.userInfo._id) ? (
                   <Button
-                    fluid
+
                     content="Following"
                     circular
                     className="edit-profile-btn"
@@ -162,7 +162,7 @@ const ProfileBox = (props) => {
                   />
                 ) : (
                   <Button
-                    fluid
+
                     content="Follow"
                     circular
                     className="follow-btn"

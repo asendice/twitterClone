@@ -16,9 +16,13 @@ import { connect } from "react-redux";
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    props.getBoxes();
+    const indexes = {
+      firstIndex: props.firstIndex,
+      secondIndex: props.secondIndex,
+    };
+    props.getBoxes(indexes);
     props.getUsers();
-  }, []);
+  }, [props.firstIndex, props.secondIndex]);
 
   const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
     if (props.selectedUser.name) {
@@ -143,9 +147,9 @@ const ProfileFeed = (props) => {
           </Segment>
         );
       });
-    } else {
+    } else if(sorted.length < 1 && !props.boxesLoading){
       return (
-        <Segment style={{background: "#203647"}}>
+        <Segment style={{ background: "#203647" }}>
           {" "}
           <span style={{ color: "#fff" }}>
             {props.selectedUser.name} has not posted anything yet...{" "}
@@ -155,17 +159,13 @@ const ProfileFeed = (props) => {
     }
   };
 
-  if (props.boxesLoading) {
-    return <Loading />;
-  }
-  if (props.boxes) {
-    return (
-      <>
-        {renderFeed()}
-        {renderModal()}
-      </>
-    );
-  }
+  return (
+    <>
+      {renderFeed()}
+      {renderModal()}
+      {props.boxesLoading ? <Loading /> : null}
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
@@ -177,12 +177,12 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
-    selectedUser:  state.selectedUser,
+    selectedUser: state.selectedUser,
   };
 };
 
 const mapDispatchToProps = {
-  getBoxes: () => getBoxes(),
+  getBoxes: (indexes) => getBoxes(indexes),
   selectBox: (box) => selectBox(box),
   postComment: (comment) => postComment(comment),
   putComment: (comment) => putComment(comment),

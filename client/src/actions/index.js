@@ -42,15 +42,25 @@ export const boxesLoading = () => {
   };
 };
 
-export const getBoxes = () => {
+export const getBoxes = (index) => {
+  console.log("index", index);
   return async (dispatch) => {
     dispatch(boxesLoading());
     await backendApi
-      .get("/boxes", {
-        headers: {
-          "Content-Type": "application/json",
+      .get(
+        "/boxes",
+        {
+          params: {
+            firstIndex: index.firstIndex,
+            secondIndex: index.secondIndex,
+          },
         },
-      })
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
       .then((response) => {
         if (response) {
           return response;
@@ -62,7 +72,11 @@ export const getBoxes = () => {
           throw error;
         }
       })
-      .then((boxes) => dispatch(addBoxes(boxes.data.result)));
+      .then((boxes) => {
+        setTimeout(() => {
+          dispatch(addBoxes(boxes.data.result));
+        }, 500);
+      });
   };
 };
 

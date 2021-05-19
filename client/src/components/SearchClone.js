@@ -195,35 +195,50 @@ const SearchClone = (props) => {
   };
 
   return (
-    <Segment
-      className="search-clone-card media-right-card"
-      style={{ minHeight: 300 }}
-    >
-      <Input fluid iconPosition="left" placeholder="Search twitterClone Users">
-        <Icon name="search" style={{ color: "#fff" }} />
-        <input
-          onChange={(e) => setTerm(e.target.value)}
-          className="search-input"
-        />
-      </Input>
-      <Divider />
-      {term.length === 0 ? (
-        <Header textAlign="center" style={{ margin: "auto", color: "#4da8da" }}>
-          Who to follow
-        </Header>
-      ) : (
-        <Header textAlign="center" style={{ margin: "auto", color: "#4da8da" }}>
-          Search Results
-        </Header>
-      )}
-      <Divider />
-      <Table basic="very">
-        <Table.Body>
-          {renderRow()}
-          {renderSearchNf()}
-        </Table.Body>
-      </Table>
-    </Segment>
+    <>
+      <Segment
+        className="search-clone-card media-right-card"
+        style={{ minHeight: 300 }}
+      >
+        <Input
+          fluid
+          iconPosition="left"
+          placeholder="Search twitterClone Users"
+        >
+          <Icon name="search" style={{ color: "#fff" }} />
+          <input
+            onChange={(e) => setTerm(e.target.value)}
+            className="search-input"
+          />
+        </Input>
+        <Divider />
+        {term.length === 0 ? (
+          <Header
+            textAlign="center"
+            style={{ margin: "auto", color: "#4da8da" }}
+          >
+            Who to follow
+          </Header>
+        ) : (
+          <Header
+            textAlign="center"
+            style={{ margin: "auto", color: "#4da8da" }}
+          >
+            Search Results
+          </Header>
+        )}
+        <Divider />
+        <Table basic="very">
+          <Table.Body>
+            {renderRow()}
+            {renderSearchNf()}
+          </Table.Body>
+        </Table>
+      </Segment>
+      <Segment basic  className="copy-right media-right-card"  textAlign="center">
+        <span style={{ color: "grey"}}> twitterClone <Icon name="copyright outline"/> 2021</span>
+      </Segment>
+    </>
   );
 };
 

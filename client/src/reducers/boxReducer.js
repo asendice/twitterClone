@@ -16,7 +16,7 @@ const boxReducer = (state = { boxes: [], isLoading: true }, action) => {
       );
       return { ...state, isLoading: false, boxes: newList };
     case "BOXES_LOADING":
-      return { ...state, isLoading: true, boxes: [] };
+      return { ...state, isLoading: true, boxes: state.boxes };
     default:
       return state;
   }

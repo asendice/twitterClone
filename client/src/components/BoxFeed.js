@@ -17,9 +17,13 @@ const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    props.getBoxes();
+    const indexes = {
+      firstIndex: props.firstIndex,
+      secondIndex: props.secondIndex,
+    };
+    props.getBoxes(indexes);
     props.getUsers();
-  }, []);
+  }, [props.firstIndex, props.secondIndex]);
 
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
@@ -128,6 +132,7 @@ const BoxFeed = (props) => {
     } else if (props.boxesLoading === false) {
       return (
         <Segment
+          onScroll={() => console.log("Scrollin from BoxFeed")}
           basic
           className="box-feed-item"
           style={{ marginLeft: "auto", marginRight: "auto" }}
@@ -139,20 +144,13 @@ const BoxFeed = (props) => {
     }
   };
 
-  if (props.boxesLoading) {
-    return (
-      <Segment basic>
-        <Loading />
-      </Segment>
-    );
-  } else {
-    return (
-      <>
-        {renderFeed()}
-        {renderModal()}
-      </>
-    );
-  }
+  return (
+    <>
+      {renderFeed()}
+      {renderModal()}
+      {props.boxesLoading ? <Loading /> : null}
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
@@ -168,7 +166,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getBoxes: () => getBoxes(),
+  getBoxes: (indexes) => getBoxes(indexes),
   selectBox: (box) => selectBox(box),
   postComment: (comment) => postComment(comment),
   putComment: (comment) => putComment(comment),

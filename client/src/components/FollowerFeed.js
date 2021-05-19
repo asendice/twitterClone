@@ -15,10 +15,28 @@ import { connect } from "react-redux";
 
 const FollowerFeed = (props) => {
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    props.getBoxes();
-    props.getUsers();
-  }, []);
+    if (
+      filterBoxesByCurrentUserFollowing &&
+      filterBoxesByCurrentUserFollowing.length < 5
+    ) {
+      const indexes = {
+        firstIndex: props.firstIndex,
+        secondIndex: props.secondIndex + 25,
+      };
+
+      props.getBoxes(indexes);
+      props.getUsers();
+    }else {
+      const indexes = {
+        firstIndex: props.firstIndex,
+        secondIndex: props.secondIndex,
+      };
+      props.getBoxes(indexes);
+      props.getUsers();
+    }
+  }, [props.firstIndex, props.secondIndex]);
 
   const filterFollowing = props.allUsers.filter((user) => {
     if (props.currentUser.following.includes(user._id)) return user;
@@ -41,6 +59,19 @@ const FollowerFeed = (props) => {
     const two = new Date(b.createdAt);
     return two - one;
   });
+
+  // if (filterBoxesByCurrentUserFollowing.length < 5 && props.currentUser.following.length > 0) {
+  //   console.log("hmm");
+  //   const indexes = {
+  //     firstIndex: 0,
+  //     secondIndex: props.secondIndex + 25,
+  //   };
+
+  //   props.getBoxes(indexes);
+  // }
+
+  console.log(sortFollowingBoxes.length, "sortFollowingBoxes");
+  console.log(props.currentUser.following > 0);
 
   const onFormSubmit = (values) => {
     const comment = {
@@ -142,31 +173,32 @@ const FollowerFeed = (props) => {
       });
     } else {
       return (
-        <Segment style={{background: "#203647", maxWidth: "650px", minWidth:"420px", margin: "auto", marginTop: "20px"}}>
+        <Segment
+          style={{
+            background: "#203647",
+            maxWidth: "650px",
+            minWidth: "420px",
+            margin: "auto",
+            marginTop: "20px",
+          }}
+        >
           {" "}
           <span style={{ color: "#fff" }}>
-             You don't have any followers! Check out Who to follow, or Everyone's feed and start following! {" "}
+            You don't have any followers! Check out Who to follow, or Everyone's
+            feed and start following!{" "}
           </span>
         </Segment>
       );
     }
   };
 
-  if (props.boxesLoading) {
-    return (
-      <Segment basic>
-        <Loading />
-      </Segment>
-    );
-  }
-  if (!props.boxesLoading) {
-    return (
-      <>
-        {renderFollowingFeed()}
-        {renderModal()}
-      </>
-    );
-  }
+  return (
+    <>
+      {renderFollowingFeed()}
+      {renderModal()}
+      {props.boxesLoading ? <Loading /> : null}
+    </>
+  );
 };
 
 const mapStateToProps = (state) => {
@@ -186,7 +218,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  getBoxes: () => getBoxes(),
+  getBoxes: (indexes) => getBoxes(indexes),
   selectBox: (box) => selectBox(box),
   postComment: (comment) => postComment(comment),
   putComment: (comment) => putComment(comment),
