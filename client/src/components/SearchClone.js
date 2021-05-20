@@ -33,6 +33,8 @@ const SearchClone = (props) => {
   const preSelectedUsers = props.allUsers.filter((user) => {
     if (preSelectedUserArr.includes(user.name)) {
       return user;
+    }else {
+      return null;
     }
   });
 

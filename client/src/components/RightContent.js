@@ -1,6 +1,6 @@
 import React from "react"
 import SearchClone from "./SearchClone"
-import { Sticky, Segment } from "semantic-ui-react"
+import { Sticky } from "semantic-ui-react"
 
 
 const RightContent = (props) => {

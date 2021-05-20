@@ -127,105 +127,120 @@ const ProfileBox = (props) => {
       };
 
       const followerContent = () => {
-        return followers.map((follower) => {
+        if (followers.length > 0) {
+          return followers.map((follower) => {
+            return (
+              <Table.Row key={follower._id}>
+                <Table.Cell>
+                  <a href={`/profile/${follower.name}`}>
+                    <Image
+                      style={{
+                        maxWidth: 80,
+                        minHeight: 80,
+                        minWidth: 80,
+                        maxHeight: 80,
+                      }}
+                      circular
+                      src={`http://localhost:8000/${follower.profilePic}`}
+                    />
+                  </a>
+                </Table.Cell>
+                <Table.Cell>
+                  <a href={`/profile/${follower.name}`}>
+                    <Header as="h3" style={{ color: "#fff" }}>
+                      {follower.name}
+                    </Header>
+                  </a>
+                  <p style={{ color: "grey" }}>{follower.bio}</p>
+                </Table.Cell>
+                <Table.Cell>
+                  {follower._id === props.userInfo._id ? (
+                    ""
+                  ) : follower.followers.includes(props.userInfo._id) ? (
+                    <Button
+                      content="Following"
+                      circular
+                      className="edit-profile-btn"
+                      onClick={() => onFollowBtnClickFromModal(follower)}
+                    />
+                  ) : (
+                    <Button
+                      content="Follow"
+                      circular
+                      className="follow-btn"
+                      onClick={() => onFollowBtnClickFromModal(follower)}
+                    />
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            );
+          });
+        } else {
           return (
-            <Table.Row key={follower._id}>
-              <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
-                  <Image
-                    style={{
-                      maxWidth: 80,
-                      minHeight: 80,
-                      minWidth: 80,
-                      maxHeight: 80,
-                    }}
-                    circular
-                    src={`http://localhost:8000/${follower.profilePic}`}
-                  />
-                </a>
-              </Table.Cell>
-              <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
-                  <Header as="h3" style={{ color: "#fff" }}>
-                    {follower.name}
-                  </Header>
-                </a>
-                <p style={{ color: "grey" }}>{follower.bio}</p>
-              </Table.Cell>
-              <Table.Cell>
-                {follower._id === props.userInfo._id ? (
-                  ""
-                ) : follower.followers.includes(props.userInfo._id) ? (
-                  <Button
-                    content="Following"
-                    circular
-                    className="edit-profile-btn"
-                    onClick={() => onFollowBtnClickFromModal(follower)}
-                  />
-                ) : (
-                  <Button
-                    content="Follow"
-                    circular
-                    className="follow-btn"
-                    onClick={() => onFollowBtnClickFromModal(follower)}
-                  />
-                )}
-              </Table.Cell>
-            </Table.Row>
+            <span>
+              {props.selectedUser.name} doesn't have any followers. Be the first
+              ?
+            </span>
           );
-        });
+        }
       };
 
       const followingContent = () => {
-        return following.map((follower) => {
-          return (
-            <Table.Row key={follower._id}>
-              <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
-                  <Image
-                    style={{
-                      maxWidth: 80,
-                      minHeight: 80,
-                      minWidth: 80,
-                      maxHeight: 80,
-                    }}
-                    circular
-                    src={`http://localhost:8000/${follower.profilePic}`}
-                  />
-                </a>
-              </Table.Cell>
-              <Table.Cell>
-                <a href={`/profile/${follower.name}`}>
-                  <Header as="h3" style={{ color: "#fff" }}>
-                    {follower.name}
-                  </Header>
-                </a>
-                <p style={{ color: "grey" }}>{follower.bio}</p>
-              </Table.Cell>
-              <Table.Cell>
-                {follower._id === props.userInfo._id ? (
-                  ""
-                ) : follower.followers.includes(props.userInfo._id) ? (
-                  <Button
-                    fluid
-                    content="Following"
-                    circular
-                    className="edit-profile-btn"
-                    onClick={() => onFollowBtnClickFromModal(follower)}
-                  />
-                ) : (
-                  <Button
-                    fluid
-                    content="Follow"
-                    circular
-                    className="follow-btn"
-                    onClick={() => onFollowBtnClickFromModal(follower)}
-                  />
-                )}
-              </Table.Cell>
-            </Table.Row>
-          );
-        });
+        if (following.length > 0) {
+          return following.map((follower) => {
+            return (
+              <Table.Row key={follower._id}>
+                <Table.Cell>
+                  <a href={`/profile/${follower.name}`}>
+                    <Image
+                      style={{
+                        maxWidth: 80,
+                        minHeight: 80,
+                        minWidth: 80,
+                        maxHeight: 80,
+                      }}
+                      circular
+                      src={`http://localhost:8000/${follower.profilePic}`}
+                    />
+                  </a>
+                </Table.Cell>
+                <Table.Cell>
+                  <a href={`/profile/${follower.name}`}>
+                    <Header as="h3" style={{ color: "#fff" }}>
+                      {follower.name}
+                    </Header>
+                  </a>
+                  <p style={{ color: "grey" }}>{follower.bio}</p>
+                </Table.Cell>
+                <Table.Cell>
+                  {follower._id === props.userInfo._id ? (
+                    ""
+                  ) : follower.followers.includes(props.userInfo._id) ? (
+                    <Button
+                      fluid
+                      content="Following"
+                      circular
+                      className="edit-profile-btn"
+                      onClick={() => onFollowBtnClickFromModal(follower)}
+                    />
+                  ) : (
+                    <Button
+                      fluid
+                      content="Follow"
+                      circular
+                      className="follow-btn"
+                      onClick={() => onFollowBtnClickFromModal(follower)}
+                    />
+                  )}
+                </Table.Cell>
+              </Table.Row>
+            );
+          });
+        } else {
+          <span>
+            {props.selectedUser.name} isn't following anyone...
+          </span>;
+        }
       };
 
       const panes = [

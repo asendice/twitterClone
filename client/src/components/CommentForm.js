@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Button, Divider, TextArea, Segment } from "semantic-ui-react";
+import { Form, Button, Divider, TextArea } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 const renderTextArea = ({ input, meta: { touched, error, warning } }) => {
   return (

@@ -158,7 +158,7 @@ const FollowerFeed = (props) => {
           </Segment>
         );
       });
-    } else {
+    } else if (!props.boxesLoading && sortFollowingBoxes.length === 0) {
       return (
         <Segment
           style={{

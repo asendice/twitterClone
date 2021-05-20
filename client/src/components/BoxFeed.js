@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "./Box";
 import Loading from "./Loading";
 import { Modal, Segment, Divider, Icon } from "semantic-ui-react";
@@ -17,7 +17,6 @@ const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
     const indexes = {
       firstIndex: props.index.firstIndex,
       secondIndex: props.index.secondIndex,
