@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PostBox from "./PostBox";
 import BoxFeed from "./BoxFeed";
 import { Segment, Button, Sticky } from "semantic-ui-react";

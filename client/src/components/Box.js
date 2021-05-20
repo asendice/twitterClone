@@ -48,7 +48,7 @@ const Box = (props) => {
     if (user.id === props.userId || user._id === props.userId) {
       return user;
     } else {
-      return;
+      return null;
     }
   });
 

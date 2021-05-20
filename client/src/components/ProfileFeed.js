@@ -17,13 +17,27 @@ const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    console.log(filterBoxesByUserAndUserLikes.length, "fbbuaul");
+
     if (
       filterBoxesByUserAndUserLikes &&
+      filterBoxesByUserAndUserLikes.length > 3 &&
       filterBoxesByUserAndUserLikes.length < 5
     ) {
       const indexes = {
         firstIndex: props.index.firstIndex,
         secondIndex: props.index.secondIndex + 25,
+      };
+
+      props.getBoxes(indexes);
+      props.getUsers();
+    } else if (
+      filterBoxesByUserAndUserLikes &&
+      filterBoxesByUserAndUserLikes.length < 2
+    ) {
+      const indexes = {
+        firstIndex: props.index.firstIndex,
+        secondIndex: props.index.secondIndex + 100,
       };
 
       props.getBoxes(indexes);
@@ -45,6 +59,8 @@ const ProfileFeed = (props) => {
         box.userId === props.selectedUser._id
       ) {
         return box;
+      } else {
+        return null;
       }
     } else {
       return null;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Segment, Header, Sticky } from "semantic-ui-react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Title = (props) => {
   return (

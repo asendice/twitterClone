@@ -29,8 +29,14 @@ const Notifications = (props) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.userInfo.user
+  }
+}
+
 const mapDispatchToProps = {
   selectUser: (user) => selectUser(user),
 };
 
-export default connect(null, mapDispatchToProps)(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
