@@ -4,6 +4,10 @@ body {
   scrollbar-color: "black"
 }
 
+.app-main-div {
+  height: 100vh
+}
+
 .search-clone-card {
   margin-right: auto !important;
   min-width: 100px !important;

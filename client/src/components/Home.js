@@ -8,25 +8,18 @@ import { selectUser } from "../actions";
 
 const Home = (props) => {
   const [value, setValue] = useState(true);
-  const [firstIndex, setFirstIndex] = useState(0);
-  const [secondIndex, setSecondIndex] = useState(25);
 
   useEffect(() => {
     props.selectUser(props.userInfo);
-    window.onscroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-        setSecondIndex(props.numOfBoxes + 25);
-        console.log("at the bottom of the page");
-      }
-    };
-  }, [props.numOfBoxes]);
+  }, []);
 
   const feedSelector = () => {
-    return value ? (
-      <BoxFeed firstIndex={firstIndex} secondIndex={secondIndex} />
-    ) : (
-      <FollowerFeed firstIndex={firstIndex} secondIndex={secondIndex} />
-    );
+    return value ? <BoxFeed /> : <FollowerFeed />;
+  };
+
+  const onBtnClick = () => {
+    setValue(!value);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -40,10 +33,15 @@ const Home = (props) => {
         <Button
           circular
           fluid
-          onClick={() => setValue(!value)}
+          onClick={() => onBtnClick()}
           className={value ? "follow-btn" : "edit-profile-btn"}
           content={value ? "Everyone" : "Following"}
-          style={{ maxWidth: "650px", margin: "auto", minWidth: "420px", marginBottom: "10px" }}
+          style={{
+            maxWidth: "650px",
+            margin: "auto",
+            minWidth: "420px",
+            marginBottom: "10px",
+          }}
         />
       </Sticky>
       {feedSelector()}
@@ -56,6 +54,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     boxesLoading: state.box.isLoading,
     numOfBoxes: state.box.boxes.length,
+    index: state.index,
   };
 };
 

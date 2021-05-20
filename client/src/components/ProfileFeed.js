@@ -15,14 +15,28 @@ import { connect } from "react-redux";
 
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
-    const indexes = {
-      firstIndex: props.firstIndex,
-      secondIndex: props.secondIndex,
-    };
-    props.getBoxes(indexes);
-    props.getUsers();
-  }, [props.firstIndex, props.secondIndex]);
+    if (
+      filterBoxesByUserAndUserLikes &&
+      filterBoxesByUserAndUserLikes.length < 5
+    ) {
+      const indexes = {
+        firstIndex: props.index.firstIndex,
+        secondIndex: props.index.secondIndex + 25,
+      };
+
+      props.getBoxes(indexes);
+      props.getUsers();
+    } else {
+      const indexes = {
+        firstIndex: props.index.firstIndex,
+        secondIndex: props.index.secondIndex,
+      };
+      props.getBoxes(indexes);
+      props.getUsers();
+    }
+  }, [props.index.firstIndex, props.index.secondIndex]);
 
   const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
     if (props.selectedUser.name) {
@@ -38,8 +52,8 @@ const ProfileFeed = (props) => {
   });
 
   const sorted = filterBoxesByUserAndUserLikes.sort((a, b) => {
-    const one = new Date(a.updatedAt);
-    const two = new Date(b.updatedAt);
+    let one = new Date(a.updatedAt);
+    let two = new Date(b.updatedAt);
     return two - one;
   });
 
@@ -147,7 +161,7 @@ const ProfileFeed = (props) => {
           </Segment>
         );
       });
-    } else if(sorted.length < 1 && !props.boxesLoading){
+    } else if (sorted.length < 1 && !props.boxesLoading) {
       return (
         <Segment style={{ background: "#203647" }}>
           {" "}
@@ -177,6 +191,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
+    index: state.index,
     selectedUser: state.selectedUser,
   };
 };

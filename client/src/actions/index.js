@@ -278,6 +278,12 @@ export const loggedin = (res) => {
     payload: res,
   };
 };
+export const updateIndex = (res) => {
+  return {
+    type: "UPDATE_INDEX",
+    payload: res,
+  };
+};
 export const updateUser = (res) => {
   return {
     type: "UPDATE_USER",

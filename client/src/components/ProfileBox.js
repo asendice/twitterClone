@@ -30,6 +30,7 @@ import {
 const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
   const [followOpen, setFollowOpen] = useState(false);
+
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
     props.getUsers();
@@ -38,8 +39,6 @@ const ProfileBox = (props) => {
   const currentSelectedUser = props.allUsers.filter(
     (user) => user._id === props.selectedUser._id
   )[0];
-
-  const postDate = new Date(props.selectedUser.createdAt).toString();
 
   const onFormSubmit = (values) => {
     if (values.profilePic) {
