@@ -9,11 +9,25 @@ import Title from "./Title";
 import LeftMenu from "./LeftMenu";
 import RightContent from "./RightContent";
 import { Grid, Divider } from "semantic-ui-react";
+import { selectUser, updateIndex } from "../actions";
 import { connect } from "react-redux";
 
 const Main = (props) => {
   const contextRef = useRef();
   const name = window.location.pathname.slice(9);
+
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+        let index = {
+          firstIndex: props.numOfBoxes,
+          secondIndex: props.numOfBoxes + 25,
+        };
+        props.updateIndex(index);
+        console.log("at the bottom of the page");
+      }
+    };
+  }, [props.numOfBoxes]);
 
   if (window.location.pathname === "/" && props.loggedIn) {
     return <Redirect to="/home" />;
@@ -65,7 +79,13 @@ const mapStateToProps = (state) => {
     loggedIn: state.userInfo.loggedIn,
     selectedUser: state.selectedUser,
     selectedBox: state.selectedBox,
+    numOfBoxes: state.box.boxes.length,
   };
 };
 
-export default connect(mapStateToProps, null)(Main);
+const mapDispatchToProps = {
+  selectUser: (user) => selectUser(user),
+  updateIndex: (index) => updateIndex(index),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

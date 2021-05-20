@@ -22,21 +22,21 @@ const FollowerFeed = (props) => {
       filterBoxesByCurrentUserFollowing.length < 5
     ) {
       const indexes = {
-        firstIndex: props.firstIndex,
-        secondIndex: props.secondIndex + 25,
+        firstIndex: props.index.firstIndex,
+        secondIndex: props.index.secondIndex + 25,
       };
 
       props.getBoxes(indexes);
       props.getUsers();
     } else {
       const indexes = {
-        firstIndex: props.firstIndex,
-        secondIndex: props.secondIndex,
+        firstIndex: props.index.firstIndex,
+        secondIndex: props.index.secondIndex,
       };
       props.getBoxes(indexes);
       props.getUsers();
     }
-  }, [props.firstIndex, props.secondIndex]);
+  }, [props.index.firstIndex, props.index.secondIndex]);
 
   const filterFollowing = props.allUsers.filter((user) => {
     if (props.currentUser.following.includes(user._id)) return user;
@@ -59,19 +59,6 @@ const FollowerFeed = (props) => {
     const two = new Date(b.createdAt);
     return two - one;
   });
-
-  // if (filterBoxesByCurrentUserFollowing.length < 5 && props.currentUser.following.length > 0) {
-  //   console.log("hmm");
-  //   const indexes = {
-  //     firstIndex: 0,
-  //     secondIndex: props.secondIndex + 25,
-  //   };
-
-  //   props.getBoxes(indexes);
-  // }
-
-  console.log(sortFollowingBoxes.length, "sortFollowingBoxes");
-  console.log(props.currentUser.following > 0);
 
   const onFormSubmit = (values) => {
     const comment = {
@@ -214,6 +201,7 @@ const mapStateToProps = (state) => {
           (user) => user._id === state.userInfo.user._id
         )[0]
       : state.userInfo.user,
+    index: state.index,
   };
 };
 

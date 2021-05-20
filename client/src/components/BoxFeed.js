@@ -17,13 +17,14 @@ const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    // window.scrollTo(0, 0);
     const indexes = {
-      firstIndex: props.firstIndex,
-      secondIndex: props.secondIndex,
+      firstIndex: props.index.firstIndex,
+      secondIndex: props.index.secondIndex,
     };
     props.getBoxes(indexes);
     props.getUsers();
-  }, [props.firstIndex, props.secondIndex]);
+  }, [props.index.firstIndex, props.index.secondIndex]);
 
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);
@@ -110,7 +111,7 @@ const BoxFeed = (props) => {
             basic
             onClick={() => props.selectBox(box)}
             className="box-feed-item"
-            style={{ marginLeft: "auto", marginRight: "auto",  }}
+            style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Box
               id={box._id}
@@ -161,6 +162,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo.user,
     loggedIn: state.userInfo.loggedIn,
     allUsers: state.allUsers.users,
+    index: state.index,
   };
 };
 

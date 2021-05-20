@@ -1,7 +1,15 @@
 const boxReducer = (state = { boxes: [], isLoading: true }, action) => {
   switch (action.type) {
     case "ADD_BOXES":
-      return { ...state, isLoading: false, boxes: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        boxes: state.boxes
+          .concat(action.payload)
+          // find unique id's in an array
+          .filter((v, i, a) => a.findIndex((t) => t._id === v._id) === i),
+      };
+
     case "ADD_BOX":
       return {
         ...state,

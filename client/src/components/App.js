@@ -4,7 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div style={{height: "100vh"}} onScroll={()=> console.log("scrolling from app")}>
+    <div className="app-main-div">
       <BrowserRouter>
         <Route path="/" component={Main} />
       </BrowserRouter>
