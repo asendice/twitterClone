@@ -42,8 +42,17 @@ const readableDate = (str) => {
   return `${timeTwelve} - ${date}`;
 };
 
+// returns just the date from this format "Wed May 12 2021 18:50:46 GMT-0700 (Pacific Daylight Time)"
 const justDate = (str) => {
   return str.slice(3, 15);
-}
+};
 
-export { convertMili, rounder, readableDate, justDate };
+const smallBio = (str) => {
+  if (str.length > 60) {
+    let slice = str.slice(0, 60);
+    let smallBio = slice + "...";
+    return smallBio;
+  }
+};
+
+export { convertMili, rounder, readableDate, justDate, smallBio };
