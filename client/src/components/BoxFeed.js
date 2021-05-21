@@ -15,15 +15,16 @@ import { connect } from "react-redux";
 
 const BoxFeed = (props) => {
   const [open, setOpen] = useState(false);
+  const { index } = props;
 
   useEffect(() => {
     const indexes = {
-      firstIndex: props.index.firstIndex,
-      secondIndex: props.index.secondIndex,
+      firstIndex: index.firstIndex,
+      secondIndex: index.secondIndex,
     };
     props.getBoxes(indexes);
     props.getUsers();
-  }, [props.index.firstIndex, props.index.secondIndex]);
+  }, [index.firstIndex, index.secondIndex]);
 
   const sorted = props.boxes.sort((a, b) => {
     const one = new Date(a.createdAt);

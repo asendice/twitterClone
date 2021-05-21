@@ -1,7 +1,5 @@
 import backendApi from "../apis/backendApi";
 
-// selected comment and selected profile
-// collects the box  or profile and their id's for the GET req
 export const selectBox = (box) => {
   return {
     type: "BOX_SELECT",

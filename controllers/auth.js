@@ -46,8 +46,10 @@ exports.register = (req, res, next) => {
           name: name,
           email: email,
           password: password,
-          profilePic: "uploads/2021-05-08T02:06:44.991Zbasicuser.png",
-          background: "uploads/2021-05-08T02:09:18.528Zbasicbackground.png",
+          profilePic:
+            "https://s3-us-west-1.amazonaws.com/twitterclone.dt/2021-05-21T02%3A08%3A59.967Zbasicuser.png",
+          background:
+            "https://s3-us-west-1.amazonaws.com/twitterclone.dt/basicbackground.png",
         });
         bcrypt.genSalt(10, function (err, salt) {
           bcrypt.hash(password, salt, function (err, hash) {
@@ -392,8 +394,8 @@ exports.getUser = (req, res) => {
 
 //<---------EDIT PROFILE --------------->///
 exports.uploadProfilePic = (req, res) => {
-  console.log(req.file, "req.file");
-  let image = req.file.path;
+  console.log(req.file.location, "req.file");
+  let image = req.file.location;
   const { userId } = req.params;
   User.findById(userId).then((user) => {
     user.profilePic = image;
@@ -415,7 +417,7 @@ exports.uploadProfilePic = (req, res) => {
 };
 
 exports.uploadBackgroundPic = (req, res) => {
-  let image = req.file.path;
+  let image = req.file.location;
   console.log(image, "IMAGE");
   const { userId } = req.params;
   console.log(req, "THIS IS THE REQUEST ");

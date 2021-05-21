@@ -104,11 +104,15 @@ const ProfileBox = (props) => {
       const followers = props.allUsers.filter((user) => {
         if (user.following.includes(props.selectedUser._id)) {
           return user;
+        } else {
+          return null;
         }
       });
       const following = props.allUsers.filter((user) => {
         if (user.followers.includes(props.selectedUser._id)) {
           return user;
+        } else {
+          return null;
         }
       });
 
@@ -141,7 +145,7 @@ const ProfileBox = (props) => {
                         maxHeight: 80,
                       }}
                       circular
-                      src={`http://localhost:8000/${follower.profilePic}`}
+                      src={`follower.profilePic}`}
                     />
                   </a>
                 </Table.Cell>
@@ -175,15 +179,20 @@ const ProfileBox = (props) => {
               </Table.Row>
             );
           });
-        } else {
+        } else if (followers.length === 0) {
           return (
-            <span>
-              {props.selectedUser.name} doesn't have any followers. Be the first
-              ?
-            </span>
+            <Table.Row>
+              <Table.Cell>
+                <span style={{ color: "#fff" }}>
+                  {props.selectedUser.name} doesn't have any followers.
+                </span>
+              </Table.Cell>
+            </Table.Row>
           );
         }
       };
+
+      console.log(following.length, "following.length");
 
       const followingContent = () => {
         if (following.length > 0) {
@@ -200,7 +209,7 @@ const ProfileBox = (props) => {
                         maxHeight: 80,
                       }}
                       circular
-                      src={`http://localhost:8000/${follower.profilePic}`}
+                      src={`${follower.profilePic}`}
                     />
                   </a>
                 </Table.Cell>
@@ -236,10 +245,18 @@ const ProfileBox = (props) => {
               </Table.Row>
             );
           });
+        } else if (following.length === 0) {
+          return (
+            <Table.Row>
+              <Table.Cell>
+                <span style={{ color: "#fff" }}>
+                  {props.selectedUser.name} isn't following anyone.
+                </span>
+              </Table.Cell>
+            </Table.Row>
+          );
         } else {
-          <span>
-            {props.selectedUser.name} isn't following anyone...
-          </span>;
+          return null;
         }
       };
 
@@ -324,7 +341,7 @@ const ProfileBox = (props) => {
                   marginRight: 5,
                 }}
                 circular
-                src={`http://localhost:8000/${props.selectedUser.profilePic}`}
+                src={`${props.selectedUser.profilePic}`}
               />
               <Header
                 as="h2"
@@ -363,7 +380,7 @@ const ProfileBox = (props) => {
           textAlign="center"
           className="profile-box"
           style={{
-            backgroundImage: `url('${`http://localhost:8000/${props.selectedUser.background}`}')`,
+            backgroundImage: `url('${`${props.selectedUser.background}`}')`,
             backgroundSize: "600px 350px, cover",
           }}
         >
@@ -385,7 +402,7 @@ const ProfileBox = (props) => {
                     border: "3px black solid",
                     top: -125,
                   }}
-                  src={`http://localhost:8000/${props.selectedUser.profilePic}`}
+                  src={`${props.selectedUser.profilePic}`}
                 />
                 <Header as="h1" style={{ color: "#fff", marginTop: -120 }}>
                   {props.selectedUser.name}
@@ -402,6 +419,7 @@ const ProfileBox = (props) => {
                 </span>
                 <Divider />
                 <Segment
+                  className="follow-seg"
                   onClick={() => setFollowOpen(true)}
                   basic
                   style={{ padding: 0, cursor: "pointer" }}

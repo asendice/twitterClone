@@ -16,9 +16,10 @@ import { connect } from "react-redux";
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
 
+  // on initial render and when either the first or second index changes 
+  // in place to ensure that on profile feed there is enough posts to to hit the bottom of the page so scolling down it will cause firstIndex/secondIndex to change
+  // causing the getBoxes() to call 
   useEffect(() => {
-    console.log(filterBoxesByUserAndUserLikes.length, "fbbuaul");
-
     if (
       filterBoxesByUserAndUserLikes &&
       filterBoxesByUserAndUserLikes.length > 3 &&
@@ -182,7 +183,7 @@ const ProfileFeed = (props) => {
         <Segment style={{ background: "#203647" }}>
           {" "}
           <span style={{ color: "#fff" }}>
-            {props.selectedUser.name} has not posted anything yet...{" "}
+            {props.selectedUser.name} has not posted anything yet.{" "}
           </span>
         </Segment>
       );

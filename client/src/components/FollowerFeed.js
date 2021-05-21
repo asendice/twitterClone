@@ -39,7 +39,11 @@ const FollowerFeed = (props) => {
   }, [props.index.firstIndex, props.index.secondIndex]);
 
   const filterFollowing = props.allUsers.filter((user) => {
-    if (props.currentUser.following.includes(user._id)) return user;
+    if (props.currentUser.following.includes(user._id)) {
+      return user;
+    } else {
+      return null;
+    }
   });
 
   const followingLikesList = filterFollowing.map((user) => {
@@ -51,6 +55,8 @@ const FollowerFeed = (props) => {
     let arr = props.currentUser.following.concat(followingLikesList);
     if (arr.includes(box.userId) || arr.includes(box._id)) {
       return box;
+    } else {
+      return null;
     }
   });
 

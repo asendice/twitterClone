@@ -33,7 +33,7 @@ const SearchClone = (props) => {
   const preSelectedUsers = props.allUsers.filter((user) => {
     if (preSelectedUserArr.includes(user.name)) {
       return user;
-    }else {
+    } else {
       return null;
     }
   });
@@ -101,20 +101,19 @@ const SearchClone = (props) => {
                     maxHeight: 60,
                   }}
                   circular
-                  src={`http://localhost:8000/${user.profilePic}`}
+                  src={`${user.profilePic}`}
                   onClick={() => props.selectUser(user)}
                 />
               </Link>
             </Table.Cell>
             <Table.Cell>
               <Link to={`/profile/${user.name}`}>
-                <Header
+                <h3
                   onClick={() => props.selectUser(user)}
-                  as="h3"
-                  style={{ color: "#fff" }}
+                  className="follow-seg"
                 >
                   {user.name}
-                </Header>
+                </h3>
               </Link>
               <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
@@ -154,21 +153,21 @@ const SearchClone = (props) => {
                     maxHeight: 60,
                   }}
                   circular
-                  src={`http://localhost:8000/${user.profilePic}`}
+                  src={`${user.profilePic}`}
                   onClick={() => props.selectUser(user)}
                 />
               </Link>
             </Table.Cell>
             <Table.Cell>
               <Link to={`/profile/${user.name}`}>
-                <Header
+                <h3
                   onClick={() => props.selectUser(user)}
-                  as="h3"
-                  style={{ color: "#fff" }}
+                  className="follow-seg"
                 >
                   {user.name}
-                </Header>
+                </h3>
               </Link>
+
               <p style={{ color: "grey" }}>{user.bio}</p>
             </Table.Cell>
             <Table.Cell>
@@ -237,8 +236,11 @@ const SearchClone = (props) => {
           </Table.Body>
         </Table>
       </Segment>
-      <Segment basic  className="copy-right media-right-card"  textAlign="center">
-        <span style={{ color: "grey"}}> twitterClone <Icon name="copyright outline"/> 2021</span>
+      <Segment basic className="copy-right media-right-card" textAlign="center">
+        <span style={{ color: "grey" }}>
+          {" "}
+          twitterClone <Icon name="copyright outline" /> 2021
+        </span>
       </Segment>
     </>
   );
