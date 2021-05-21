@@ -207,6 +207,8 @@ const BoxComment = (props) => {
       const userName = props.allUsers.filter((user) => {
         if (user._id === props.selectedComment.userId) {
           return user;
+        } else {
+          return null;
         }
       });
 
@@ -282,7 +284,7 @@ const BoxComment = (props) => {
       </>
     );
   } else {
-    return <div></div>;
+    return null;
   }
 };
 

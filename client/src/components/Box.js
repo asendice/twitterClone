@@ -26,7 +26,6 @@ const Box = (props) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [index] = useState(0);
 
-  
   // creates ids object that contains user Id and the box or "post" id.
   // checks to see if the logged in user is in the box's "likes" array
   // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
@@ -159,11 +158,15 @@ const Box = (props) => {
         const userName = props.allUsers.filter((user) => {
           if (user._id === reply.userId) {
             return user;
+          } else {
+            return null;
           }
         });
         const commentUserName = props.allUsers.filter((user) => {
           if (user._id === props.userId) {
             return user;
+          } else {
+            return null;
           }
         });
         const commentName = commentUserName.map((name) => {
@@ -175,9 +178,6 @@ const Box = (props) => {
         const profilePic = userName.map((name) => {
           return name.profilePic;
         });
-        const date = new Date();
-        const postDate = new Date(reply.createdAt);
-        const ago = date - postDate;
         if (currentReplies)
           return (
             <Segment
@@ -205,7 +205,7 @@ const Box = (props) => {
                     <Image
                       circular
                       to={`/profile/${name}`}
-                      src={`http://localhost:8000/${profilePic}`}
+                      src={`${profilePic}`}
                       style={{
                         minWidth: 60,
                         minHeight: 60,
@@ -249,13 +249,18 @@ const Box = (props) => {
     setActiveIndex(newIndex);
   };
 
+  const onBoxClick = () => {
+    console.log("clicked");
+    return <Redirect to={`/comment/${props.link}`} />;
+  };
+
   return (
     <>
       <Link
         to={`/comment/${props.link}`}
         className={props.disabled ? "disabled-link" : ""}
       >
-        <Segment style={{ padding: 0 }} basic>
+        <Segment style={{ padding: 0 }} basic onClick={() => onBoxClick()}>
           {renderLikeMsg()}
           {renderSuggestion()}
           {renderCommentMsg()}
@@ -268,39 +273,55 @@ const Box = (props) => {
             }}
           >
             {/* */}
-            <Link
-              to={`/profile/${name}`}
-              style={{ width: "60%", pointerEvents: "visible" }}
+
+            <Header
+              as="h3"
+              style={{ display: "flex" }}
+              onClick={() => props.selectUser(userName[0])}
             >
-              <Header as="h3" onClick={() => props.selectUser(userName[0])}>
-                {" "}
-                <Image
-                  // onClick={() => onUserInfoClick(userName[0])}
-                  circular
+              {" "}
+              <object>
+                <Link
                   to={`/profile/${name}`}
-                  src={`http://localhost:8000/${profilePic}`}
                   style={{
-                    minWidth: 60,
-                    minHeight: 60,
-                    maxHeight: 60,
+                    display: "flex",
+                    pointerEvents: "visible",
+                    padding: 0,
+                    margin: 0,
                     maxWidth: 60,
                   }}
-                />{" "}
-                <span style={{ color: "#EEFBFB", sdisplay: "flex" }}>
-                  {name}
-                </span>
-                <span
-                  style={{
-                    color: "grey",
-                    fontSize: "15px",
-                    fontWeight: "normal",
-                  }}
                 >
-                  {" - "}
-                  {convertMili(props.ago)}
-                </span>
-              </Header>
-            </Link>
+                  <Image
+                    circular
+                    src={`${profilePic}`}
+                    style={{
+                      minWidth: 60,
+                      minHeight: 60,
+                      maxHeight: 60,
+                      maxWidth: 60,
+                    }}
+                  />{" "}
+                </Link>
+              </object>
+              <object style={{ marginTop: "15px", marginLeft: "5px" }}>
+                <Link
+                  to={`/profile/${name}`}
+                  style={{ pointerEvents: "visible" }}
+                >
+                  <span className="follow-seg">{name}</span>
+                  <span
+                    style={{
+                      color: "grey",
+                      fontSize: "15px",
+                      fontWeight: "normal",
+                    }}
+                  >
+                    {" - "}
+                    {convertMili(props.ago)}
+                  </span>
+                </Link>
+              </object>
+            </Header>
             <Feed.Content>
               <span
                 style={{

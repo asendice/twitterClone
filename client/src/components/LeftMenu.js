@@ -44,6 +44,8 @@ const LeftMenu = (props) => {
   const updatedUser = props.allUsers.filter((users) => {
     if (users._id === props.userInfo._id) {
       return users;
+    } else {
+      return null;
     }
   });
 
@@ -107,7 +109,7 @@ const LeftMenu = (props) => {
                   maxHeight: 120,
                 }}
                 circular
-                src={`http://localhost:8000/${updatedUserPic}`}
+                src={`${updatedUserPic}`}
               />
             </Header>
             <Header as="h1" style={{ color: "#fff" }}>
@@ -202,7 +204,7 @@ const LeftMenu = (props) => {
                   right: "6px",
                 }}
                 circular
-                src={`http://localhost:8000/${updatedUserPic}`}
+                src={`${updatedUserPic}`}
               />
             </NavLink>
           </Menu.Item>
@@ -297,7 +299,7 @@ const LeftMenu = (props) => {
                   right: "6px",
                 }}
                 circular
-                src={`http://localhost:8000/${updatedUserPic}`}
+                src={`${updatedUserPic}`}
               />
             </NavLink>
           </Menu.Item>

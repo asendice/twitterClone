@@ -48,13 +48,12 @@ let Comment = (props) => {
           validate={[required, maxLength]}
         />
         <Divider hidden />
-        <span style={{float: "right"}}>
+        <span style={{ float: "right" }}>
           <Button
             type="submit"
             style={{
               backgroundColor: "#4DA8DA",
               color: "#fff",
-              
             }}
           >
             Reply

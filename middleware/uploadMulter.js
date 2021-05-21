@@ -1,11 +1,19 @@
 const multer = require("multer");
+const multerS3 = require("multer-s3");
+const aws = require("aws-sdk");
 const fs = require("fs");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads");
-  },
-  filename: (req, file, cb) => {
+const s3 = new aws.S3({
+  accessKeyId: "AKIA3DBJAYZLJCPN5Y3L",
+  secretAccessKey: "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",
+  Bucket: "twitterclone.dt",
+});
+
+const storage = multerS3({
+  s3: s3,
+  bucket: "twitterclone.dt",
+  acl: "public-read",
+  key: (req, file, cb) => {
     cb(null, new Date().toISOString() + file.originalname);
   },
 });

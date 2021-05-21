@@ -1,11 +1,11 @@
 body {
   overscroll-behavior-y: none;
   overflow: overlay;
-  scrollbar-color: "black"
+  scrollbar-color: "black";
 }
 
 .app-main-div {
-  height: 100vh
+  height: 100vh;
 }
 
 .search-clone-card {
@@ -14,6 +14,13 @@ body {
   max-width: 400px !important;
   background: #203647 !important;
   border: 1px solid black !important;
+}
+.follow-seg {
+  color: #fff;
+}
+.follow-seg:hover {
+  text-decoration: underline !important;
+  color: #fff;
 }
 
 .copy-right {
