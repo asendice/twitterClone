@@ -145,7 +145,7 @@ const ProfileBox = (props) => {
                         maxHeight: 80,
                       }}
                       circular
-                      src={`follower.profilePic}`}
+                      src={`${follower.profilePic}`}
                     />
                   </a>
                 </Table.Cell>

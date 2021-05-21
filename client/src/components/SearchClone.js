@@ -19,6 +19,7 @@ import {
   delFollowing,
 } from "../actions/index";
 import { Link } from "react-router-dom";
+import { smallBio } from "../utils/Helper";
 import { connect } from "react-redux";
 
 const SearchClone = (props) => {
@@ -115,7 +116,7 @@ const SearchClone = (props) => {
                   {user.name}
                 </h3>
               </Link>
-              <p style={{ color: "grey" }}>{user.bio}</p>
+              <p style={{ color: "grey" }}>{smallBio(user.bio)}</p>
             </Table.Cell>
             <Table.Cell>
               {user._id === props.userInfo._id ? (
@@ -168,7 +169,7 @@ const SearchClone = (props) => {
                 </h3>
               </Link>
 
-              <p style={{ color: "grey" }}>{user.bio}</p>
+              <p style={{ color: "grey" }}>{smallBio(user.bio)}</p>
             </Table.Cell>
             <Table.Cell>
               {user._id === props.userInfo._id ? (
