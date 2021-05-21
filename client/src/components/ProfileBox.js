@@ -151,9 +151,7 @@ const ProfileBox = (props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <a href={`/profile/${follower.name}`}>
-                    <Header as="h3" style={{ color: "#fff" }}>
-                      {follower.name}
-                    </Header>
+                    <h3 className="follow-seg">{follower.name}</h3>
                   </a>
                   <p style={{ color: "grey" }}>{follower.bio}</p>
                 </Table.Cell>
@@ -215,9 +213,7 @@ const ProfileBox = (props) => {
                 </Table.Cell>
                 <Table.Cell>
                   <a href={`/profile/${follower.name}`}>
-                    <Header as="h3" style={{ color: "#fff" }}>
-                      {follower.name}
-                    </Header>
+                    <h3 className="follow-seg">{follower.name}</h3>
                   </a>
                   <p style={{ color: "grey" }}>{follower.bio}</p>
                 </Table.Cell>
@@ -339,13 +335,17 @@ const ProfileBox = (props) => {
                   maxHeight: 80,
                   margin: "auto",
                   marginRight: 5,
+                  cursor: "pointer",
                 }}
+                onClick={() => setFollowOpen(false)}
                 circular
                 src={`${props.selectedUser.profilePic}`}
               />
               <Header
                 as="h2"
-                style={{ color: "#fff", margin: "auto", marginLeft: 5 }}
+                className="follow-seg"
+                style={{ margin: "auto", marginLeft: 5, cursor: "pointer"}}
+                onClick={() => setFollowOpen(false)}
               >
                 {props.selectedUser.name}
               </Header>

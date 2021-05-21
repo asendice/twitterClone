@@ -21,7 +21,7 @@ const Notifications = (props) => {
         }}
       >
         <Header as="h3" style={{ color: "#fff" }}>
-          Notifations will be working in version 2 of twitterClone.
+          Coming soon...
         </Header>
         <Icon size="massive" name="time" style={{ color: "#fff" }} />
       </Segment>
