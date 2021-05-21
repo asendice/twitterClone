@@ -16,9 +16,10 @@ import { connect } from "react-redux";
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
 
-  // on initial render and when either the first or second index changes 
-  // in place to ensure that on profile feed there is enough posts to to hit the bottom of the page so scolling down it will cause firstIndex/secondIndex to change
-  // causing the getBoxes() to call 
+
+  // in place to ensure that on profile feed there is enough posts to to hit the bottom of the 
+  // page so scolling down it will cause firstIndex/secondIndex to change
+  // causing the getBoxes() ensuring all posts from profile will eventually be called and rendered
   useEffect(() => {
     if (
       filterBoxesByUserAndUserLikes &&

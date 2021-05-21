@@ -78,7 +78,7 @@ let Register = (props) => {
   return (
     <div style={{ backgroundColor: "#203647" }}>
       <Header as="h2" style={{ color: "#fff" }}>
-        Register to twitterClone
+        Register to <span style={{ color: "#4da8da" }}>twitterClone</span>
       </Header>
       <Divider hidden />
       <Form onSubmit={props.handleSubmit(props.onRegister)}>
@@ -109,12 +109,7 @@ let Register = (props) => {
           component={renderInput}
           type="password"
           label="password"
-          validate={[
-            required,
-            length,
-            passMaxLength,
-            userNameVal,
-          ]}
+          validate={[required, length, passMaxLength, userNameVal]}
         />
         <Divider hidden />
         <Field
@@ -125,15 +120,9 @@ let Register = (props) => {
           validate={[length, required, passMaxLength, userNameVal]}
         />
         <Divider />
-        <Button
-          type="submit"
-          fluid
-          circular
-          className="follow-btn"
-        >
+        <Button type="submit" fluid circular className="follow-btn">
           Register
         </Button>
-        
       </Form>
     </div>
   );
