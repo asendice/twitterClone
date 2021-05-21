@@ -16,11 +16,12 @@ body {
   border: 1px solid black !important;
 }
 .follow-seg {
-  color: #fff;
+  color: #fff !important;
 }
 .follow-seg:hover {
   text-decoration: underline !important;
-  color: #fff;
+  color: #fff !important;
+  cursor: pointer !important;
 }
 
 .copy-right {
@@ -87,12 +88,6 @@ body {
   color: #4da8da !important ;
 }
 
-/* @media screen and (max-width: 1300px) {
-  .media-left-menu {
-    margin-left: 55px !important;
-  }
-} */
-
 .follow-btn {
   cursor: pointer !important;
   min-width: 105px;
@@ -111,11 +106,18 @@ body {
   border: #4da8da solid 1px !important;
 }
 
-.follow-btn:hover {
-  background-color: #4da8da !important;
-  border: solid #203647 1px !important;
+/* .follow-btn:hover {
+  background-color: black !important;
+  color: #4da8da !important;
+  border: solid #4da8da 1px !important;
   overflow: hidden !important;
 }
+
+.edit-profile-btn:hover {
+  background-color: #4da8da !important;
+  color: #fff !important;
+  border: black solid 1px !important;
+} */
 
 .post-box {
   min-width: 420px;
@@ -195,16 +197,16 @@ body {
 .box-btn-comment:hover {
   color: #4da8da !important;
 }
-/* 
-body::-webkit-scrollbar {
-  display: none !important;
-} */
-body::-webkit-scrollbar-track-piece {
-  background: black !important;
-  border-radius: 20px !important;
-  height: 30px !important;
+
+*::-webkit-scrollbar {
+  width: 10px;
 }
 
-body::-webkit-scrollbar-track {
-  width: 0 !important;
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0);
+  border-radius: 10px;
 }

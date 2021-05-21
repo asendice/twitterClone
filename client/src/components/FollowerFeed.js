@@ -177,7 +177,7 @@ const FollowerFeed = (props) => {
         >
           {" "}
           <span style={{ color: "#fff" }}>
-            You don't have any followers! Check out Who to follow, or Everyone's
+            You aren't following anyone! Check out Who to follow, or Everyone's
             feed and start following!{" "}
           </span>
         </Segment>
