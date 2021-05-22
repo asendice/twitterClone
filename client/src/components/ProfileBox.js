@@ -190,8 +190,6 @@ const ProfileBox = (props) => {
         }
       };
 
-      console.log(following.length, "following.length");
-
       const followingContent = () => {
         if (following.length > 0) {
           return following.map((follower) => {

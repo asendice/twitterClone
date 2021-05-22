@@ -156,7 +156,6 @@ exports.postBoxes = (req, res) => {
 };
 
 exports.getBoxes = (req, res) => {
-  console.log(req.query);
   const values = {
     firstIndex: req.query.firstIndex,
     secondIndex: req.query.secondIndex,
@@ -394,7 +393,6 @@ exports.getUser = (req, res) => {
 
 //<---------EDIT PROFILE --------------->///
 exports.uploadProfilePic = (req, res) => {
-  console.log(req.file.location, "req.file");
   let image = req.file.location;
   const { userId } = req.params;
   User.findById(userId).then((user) => {
@@ -418,11 +416,8 @@ exports.uploadProfilePic = (req, res) => {
 
 exports.uploadBackgroundPic = (req, res) => {
   let image = req.file.location;
-  console.log(image, "IMAGE");
   const { userId } = req.params;
-  console.log(req, "THIS IS THE REQUEST ");
   User.findById(userId).then((user) => {
-    console.log(user, "user");
     user.background = image;
     user
       .save()
@@ -442,7 +437,6 @@ exports.uploadBackgroundPic = (req, res) => {
 
 exports.editBio = (req, res) => {
   const { id, bio } = req.body;
-  console.log(id, bio);
   User.findById(id).then((user) => {
     user.bio = bio;
     user
@@ -505,7 +499,6 @@ exports.postReply = (req, res) => {
 
 exports.addReplyToComment = (req, res) => {
   const { commentId, replyId } = req.body;
-  console.log(replyId, "ReplyID");
   Comment.findOne({ id: commentId }).then((comment) => {
     comment.replies.push(replyId);
     comment

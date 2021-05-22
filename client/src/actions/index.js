@@ -41,7 +41,6 @@ export const boxesLoading = () => {
 };
 
 export const getBoxes = (index) => {
-  console.log("index", index);
   return async (dispatch) => {
     dispatch(boxesLoading());
     await backendApi
@@ -610,7 +609,6 @@ export const postReply = (reply) => {
 };
 
 export const addReplyToComment = (item) => {
-  console.log(item, "FROM addReplyToComment");
   const json = JSON.stringify(item);
   return async (dispatch) => {
     await backendApi
@@ -688,7 +686,6 @@ export const addFollower = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response");
         if (response) {
           return response;
         } else {
@@ -715,7 +712,7 @@ export const addFollowing = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response");
+
         if (response) {
           return response;
         } else {
@@ -742,7 +739,6 @@ export const delFollower = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response");
         if (response) {
           return response;
         } else {
@@ -769,7 +765,6 @@ export const delFollowing = (item) => {
         },
       })
       .then((response) => {
-        console.log(response, "response");
         if (response) {
           return response;
         } else {

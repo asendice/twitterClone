@@ -32,7 +32,7 @@ const BoxComment = (props) => {
     }
     props.getComments(url);
     props.getUsers();
-  }, [url, open]);
+  }, [url]);
 
   const user = props.allUsers.filter((item) => {
     const name = item._id === props.selectedBox.userId ? item : null;
@@ -81,6 +81,7 @@ const BoxComment = (props) => {
               box="comment"
               suggestion={false}
               noLink={true}
+              link={props.selectedBox._id}
               replyIds={comment.replies}
               id={comment.id}
               comments="none"
