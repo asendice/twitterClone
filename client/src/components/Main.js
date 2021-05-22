@@ -24,7 +24,6 @@ const Main = (props) => {
           secondIndex: props.numOfBoxes + 25,
         };
         props.updateIndex(index);
-        console.log("at the bottom of the page");
       }
     };
   }, [props.numOfBoxes]);

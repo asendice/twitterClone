@@ -199,33 +199,54 @@ const Box = (props) => {
                   boxShadow: "none",
                 }}
               >
-                <Link to={`/profile/${name}`}>
-                  <Header as="h3" onClick={() => props.selectUser(userName)}>
-                    {" "}
-                    <Image
-                      circular
+                <Header
+                  as="h3"
+                  style={{ display: "flex" }}
+                  onClick={() => props.selectUser(userName[0])}
+                >
+                  {" "}
+                  <object>
+                    <Link
                       to={`/profile/${name}`}
-                      src={`${profilePic}`}
                       style={{
-                        minWidth: 60,
-                        minHeight: 60,
-                        maxHeight: 60,
+                        display: "flex",
+                        pointerEvents: "visible",
+                        padding: 0,
+                        margin: 0,
                         maxWidth: 60,
                       }}
-                    />{" "}
-                    <span style={{ color: "#EEFBFB" }}>{name}</span>
-                    <span
-                      style={{
-                        color: "grey",
-                        fontSize: "15px",
-                        fontWeight: "normal",
-                      }}
                     >
-                      {" - "}
-                      {convertMili(props.ago)}
-                    </span>
-                  </Header>
-                </Link>
+                      <Image
+                        circular
+                        src={`${profilePic}`}
+                        style={{
+                          minWidth: 60,
+                          minHeight: 60,
+                          maxHeight: 60,
+                          maxWidth: 60,
+                        }}
+                      />{" "}
+                    </Link>
+                  </object>
+                  <object style={{ marginTop: "15px", marginLeft: "5px" }}>
+                    <Link
+                      to={`/profile/${name}`}
+                      style={{ pointerEvents: "visible" }}
+                    >
+                      <span className="follow-seg">{name}</span>
+                      <span
+                        style={{
+                          color: "grey",
+                          fontSize: "15px",
+                          fontWeight: "normal",
+                        }}
+                      >
+                        {" - "}
+                        {convertMili(props.ago)}
+                      </span>
+                    </Link>
+                  </object>
+                </Header>
                 <Feed.Content>
                   <span
                     style={{
@@ -250,7 +271,6 @@ const Box = (props) => {
   };
 
   const onBoxClick = () => {
-    console.log("clicked");
     return <Redirect to={`/comment/${props.link}`} />;
   };
 
@@ -260,7 +280,7 @@ const Box = (props) => {
         to={`/comment/${props.link}`}
         className={props.disabled ? "disabled-link" : ""}
       >
-        <Segment style={{ padding: 0 }} basic onClick={() => onBoxClick()}>
+        <Segment style={{ padding: 0 }} basic>
           {renderLikeMsg()}
           {renderSuggestion()}
           {renderCommentMsg()}

@@ -52,6 +52,8 @@ const smallBio = (str) => {
     let slice = str.slice(0, 60);
     let smallBio = slice + "...";
     return smallBio;
+  }else{
+    return str;
   }
 };
 
