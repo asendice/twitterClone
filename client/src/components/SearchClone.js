@@ -28,8 +28,8 @@ const SearchClone = (props) => {
   // array of preSelectedUser to be displayed for all users
   const preSelectedUserArr = [
     "DarkHelmet",
-    "MichaelScott",
-    "SenSanders",
+    "DylanTravis",
+    "TwentyOnePilots",
     "DwightSchrute",
   ];
   // ensuring the preselectedUsers are updated
