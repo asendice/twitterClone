@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Menu,
   Image,
@@ -13,7 +13,7 @@ import {
 } from "semantic-ui-react";
 import { NavLink, Redirect } from "react-router-dom";
 import PostBoxForm from "./PostBoxForm";
-import { postBoxes, getUser } from "../actions";
+import { postBoxes, getUser, getUsers } from "../actions";
 import { logout } from "../actions";
 import { connect } from "react-redux";
 
@@ -23,6 +23,10 @@ const LeftMenu = (props) => {
   const onProfileClick = () => {
     props.getUser(props.userInfo.name);
   };
+
+  useEffect(() => {
+    props.getUsers();
+  }, [props.selectedUser]);
 
   const onFormSubmit = (values) => {
     const box = {
@@ -384,6 +388,7 @@ const mapDispatchToProps = {
   postBoxes: (box) => postBoxes(box),
   logout: () => logout(),
   getUser: (userId) => getUser(userId),
+  getUsers: () => getUsers(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftMenu);

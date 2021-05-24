@@ -92,7 +92,7 @@ const ProfileFeed = (props) => {
     return item.name;
   });
 
-  // accepts values from commentForm 
+  // accepts values from commentForm
   // posts comment and add comment id to "box" comments array
   const onFormSubmit = (values) => {
     const comment = {
@@ -105,7 +105,6 @@ const ProfileFeed = (props) => {
     props.putComment(comment);
     setOpen(false);
   };
-
 
   const renderModal = () => {
     const postDate = new Date(props.selectedBox.createdAt);
@@ -190,7 +189,9 @@ const ProfileFeed = (props) => {
       });
     } else if (sorted.length < 1 && !props.boxesLoading) {
       return (
-        <Segment style={{ background: "#203647" }}>
+        <Segment
+          className="box-zero-feed"
+        >
           {" "}
           <span style={{ color: "#fff" }}>
             {props.selectedUser.name} has not posted anything yet.{" "}

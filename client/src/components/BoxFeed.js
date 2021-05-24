@@ -134,8 +134,7 @@ const BoxFeed = (props) => {
       return (
         <Segment
           basic
-          className="box-feed-item"
-          style={{ marginLeft: "auto", marginRight: "auto" }}
+          className="box-zero-feed"
         >
           {" "}
           No posts able to be rendered:
