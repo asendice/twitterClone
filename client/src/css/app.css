@@ -219,13 +219,10 @@ body {
 
 *::-webkit-scrollbar {
   width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1) !important;
+  background: black;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0);
+  background: #4da8da;
   border-radius: 10px;
 }
