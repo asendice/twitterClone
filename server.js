@@ -41,10 +41,16 @@ app.use(cors(corsOptions));
 app.use("/api", authRoutes);
 
 // need for production
-if (process.env.NODE_ENT === "production") {
-  //serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
-  // handle react routing, return all requests to React App
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.send("Api running");
+  });
 }
 
 const port = process.env.PORT;
