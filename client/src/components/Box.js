@@ -372,7 +372,7 @@ const Box = (props) => {
                   onClick={() => onHeartClick()}
                   size="large"
                   color={
-                    props.likes.includes(props.userInfo._id) ? "pink" : "grey"
+                    props.likes.includes(props.userInfo._id) ? "red" : "grey"
                   }
                   name={
                     props.likes.includes(props.userInfo._id)
