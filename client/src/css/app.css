@@ -8,6 +8,15 @@ body {
   height: 100vh;
 }
 
+.add-a-comment {
+  cursor: pointer;
+  color: #4da8da !important;
+}
+
+.add-a-comment:hover {
+  text-decoration: underline !important;
+}
+
 .search-clone-card {
   margin-right: auto !important;
   min-width: 100px !important;

@@ -47,8 +47,11 @@ const justDate = (str) => {
   return str.slice(3, 15);
 };
 
+// takes in string and returns the string to the 60'th index and adds "..."
+// made for searchClone.js to still display bios and prevent really long bios 120+ to take up too much space. 
+// possible refactor to end at a space, to prevent a word from being cut off... tbd
 const smallBio = (str) => {
-  if (str.length > 60) {
+  if (str && str.length > 60) {
     let slice = str.slice(0, 60);
     let smallBio = slice + "...";
     return smallBio;
