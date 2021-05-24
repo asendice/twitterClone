@@ -26,9 +26,10 @@ const Box = (props) => {
   const [activeIndex, setActiveIndex] = useState(1);
   const [index] = useState(0);
 
-  // creates ids object that contains user Id and the box or "post" id.
-  // checks to see if the logged in user is in the box's "likes" array
-  // passes ids object to the appropriate action creator depending on if the logged in user in that box's "likes" array
+  // creates ids object that contains userId and the box or "post" id.
+  // checks if the loggedin user is in the box's "likes" array
+  // passes ids object to the appropriate action creator 
+
   const onHeartClick = () => {
     const ids = {
       userId: props.currentUserId,
@@ -43,23 +44,25 @@ const Box = (props) => {
     }
   };
 
-  const userName = props.allUsers.filter((user) => {
-    if (user.id === props.userId || user._id === props.userId) {
+  // filters throgugh allUsers and returns an array of users that match userId from props
+  const users = props.allUsers.filter((user) => {
+    if (user._id === props.userId) {
       return user;
     } else {
       return null;
     }
   });
-
-  const name = userName.map((name) => {
+  //maps through the users array and returns just the users's name 
+  const name = users.map((name) => {
     return name.name;
   });
-
-  const profilePic = userName.map((name) => {
+  //maps through the users array and retuns just the profilePic
+  const profilePic = users.map((name) => {
     return name.profilePic;
   });
   const postDate = new Date(props.time).toString();
 
+  //renders out more detailed information about the post or "box" date/time/likes/comments
   const renderBoxInfo = () => {
     if (props.info) {
       return (
@@ -88,6 +91,7 @@ const Box = (props) => {
       );
     }
   };
+
 
   const renderLikeMsg = () => {
     if (props.likes) {
@@ -155,6 +159,7 @@ const Box = (props) => {
     });
     if (currentReplies.length > 0) {
       return currentReplies.map((reply) => {
+        console.log("reply", reply)
         const userName = props.allUsers.filter((user) => {
           if (user._id === reply.userId) {
             return user;
@@ -270,9 +275,6 @@ const Box = (props) => {
     setActiveIndex(newIndex);
   };
 
-  const onBoxClick = () => {
-    return <Redirect to={`/comment/${props.link}`} />;
-  };
 
   return (
     <>
@@ -297,7 +299,7 @@ const Box = (props) => {
             <Header
               as="h3"
               style={{ display: "flex" }}
-              onClick={() => props.selectUser(userName[0])}
+              onClick={() => props.selectUser(users[0])}
             >
               {" "}
               <object>

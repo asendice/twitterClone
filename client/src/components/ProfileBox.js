@@ -31,15 +31,21 @@ const ProfileBox = (props) => {
   const [open, setOpen] = useState(false);
   const [followOpen, setFollowOpen] = useState(false);
 
+  //call getUser by the name in URL and sets setsSelectedUsers
+  // also calls the list of all the users 
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
     props.getUsers();
   }, [open, followOpen, window.location.pathname]);
 
+  // filters allUsers bu selectedUser._id to get get currentSelectedUser
   const currentSelectedUser = props.allUsers.filter(
     (user) => user._id === props.selectedUser._id
   )[0];
 
+  // gets values from settigns form
+  // passes correct items object to edit user info action creators 
+  // closes modal and calls getUsers
   const onFormSubmit = (values) => {
     if (values.profilePic) {
       const items = {
@@ -67,6 +73,10 @@ const ProfileBox = (props) => {
     props.getUsers();
   };
 
+
+  // checks if user's followers array contains the id of the loggedin user
+  // if it does: the button click meant to unfollow - delete 
+  // if it doesn't: the button click meant to follow - add 
   const onFollowBtnClick = () => {
     const item = {
       currentUserId: props.userInfo._id,

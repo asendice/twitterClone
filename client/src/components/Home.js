@@ -13,10 +13,12 @@ const Home = (props) => {
     props.selectUser(props.userInfo);
   }, []);
 
+  // if value is true render boxFeed else render FollowFeed 
   const feedSelector = () => {
     return value ? <BoxFeed /> : <FollowerFeed />;
   };
 
+  // makes the botton a toggle from true to false, and brings user to top of page
   const onBtnClick = () => {
     setValue(!value);
     window.scrollTo(0, 0);

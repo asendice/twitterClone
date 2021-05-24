@@ -15,11 +15,10 @@ import { connect } from "react-redux";
 
 const ProfileFeed = (props) => {
   const [open, setOpen] = useState(false);
-
-
-  // in place to ensure that on profile feed there is enough posts to to hit the bottom of the 
+  // in place to ensure that on profile feed there is enough posts to to hit the bottom of the
   // page so scolling down it will cause firstIndex/secondIndex to change
   // causing the getBoxes() ensuring all posts from profile will eventually be called and rendered
+  // short term solution
   useEffect(() => {
     if (
       filterBoxesByUserAndUserLikes &&
@@ -54,6 +53,7 @@ const ProfileFeed = (props) => {
     }
   }, [props.index.firstIndex, props.index.secondIndex]);
 
+  // filters all the current called boxes by the selectedUser._id or if selectedUser liked arra contains the box._id
   const filterBoxesByUserAndUserLikes = props.boxes.filter((box) => {
     if (props.selectedUser.name) {
       if (
@@ -69,23 +69,31 @@ const ProfileFeed = (props) => {
     }
   });
 
+  // sorts array by updatedAt date
   const sorted = filterBoxesByUserAndUserLikes.sort((a, b) => {
     let one = new Date(a.updatedAt);
     let two = new Date(b.updatedAt);
     return two - one;
   });
 
+  // sets selectedBox state
   const setSelectedBox = (box) => {
     props.selectBox(box);
   };
 
+  //filters allUsers and returns an array of users that are === to the selectedBox author
   const replyName = props.allUsers.filter((item) => {
     const name = item._id === props.selectedBox.userId ? item.name : null;
     return name;
   });
+
+  //maps through replyName array and returns name of user
   const mappedName = replyName.map((item) => {
     return item.name;
   });
+
+  // accepts values from commentForm 
+  // posts comment and add comment id to "box" comments array
   const onFormSubmit = (values) => {
     const comment = {
       id: uuid(),
@@ -97,6 +105,7 @@ const ProfileFeed = (props) => {
     props.putComment(comment);
     setOpen(false);
   };
+
 
   const renderModal = () => {
     const postDate = new Date(props.selectedBox.createdAt);

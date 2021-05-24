@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Header, Button, Divider } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
+
+// validator for a required field 
 const required = (x) => {
   if (!x || x === "") {
     return <span style={{ color: "pink" }}>*This field is required.</span>;
@@ -9,16 +11,19 @@ const required = (x) => {
   return undefined;
 };
 
+//validator for only numbers and letters 
 const alphaNumeric = (value) =>
   value && /[^a-zA-Z0-9 ]/i.test(value) ? (
     <span style={{ color: "pink" }}> *Only alphanumeric characters</span>
   ) : undefined;
 
+// validator for email
 const email = (value) =>
   value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? (
     <span style={{ color: "pink" }}>*Invalid Email address.</span>
   ) : undefined;
 
+//validator for length < 4, value can't be less than 4
 const length = (value) =>
   value && value.length < 4 ? (
     <span style={{ color: "pink" }}>
@@ -26,6 +31,7 @@ const length = (value) =>
     </span>
   ) : undefined;
 
+// validator for maxLength value can't be greater than 18
 const nameMaxLength = (value) =>
   value && value.length > 18 ? (
     <span style={{ color: "pink" }}>
@@ -40,6 +46,7 @@ const passMaxLength = (value) =>
     </span>
   ) : undefined;
 
+// validator to prevent a username that contains spaces
 const userNameVal = (value) =>
   value && value.includes(" ") ? (
     <span style={{ color: "pink" }}>*This field cannot include spaces.</span>
