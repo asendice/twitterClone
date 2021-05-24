@@ -1,11 +1,12 @@
 body {
   overscroll-behavior-y: none;
   overscroll-behavior-x: none;
-  overflow: overlay;
+  overflow: auto;
 }
 
 .app-main-div {
   height: 100vh;
+  width: 100vw;
 }
 
 .add-a-comment {
@@ -216,7 +217,7 @@ body {
   color: #4da8da !important;
 }
 
-*::-webkit-scrollbar {
+/* *::-webkit-scrollbar {
   width: 10px;
 }
 
@@ -227,4 +228,4 @@ body {
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0);
   border-radius: 10px;
-}
+} */
