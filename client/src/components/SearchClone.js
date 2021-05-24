@@ -25,12 +25,14 @@ import { connect } from "react-redux";
 const SearchClone = (props) => {
   const [term, setTerm] = useState("");
 
+  // array of preSelectedUser to be displayed for all users
   const preSelectedUserArr = [
     "DarkHelmet",
     "MichaelScott",
     "SenSanders",
     "DwightSchrute",
   ];
+  // ensuring the preselectedUsers are updated
   const preSelectedUsers = props.allUsers.filter((user) => {
     if (preSelectedUserArr.includes(user.name)) {
       return user;
@@ -39,6 +41,7 @@ const SearchClone = (props) => {
     }
   });
 
+  // utilized the search term to filter allUsers list
   const filteredUsers = props.allUsers.filter((user) => {
     if (user.name.toLowerCase().includes(term.toLowerCase())) {
       return user;
@@ -47,6 +50,8 @@ const SearchClone = (props) => {
     }
   });
 
+  // if filteredUsers contains no users and allUsers call is not loading
+  // let the user know that their search term had no results 
   const renderSearchNf = () => {
     if (filteredUsers.length === 0 && !props.allUsersLoading) {
       return (
@@ -63,6 +68,9 @@ const SearchClone = (props) => {
     }
   };
 
+  // checks if user's followers array contains the id of the loggedin user
+  // if it does: the button click meant to unfollow - delete 
+  // if it doesn't: the button click meant to follow - add 
   const onFollowBtnClick = (user) => {
     const item = {
       currentUserId: props.userInfo._id,
@@ -77,6 +85,9 @@ const SearchClone = (props) => {
     }
   };
 
+  // if allUsers is loading call render loading component
+  // if search term is longer than 0 return top 7 of filteredUsers and render
+  // else return the preSelectedUsers
   const renderRow = () => {
     if (props.allUsersLoading) {
       return (

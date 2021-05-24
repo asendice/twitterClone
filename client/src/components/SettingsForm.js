@@ -12,6 +12,7 @@ import {
 } from "semantic-ui-react";
 import { Field, reduxForm, formValueSelector } from "redux-form";
 
+// renders out the image input field, for form
 const renderImageInput = ({
   input,
   label,
@@ -41,6 +42,7 @@ const renderImageInput = ({
   );
 };
 
+// renders text area for bio
 const renderTextArea = ({
   input,
   label,
@@ -67,6 +69,7 @@ const renderTextArea = ({
   );
 };
 
+// validator to ensure the bio is not greater than 180 characters
 const bioMaxLength = (value) =>
   value && value.length > 180 ? (
     <span style={{ color: "pink" }}>
@@ -114,13 +117,18 @@ let SettingsForm = (props) => {
         />
         <Divider hidden />
         <Divider hidden />
-        <Field name="bio" component={renderTextArea} label="update your bio" validate={[bioMaxLength]} />
+        <Field
+          name="bio"
+          component={renderTextArea}
+          label="update your bio"
+          validate={[bioMaxLength]}
+        />
         <Segment basic>
           <Button
             type="submit"
+            circular
+            className="follow-btn"
             style={{
-              backgroundColor: "#4DA8DA",
-              color: "#fff",
               float: "right",
             }}
           >

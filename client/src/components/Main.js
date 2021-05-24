@@ -28,6 +28,7 @@ const Main = (props) => {
     };
   }, [props.numOfBoxes]);
 
+  
   if (window.location.pathname === "/" && props.loggedIn) {
     return <Redirect to="/home" />;
   }
