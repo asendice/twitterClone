@@ -1,7 +1,6 @@
 body {
-  overscroll-behavior-y: none;
-  overscroll-behavior-x: none;
-  overflow: auto;
+  overscroll-behavior-y: none !important;
+  overscroll-behavior-x: none !important;
 }
 
 .app-main-div {
@@ -200,6 +199,7 @@ body {
   transition: color 0.5s ease;
   color: grey !important;
 }
+
 .box-btn-heart:hover {
   color: red !important;
 }
@@ -217,15 +217,15 @@ body {
   color: #4da8da !important;
 }
 
-/* *::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1) !important;
 }
 
 ::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0);
   border-radius: 10px;
-} */
+}
