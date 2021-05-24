@@ -17,8 +17,8 @@ const FollowerFeed = (props) => {
   const [open, setOpen] = useState(false);
 
   // ** very similar to what I wrote regarding profile feed **
-  // in place to ensure there is always boxes avail to see and 
-  // to ensure window.onscroll will trigger to get more boxes  
+  // in place to ensure there is always boxes avail to see and
+  // to ensure window.onscroll will trigger to get more boxes
   useEffect(() => {
     if (
       filterBoxesByCurrentUserFollowing &&
@@ -169,15 +169,7 @@ const FollowerFeed = (props) => {
       });
     } else if (!props.boxesLoading && sortFollowingBoxes.length === 0) {
       return (
-        <Segment
-          style={{
-            background: "#203647",
-            maxWidth: "650px",
-            minWidth: "420px",
-            margin: "auto",
-            marginTop: "20px",
-          }}
-        >
+        <Segment className="box-zero-feed">
           {" "}
           <span style={{ color: "#fff" }}>
             You aren't following anyone! Check out Who to follow, or Everyone's

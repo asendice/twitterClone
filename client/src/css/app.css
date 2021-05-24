@@ -1,7 +1,6 @@
 body {
   overscroll-behavior-y: none;
   overflow: overlay;
-  scrollbar-color: "black";
 }
 
 .app-main-div {
@@ -160,6 +159,15 @@ body {
   box-shadow: none !important;
   min-width: 420px !important;
   max-width: 650px !important;
+  border: 1px solid black !important;
+}
+.box-zero-feed {
+  background: #203647 !important;
+  box-shadow: none !important;
+  min-width: 420px !important;
+  max-width: 650px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
   border: 1px solid black !important;
 }
 .box-follower-item {
