@@ -16,6 +16,9 @@ const Main = (props) => {
   const contextRef = useRef();
   const name = window.location.pathname.slice(9);
 
+  // on initial render and whenever props.numOfBoxes has changed
+  // window on scroll event checks if the bottom of the page has been reached
+  // if it has pass index to updateIndex action creator
   useEffect(() => {
     window.onscroll = () => {
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
@@ -28,7 +31,7 @@ const Main = (props) => {
     };
   }, [props.numOfBoxes]);
 
-  
+  // prevents the ability to see twitterClone content without being loggedin 
   if (window.location.pathname === "/" && props.loggedIn) {
     return <Redirect to="/home" />;
   }

@@ -16,6 +16,9 @@ import { connect } from "react-redux";
 const FollowerFeed = (props) => {
   const [open, setOpen] = useState(false);
 
+  // ** very similar to what I wrote regarding profile feed **
+  // in place to ensure there is always boxes avail to see and 
+  // to ensure window.onscroll will trigger to get more boxes  
   useEffect(() => {
     if (
       filterBoxesByCurrentUserFollowing &&

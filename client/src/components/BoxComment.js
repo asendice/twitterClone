@@ -59,7 +59,7 @@ const BoxComment = (props) => {
     if (props.commentsLoading) {
       return <Loading />;
     }
-    if (props.comments) {
+    if (props.comments.length > 0) {
       return sorted.map((comment) => {
         const date = new Date();
         const postDate = new Date(comment.createdAt);
@@ -115,7 +115,7 @@ const BoxComment = (props) => {
         >
           <span
             onClick={() => setOpen(true)}
-            style={{ cursor: "pointer", color: "#4da8da" }}
+            className="add-a-comment"
           >
             Add a comment?{" "}
           </span>
