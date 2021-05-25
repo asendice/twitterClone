@@ -13,7 +13,6 @@ const Notifications = (props) => {
         textAlign="center"
         style={{
           background: "#203647",
-          minWidth: 420,
           maxWidth: 650,
           marginLeft: "auto",
           marginRight: "auto",
@@ -31,9 +30,9 @@ const Notifications = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userInfo: state.userInfo.user
-  }
-}
+    userInfo: state.userInfo.user,
+  };
+};
 
 const mapDispatchToProps = {
   selectUser: (user) => selectUser(user),

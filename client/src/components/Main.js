@@ -40,7 +40,7 @@ const Main = (props) => {
     return (
       <div
         ref={contextRef}
-        style={{ backgroundColor: "#12232e", minHeight: "100vh" }}
+        style={{ backgroundColor: "#12232e", minHeight: "100vh"}}
       >
         <Title contextRef={contextRef} />
         <Divider hidden />
@@ -49,7 +49,7 @@ const Main = (props) => {
             <Grid.Column computer={5} tablet={2} mobile={2}>
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
-            <Grid.Column computer={6} tablet={11} mobile={12}>
+            <Grid.Column computer={6} tablet={11} mobile={14}>
               <Route
                 exact
                 path="/home"
@@ -59,7 +59,7 @@ const Main = (props) => {
               <Route exact path={`/profile/${name}`} component={Profile} />
               <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
-            <Grid.Column computer={5} tablet={1} mobile={2}>
+            <Grid.Column computer={5} tablet={1} mobile={0}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>

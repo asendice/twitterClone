@@ -32,7 +32,7 @@ const ProfileBox = (props) => {
   const [followOpen, setFollowOpen] = useState(false);
 
   //call getUser by the name in URL and sets setsSelectedUsers
-  // also calls the list of all the users 
+  // also calls the list of all the users
   useEffect(() => {
     props.getUser(window.location.pathname.slice(9));
     props.getUsers();
@@ -44,7 +44,7 @@ const ProfileBox = (props) => {
   )[0];
 
   // gets values from settigns form
-  // passes correct items object to edit user info action creators 
+  // passes correct items object to edit user info action creators
   // closes modal and calls getUsers
   const onFormSubmit = (values) => {
     if (values.profilePic) {
@@ -73,10 +73,9 @@ const ProfileBox = (props) => {
     props.getUsers();
   };
 
-
   // checks if user's followers array contains the id of the loggedin user
-  // if it does: the button click meant to unfollow - delete 
-  // if it doesn't: the button click meant to follow - add 
+  // if it does: the button click meant to unfollow - delete
+  // if it doesn't: the button click meant to follow - add
   const onFollowBtnClick = () => {
     const item = {
       currentUserId: props.userInfo._id,
@@ -352,7 +351,7 @@ const ProfileBox = (props) => {
               <Header
                 as="h2"
                 className="follow-seg"
-                style={{ margin: "auto", marginLeft: 5, cursor: "pointer"}}
+                style={{ margin: "auto", marginLeft: 5, cursor: "pointer" }}
                 onClick={() => setFollowOpen(false)}
               >
                 {props.selectedUser.name}
@@ -378,7 +377,6 @@ const ProfileBox = (props) => {
       <Segment
         style={{
           backgroundColor: "black",
-          minWidth: "420px",
           maxWidth: 650,
           margin: "auto",
           marginBottom: "10px",
@@ -426,27 +424,6 @@ const ProfileBox = (props) => {
                   {justDate(new Date(props.selectedUser.createdAt).toString())}
                 </span>
                 <Divider />
-                <Segment
-                  className="follow-seg"
-                  onClick={() => setFollowOpen(true)}
-                  basic
-                  style={{ padding: 0, cursor: "pointer" }}
-                >
-                  <span style={{ color: "#fff" }}>
-                    {currentSelectedUser
-                      ? currentSelectedUser.followers.length
-                      : "0"}
-                  </span>
-                  <span style={{ color: "grey" }}> Followers</span>
-                  <span style={{ color: "#fff", marginLeft: 15 }}>
-                    {" "}
-                    {props.selectedUser && currentSelectedUser
-                      ? currentSelectedUser.following.length
-                      : "0"}{" "}
-                  </span>
-
-                  <span style={{ color: "grey" }}> Following</span>
-                </Segment>
               </Grid.Column>
               <Grid.Column>
                 <Segment basic style={{ float: "right" }}>
@@ -480,6 +457,32 @@ const ProfileBox = (props) => {
                   )}
                 </Segment>
               </Grid.Column>
+              <Segment
+                className="follow-seg"
+                onClick={() => setFollowOpen(true)}
+                basic
+                style={{
+                  cursor: "pointer",
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  paddingRight: 0,
+                }}
+              >
+                <span style={{ color: "#fff" }}>
+                  {currentSelectedUser
+                    ? currentSelectedUser.followers.length
+                    : "0"}
+                </span>
+                <span style={{ color: "grey" }}> Followers</span>
+                <span style={{ color: "#fff", marginLeft: 15 }}>
+                  {" "}
+                  {props.selectedUser && currentSelectedUser
+                    ? currentSelectedUser.following.length
+                    : "0"}{" "}
+                </span>
+
+                <span style={{ color: "grey" }}> Following</span>
+              </Segment>
             </Grid.Row>
           </Grid>
         </Segment>

@@ -1,4 +1,4 @@
-body {
+* {
   overscroll-behavior-y: none !important;
   overscroll-behavior-x: none !important;
 }
@@ -69,6 +69,7 @@ body {
   border: none !important;
   background: #12232e !important;
   margin-left: auto !important;
+  margin-right: 0 !important;
   width: 20rem !important;
 }
 
@@ -98,7 +99,7 @@ body {
 
 .follow-btn {
   cursor: pointer !important;
-  min-width: 105px;
+  /* min-width: 105px; */
   background-color: #4da8da !important;
   color: #fff !important;
   border: solid black 1px !important;
@@ -107,7 +108,7 @@ body {
 }
 .edit-profile-btn {
   background-color: black !important;
-  min-width: 105px;
+  /* min-width: 105px; */
   cursor: pointer !important;
   color: #4da8da !important;
   overflow: hidden !important;
@@ -127,8 +128,10 @@ body {
   border: black solid 1px !important;
 } */
 
+
+
 .post-box {
-  min-width: 420px;
+  /* min-width: 420px; */
   min-height: 200px;
   max-width: 650px;
   background: #203647 !important;
@@ -144,7 +147,7 @@ body {
 }
 
 .focus-box {
-  min-width: 420px !important;
+  /* min-width: 420px !important; */
   max-width: 650px !important;
   min-height: 50px !important;
   background: #203647 !important;
@@ -157,14 +160,14 @@ body {
   cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
-  min-width: 420px !important;
+  /* min-width: 420px !important; */
   max-width: 650px !important;
   border: 1px solid black !important;
 }
 .box-zero-feed {
   background: #203647 !important;
   box-shadow: none !important;
-  min-width: 420px !important;
+  /* min-width: 420px !important; */
   max-width: 650px !important;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -174,7 +177,7 @@ body {
   cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
-  min-width: 420px !important;
+  /* min-width: 420px !important; */
   max-width: 650px !important;
   border: 1px solid black !important;
 }
@@ -216,7 +219,21 @@ body {
   color: #4da8da !important;
 }
 
-*::-webkit-scrollbar {
+.mobile-menu {
+  box-shadow: none !important;
+  border: none !important;
+  background: #12232e !important;
+  max-width: 10px !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 460px) {
+ .mobile-menu {
+  padding: 3% !important;
+ }
+}
+
+body::-webkit-scrollbar {
   width: 10px;
   background: black;
 }
