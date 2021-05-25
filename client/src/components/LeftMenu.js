@@ -77,7 +77,7 @@ const LeftMenu = (props) => {
             basic
             textAlign="center"
             padded
-            style={{ minWidth: 420, background: "#203647" }}
+            style={{ background: "#203647" }}
           >
             <PostBoxForm onFormSubmit={onFormSubmit} />
             <Divider hidden />
