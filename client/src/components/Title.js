@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Title = (props) => {
   return (
     <Sticky context={props.contextRef} offset={0}>
-      <Segment textAlign="center" style={{ backgroundColor: "black" }}>
+      <Segment  textAlign="center" style={{ backgroundColor: "black",  width: "100%" }}>
         <Link to="/home"><Header style={{ color: "#4da8da" }}>twitterClone</Header></Link>
       </Segment>
     </Sticky>
