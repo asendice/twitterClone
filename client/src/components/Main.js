@@ -59,7 +59,7 @@ const Main = (props) => {
               <Route exact path={`/profile/${name}`} component={Profile} />
               <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
-            <Grid.Column computer={5} tablet={1} mobile={0} style={{border: "red 1px solid"}}>
+            <Grid.Column computer={5} tablet={1} mobile={1}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>
