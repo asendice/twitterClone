@@ -1,6 +1,7 @@
 body {
   overscroll-behavior-y: none !important;
   overscroll-behavior-x: none !important;
+  margin: 0;
 }
 
 .app-main-div {
@@ -128,8 +129,6 @@ body {
   border: black solid 1px !important;
 } */
 
-
-
 .post-box {
   /* min-width: 420px; */
   min-height: 200px;
@@ -228,9 +227,15 @@ body {
 }
 
 @media screen and (max-width: 460px) {
- .mobile-menu {
-  padding: 0.3px !important;
- }
+  .mobile-menu {
+    padding: 0.3px !important;
+  }
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  * {
+    max-width: 100vh;
+  }
 }
 
 body::-webkit-scrollbar {
