@@ -49,7 +49,7 @@ const Main = (props) => {
             <Grid.Column computer={5} tablet={2} mobile={2}>
               <LeftMenu contextRef={contextRef} />
             </Grid.Column>
-            <Grid.Column computer={6} tablet={11} mobile={14}>
+            <Grid.Column computer={6} tablet={11} mobile={13}>
               <Route
                 exact
                 path="/home"
@@ -59,7 +59,7 @@ const Main = (props) => {
               <Route exact path={`/profile/${name}`} component={Profile} />
               <Route exact path={`/comment/${name}`} component={BoxComment} />
             </Grid.Column>
-            <Grid.Column computer={5} tablet={1} mobile={0}>
+            <Grid.Column computer={5} tablet={1} mobile={0} style={{border: "red 1px solid"}}>
               <RightContent contextRef={contextRef} />
             </Grid.Column>
           </Grid.Row>

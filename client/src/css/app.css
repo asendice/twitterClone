@@ -1,4 +1,4 @@
-* {
+body {
   overscroll-behavior-y: none !important;
   overscroll-behavior-x: none !important;
 }
@@ -229,7 +229,7 @@
 
 @media screen and (max-width: 460px) {
  .mobile-menu {
-  padding: 3% !important;
+  padding: 0.3px !important;
  }
 }
 
