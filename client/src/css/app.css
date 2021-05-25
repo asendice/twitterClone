@@ -33,6 +33,18 @@ body {
   cursor: pointer !important;
 }
 
+.landing-header-blue {
+  color: #4da8da !important;
+  font-size: 4rem !important;
+}
+.landing-header-white {
+  color: #fff !important;
+  font-size: 4rem !important;
+}
+
+@media screen and (max-width: 460px) {
+}
+
 .copy-right {
   margin-right: auto !important;
   min-width: 100px !important;
@@ -100,7 +112,6 @@ body {
 
 .follow-btn {
   cursor: pointer !important;
-  /* min-width: 105px; */
   background-color: #4da8da !important;
   color: #fff !important;
   border: solid black 1px !important;
@@ -109,7 +120,6 @@ body {
 }
 .edit-profile-btn {
   background-color: black !important;
-  /* min-width: 105px; */
   cursor: pointer !important;
   color: #4da8da !important;
   overflow: hidden !important;
@@ -132,14 +142,14 @@ body {
 .post-box {
   /* min-width: 420px; */
   min-height: 200px;
-  max-width: 650px;
+  max-width: 600px;
   background: #203647 !important;
   border: 1px solid black !important;
 }
 
 .profile-box {
   min-height: 300px;
-  max-width: 650px;
+  max-width: 600px;
   cursor: pointer;
   border: 1px solid black !important;
   margin: auto !important;
@@ -147,7 +157,7 @@ body {
 
 .focus-box {
   /* min-width: 420px !important; */
-  max-width: 650px !important;
+  max-width: 600px !important;
   min-height: 50px !important;
   background: #203647 !important;
   margin-left: auto !important;
@@ -160,14 +170,14 @@ body {
   background: #203647 !important;
   box-shadow: none !important;
   /* min-width: 420px !important; */
-  max-width: 650px !important;
+  max-width: 600px !important;
   border: 1px solid black !important;
 }
 .box-zero-feed {
   background: #203647 !important;
   box-shadow: none !important;
   /* min-width: 420px !important; */
-  max-width: 650px !important;
+  max-width: 600px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   border: 1px solid black !important;
@@ -177,7 +187,7 @@ body {
   background: #203647 !important;
   box-shadow: none !important;
   /* min-width: 420px !important; */
-  max-width: 650px !important;
+  max-width: 600px !important;
   border: 1px solid black !important;
 }
 
@@ -233,8 +243,11 @@ body {
   body::-webkit-scrollbar {
     display: none;
   }
-  * {
-    max-width: 100vh;
+  .landing-header-blue {
+    font-size: 3rem !important;
+  }
+  .landing-header-white {
+    font-size: 3rem !important;
   }
 }
 

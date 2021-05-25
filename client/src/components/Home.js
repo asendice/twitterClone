@@ -39,7 +39,7 @@ const Home = (props) => {
           className={value ? "follow-btn" : "edit-profile-btn"}
           content={value ? "Everyone" : "Following"}
           style={{
-            maxWidth: "650px",
+            maxWidth: "600px",
             margin: "auto",
             marginBottom: "10px",
           }}

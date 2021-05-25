@@ -189,7 +189,7 @@ const Box = (props) => {
               key={reply._id}
               style={{
                 background: "#203647",
-                maxWidth: 650,
+                maxWidth: 600,
                 marginLeft: "auto",
                 marginRight: "auto",
                 border: "1px solid black",

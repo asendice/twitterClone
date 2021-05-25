@@ -377,7 +377,7 @@ const ProfileBox = (props) => {
       <Segment
         style={{
           backgroundColor: "black",
-          maxWidth: 650,
+          maxWidth: 600,
           margin: "auto",
           marginBottom: "10px",
         }}
