@@ -154,16 +154,26 @@ const Landing = (props) => {
           maxWidth: "600px",
           backgroundColor: "black",
           margin: "auto",
-          marginTop: "200px",
+          marginTop: "100px",
+          border: "2px solid black",
         }}
       >
-        <Header as="h1" style={{ color: "#4da8da", fontSize: "4.5rem" }}>
+        <Header
+          className="landing-header-blue"
+          as="h1"
+        >
           It's
         </Header>
-        <Header as="h1" style={{ color: "#fff", fontSize: "4.5rem" }}>
+        <Header
+          className="landing-header-white"
+          as="h1"
+        >
           Happening
         </Header>
-        <Header as="h1" style={{ color: "#4da8da", fontSize: "4.5rem" }}>
+        <Header
+          className="landing-header-blue"
+          as="h1"
+        >
           Now.
         </Header>
         <Header as="h2" style={{ color: "#fff" }}>

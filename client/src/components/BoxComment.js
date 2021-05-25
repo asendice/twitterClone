@@ -70,7 +70,7 @@ const BoxComment = (props) => {
             key={comment.id}
             style={{
               background: "#203647",
-              maxWidth: 650,
+              maxWidth: 600,
               marginLeft: "auto",
               marginRight: "auto",
               border: "1px solid black",
@@ -105,7 +105,7 @@ const BoxComment = (props) => {
           basic
           style={{
             background: "#203647",
-            maxWidth: 650,
+            maxWidth: 600,
             marginLeft: "auto",
             marginRight: "auto",
             border: "1px solid black",
