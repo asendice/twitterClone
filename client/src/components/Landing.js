@@ -151,7 +151,6 @@ const Landing = (props) => {
       <Segment
         padded="very"
         style={{
-          minWidth: "420px",
           maxWidth: "600px",
           backgroundColor: "black",
           margin: "auto",
