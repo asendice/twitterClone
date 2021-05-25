@@ -196,8 +196,9 @@ const LeftMenu = (props) => {
         >
           <Menu.Item>
             <NavLink
+              onClick={() => onProfileClick()}
               className="menu-icon"
-              to={`/profile${props.selectedUser.name}`}
+              to={`/profile/${props.userInfo.name}`}
             >
               <Image
                 style={{
@@ -234,6 +235,7 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Menu.Item>
             <NavLink
+              onClick={() => onProfileClick()}
               className="menu-icon"
               activeClassName="menu-item-active"
               to={`/profile/${props.userInfo.name}`}
@@ -276,21 +278,10 @@ const LeftMenu = (props) => {
       </Grid>
 
       <Grid className="mobile only">
-        <Menu
-          className="mobileMenu"
-          vertical
-          borderless
-          compact
-          style={{
-            boxShadow: "none",
-            border: "none",
-            background: "#12232e",
-            maxWidth: "10px",
-            cursor: "pointer",
-          }}
-        >
+        <Menu className="mobile-menu" vertical borderless compact>
           <Menu.Item>
             <NavLink
+              onClick={() => onProfileClick()}
               className="menu-icon"
               to={`/profile/${props.userInfo.name}`}
             >
@@ -329,6 +320,7 @@ const LeftMenu = (props) => {
           </Menu.Item>
           <Menu.Item>
             <NavLink
+              onClick={() => onProfileClick()}
               className="menu-icon"
               activeClassName="menu-item-active"
               to={`/profile/${props.userInfo.name}`}

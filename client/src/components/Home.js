@@ -41,7 +41,6 @@ const Home = (props) => {
           style={{
             maxWidth: "650px",
             margin: "auto",
-            minWidth: "420px",
             marginBottom: "10px",
           }}
         />
