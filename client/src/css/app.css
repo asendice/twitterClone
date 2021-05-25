@@ -1,7 +1,10 @@
 body {
   overscroll-behavior-y: none !important;
   overscroll-behavior-x: none !important;
-  margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  width: 100%;
 }
 
 .app-main-div {
@@ -40,9 +43,6 @@ body {
 .landing-header-white {
   color: #fff !important;
   font-size: 4rem !important;
-}
-
-@media screen and (max-width: 460px) {
 }
 
 .copy-right {
@@ -111,14 +111,15 @@ body {
 }
 
 .follow-btn {
+  transition: 0.4s ease !important;
   cursor: pointer !important;
   background-color: #4da8da !important;
   color: #fff !important;
-  border: solid black 1px !important;
   overflow: hidden !important;
   box-shadow: 0 0 0 2px black !important;
 }
 .edit-profile-btn {
+  transition: 0.4s ease !important;
   background-color: black !important;
   cursor: pointer !important;
   color: #4da8da !important;
@@ -126,21 +127,15 @@ body {
   border: #4da8da solid 1px !important;
 }
 
-/* .follow-btn:hover {
-  background-color: black !important;
-  color: #4da8da !important;
-  border: solid #4da8da 1px !important;
-  overflow: hidden !important;
+.follow-btn:hover {
+  color: black !important;
 }
 
 .edit-profile-btn:hover {
-  background-color: #4da8da !important;
   color: #fff !important;
-  border: black solid 1px !important;
-} */
+}
 
 .post-box {
-  /* min-width: 420px; */
   min-height: 200px;
   max-width: 600px;
   background: #203647 !important;
@@ -156,7 +151,6 @@ body {
 }
 
 .focus-box {
-  /* min-width: 420px !important; */
   max-width: 600px !important;
   min-height: 50px !important;
   background: #203647 !important;
@@ -169,14 +163,12 @@ body {
   cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
-  /* min-width: 420px !important; */
   max-width: 600px !important;
   border: 1px solid black !important;
 }
 .box-zero-feed {
   background: #203647 !important;
   box-shadow: none !important;
-  /* min-width: 420px !important; */
   max-width: 600px !important;
   margin-left: auto !important;
   margin-right: auto !important;
@@ -186,7 +178,6 @@ body {
   cursor: pointer;
   background: #203647 !important;
   box-shadow: none !important;
-  /* min-width: 420px !important; */
   max-width: 600px !important;
   border: 1px solid black !important;
 }
