@@ -9,6 +9,7 @@ body {
 
 .app-main-div {
   height: 100vh;
+
 }
 
 .add-a-comment {
@@ -18,6 +19,7 @@ body {
 
 .add-a-comment:hover {
   text-decoration: underline !important;
+   overflow:hidden;
 }
 
 .search-clone-card {

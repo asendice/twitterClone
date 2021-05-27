@@ -40,7 +40,7 @@ const Main = (props) => {
     return (
       <div
         ref={contextRef}
-        style={{ backgroundColor: "#12232e", minHeight: "100vh"}}
+        style={{ backgroundColor: "#12232e", minHeight: "100vh", overflow: "hidden"}}
       >
         <Title contextRef={contextRef} />
         <Divider hidden />
