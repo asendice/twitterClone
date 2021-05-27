@@ -28,7 +28,7 @@ const BoxComment = (props) => {
   }
   useEffect(() => {
     if (props.selectedBox) {
-      props.getReplies(props.selectedBox._id);
+      props.getReplies(url);
     }
     props.getComments(url);
     props.getUsers();
@@ -111,10 +111,7 @@ const BoxComment = (props) => {
             border: "1px solid black",
           }}
         >
-          <span
-            onClick={() => setOpen(true)}
-            className="add-a-comment"
-          >
+          <span onClick={() => setOpen(true)} className="add-a-comment">
             Add a comment?{" "}
           </span>
         </Segment>
