@@ -37,7 +37,7 @@ const Home = (props) => {
           fluid
           onClick={() => onBtnClick()}
           className={value ? "follow-btn" : "edit-profile-btn"}
-          content={value ? "Everyone" : "Following"}
+          content={value ? "Everyone's Feed" : "Just Following"}
           style={{
             maxWidth: "600px",
             margin: "auto",
