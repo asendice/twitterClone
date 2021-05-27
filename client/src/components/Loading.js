@@ -3,7 +3,7 @@ import { Segment, Loader } from "semantic-ui-react";
 
 const Loading = () => {
   return (
-    <Segment basic>
+    <Segment basic >
       <Loader active size="small"></Loader>{" "}
     </Segment>
   );
