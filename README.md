@@ -1,8 +1,8 @@
 # twitterClone
 
 twitterClone is a project inspired by twitter.com. 
-twitterClone allows a user to create an account and post messages to a feed.
-Users can follow other users, and gain access to a new feed based upon people the user follows and what posts they like.
+twitterClone allows a user to create an account and post messages to a feed that every user can see.
+Users can follow other users, and gain access to a new feed based upon new users the user follows and what posts they like.
 Likeing posts will show up in the users' portfolio along with the posts the user has made. 
 Users have the ability to update an avatar picture and background picture that is displayed on their profile. 
 
@@ -23,8 +23,15 @@ $ git clone https://github.com/asendice/twitterClone
 # Go into the repository
 $ cd twitterClone
 
-# Install dependencies
+# Install backend dependencies
 $ npm install
+
+# Install frontend dependencies
+$ cd client
+$ npm install
+
+# Go to Root File twitterclone/
+$ cd ..
 
 # Run the server
 $ npm run dev
