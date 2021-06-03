@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = ["http://localhost:3000", "https://twitterclone-dt.herokuapp.com/api"];
 const corsOptions = {
   origin: function (origin, callback) {
     console.log("** Origin of request " + origin);
