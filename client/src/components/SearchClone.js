@@ -27,11 +27,12 @@ const SearchClone = (props) => {
 
   // array of preSelectedUser to be displayed for all users
   const preSelectedUserArr = [
-    "DarkHelmet",
+    "HappyHippo",
     "DylanTravis",
     "TwentyOnePilots",
     "MortySmith",
     "MichaelScott",
+    "TahoeBlue"
   ];
   // ensuring the preselectedUsers are updated
   const preSelectedUsers = props.allUsers.filter((user) => {
