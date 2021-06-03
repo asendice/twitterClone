@@ -120,6 +120,7 @@ body {
   color: #fff !important;
   overflow: hidden !important;
   box-shadow: 0 0 0 2px black !important;
+  min-width: 105px !important;
 }
 .edit-profile-btn {
   transition: 0.4s ease !important;
@@ -128,6 +129,7 @@ body {
   color: #4da8da !important;
   overflow: hidden !important;
   border: #4da8da solid 1px !important;
+  min-width: 105px !important;
 }
 
 .follow-btn:hover {

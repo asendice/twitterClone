@@ -30,7 +30,8 @@ const SearchClone = (props) => {
     "DarkHelmet",
     "DylanTravis",
     "TwentyOnePilots",
-    "DwightSchrute",
+    "MortySmith",
+    "MichaelScott",
   ];
   // ensuring the preselectedUsers are updated
   const preSelectedUsers = props.allUsers.filter((user) => {

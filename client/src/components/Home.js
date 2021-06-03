@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PostBox from "./PostBox";
 import BoxFeed from "./BoxFeed";
-import { Segment, Button, Sticky } from "semantic-ui-react";
+import { Segment, Button, Sticky, Divider } from "semantic-ui-react";
 import FollowerFeed from "./FollowerFeed";
 import { connect } from "react-redux";
 import { selectUser } from "../actions";
@@ -46,6 +46,7 @@ const Home = (props) => {
         />
       </Sticky>
       {feedSelector()}
+      <Divider hidden />
     </Segment>
   );
 };
