@@ -36,7 +36,7 @@ const Home = (props) => {
           circular
           fluid
           onClick={() => onBtnClick()}
-          className={value ? "follow-btn" : "edit-profile-btn"}
+          className={"edit-profile-btn"}
           content={value ? "Everyone's Feed" : "Just Following"}
           style={{
             maxWidth: "600px",

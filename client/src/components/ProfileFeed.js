@@ -204,6 +204,7 @@ const ProfileFeed = (props) => {
   return (
     <>
       {renderFeed()}
+      <Divider hidden />
       {renderModal()}
       {props.boxesLoading ? <Loading /> : null}
     </>

@@ -9,7 +9,7 @@ const rounder = (num) => {
 // returning a templated string, with a number rounded up to the nearst digit excluding decimals and the corresponding letter
 const convertMili = (num) => {
   switch (num > 0) {
-    case num >= 1000 && num < 60000:
+    case num > 1000 && num < 60000:
       const seconds = num / 1000;
       return `${rounder(seconds)}s`;
     case num >= 60000 && num < 3600000:
