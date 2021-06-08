@@ -179,13 +179,6 @@ body {
   margin-right: auto !important;
   border: 1px solid black !important;
 }
-.box-follower-item {
-  cursor: pointer;
-  background: #203647 !important;
-  box-shadow: none !important;
-  max-width: 600px !important;
-  border: 1px solid black !important;
-}
 
 .search-input {
   background-color: #203647 !important;

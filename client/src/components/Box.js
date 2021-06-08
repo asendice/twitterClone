@@ -19,7 +19,7 @@ import {
   delLikeBox,
   selectUser,
 } from "../actions";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Box = (props) => {

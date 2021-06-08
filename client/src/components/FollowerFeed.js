@@ -147,7 +147,7 @@ const FollowerFeed = (props) => {
             key={box._id}
             basic
             onClick={() => props.selectBox(box)}
-            className="box-follower-item"
+            className="box-feed-item"
             style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Box
